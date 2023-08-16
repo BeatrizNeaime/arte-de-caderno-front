@@ -1,6 +1,6 @@
 const pink_color = "#f49097"
 const purple_color = "#dfb2f4"
-const yellow_color = "#f5e960"
+const yellow_color = "#f4f99b"
 const green_color = "#55d6c2"
 const blue_color = "#6ad6ff"
 const deepBlue = "#1AA9AA"

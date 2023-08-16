@@ -12,7 +12,7 @@ import {
   Mandatory,
 } from "../../styles/sharedStyles";
 import { ForgotLink } from "../../pages/login";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { singupContext } from "../../contexts/singupContext";
 import { toast } from "react-toastify";
 import singUpValidation from "../../hooks/SingUpValidation";
@@ -31,16 +31,18 @@ const UserCheckUpView2 = () => {
   const [cities, setCities] = useState(null);
   const [selected, setSelected] = useState(initialState);
   const [show, setShow] = useState(false);
+  const [redirect, setRedirect] = useState(false)
   const navigate = useNavigate();
 
   const postStudent = async () => {
     console.log("posting aluno");
+    console.log(pessoa.escola);
 
     let address =
       pessoa.rua + ", " + pessoa.numero + " " + pessoa.complemento ||
       null + "." + pessoa.bairro;
 
-    let url = "http://localhost:8080/student";
+    let url = "http://localhost:8080/insertStudent";
     let options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -54,7 +56,7 @@ const UserCheckUpView2 = () => {
         address: `${address}`,
         city: `${pessoa.cidade}`,
         uf: `${pessoa.uf}`,
-        schoolId: `${pessoa.escola}`,
+        schoolId: `${selected.school.trim()}`,
         password: `${pessoa.senha}`,
         isFromProfessor: false,
       }),
@@ -63,6 +65,7 @@ const UserCheckUpView2 = () => {
     try {
       const a = await fetch(url, options);
       const b = await a.json();
+      setRedirect(true)
     } catch (err) {
       toast.error("Erro ao cadastrar aluno");
     }
@@ -75,7 +78,7 @@ const UserCheckUpView2 = () => {
       pessoa.rua + ", " + pessoa.numero + " " + pessoa.complemento ||
       null + "." + pessoa.bairro;
 
-    let url = "http://localhost:8080/professor";
+    let url = "http://localhost:8080/insertProfessor";
     let options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,17 +92,18 @@ const UserCheckUpView2 = () => {
         address: `${address}`,
         city: `${pessoa.cidade}`,
         uf: `${pessoa.uf}`,
-        schoolId: `${selected.escola.trim()}`,
+        schoolId: `${selected.school.trim()}`,
         password: `${pessoa.senha}`,
       }),
     };
 
-    // try { 
-    //   const a = await fetch(url, options);
-    //   const b = await a.json();
-    // } catch (err) {
-    //   toast.error("Erro ao cadastrar");
-    // }
+     try {
+       const a = await fetch(url, options);
+       const b = await a.json();
+       setRedirect(true)
+     } catch (err) {
+       toast.error("Erro ao cadastrar");
+     }
   };
 
   const getSchools = async () => {
@@ -171,7 +175,7 @@ const UserCheckUpView2 = () => {
     const { value } = e.target;
     setSelected((selected) => ({
       ...selected,
-      school: value,
+      school: value.trim(),
     }));
   };
 
@@ -199,6 +203,7 @@ const UserCheckUpView2 = () => {
       width={desktop ? "80%" : "90%"}
       style={{ margin: desktop ? "0" : "1rem 0" }}
     >
+      {redirect && <Navigate to="/login" replace /> }
       <Title>Selecione sua escola</Title>
       <InputColumn width={"100%"}>
         <Linha style={{ margin: "1rem 0" }}>

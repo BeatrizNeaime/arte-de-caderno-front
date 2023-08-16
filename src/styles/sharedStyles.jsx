@@ -173,6 +173,15 @@ const ContentContainer = styled.div`
   justify-content: space-evenly;
 `;
 
+const RateButton = styled(Button)`
+  background-color: ${(props) => props.bg};
+  color: white;
+
+  &:hover {
+    background-color: ${(props) => props.hover};
+  }
+`;
+
 export {
   Column,
   InputColumn,
@@ -193,4 +202,5 @@ export {
   ImgContainer,
   PageContainer,
   ContentContainer,
+  RateButton,
 };
