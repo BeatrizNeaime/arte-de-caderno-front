@@ -26,6 +26,7 @@ function App() {
     cidade: "",
     uf: "",
     escola: "",
+    token: ""
   });
   const [isLogged, setIsLogged] = useState(false);
 

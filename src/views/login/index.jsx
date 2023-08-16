@@ -76,7 +76,7 @@ const LoginView = () => {
       } else {
         setUser((user) => ({
           ...user,
-          id: json.user.id,
+          id: json.user._id,
           name: json.user.name,
           date_of_birth: json.user.date_of_birth,
           cpf: json.user.cpf,
@@ -91,6 +91,7 @@ const LoginView = () => {
           school: json.user.school,
           schoolId: json.user.schoolId,
           studentsId: json.user.studentsId,
+          token: json.token
         }));
         setIsLogged(true);
       }
@@ -162,7 +163,7 @@ const LoginView = () => {
                 txt={"Entrar com Gmail"}
                 img={"mail-outline"}
                 desktop={desktop}
-                bg={gmail_hover}
+                bg={gmail_hover} 
               />
             </InputColumn>
             <Linha style={{ marginTop: "0.5rem" }}>

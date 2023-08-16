@@ -37,6 +37,7 @@ const DashboardProfessorView = ({ user }) => {
           icon={"person-add-1"}
           name={"Cadastrar Aluno"}
           desktop={desktop}
+          path={"/add-student"}
         />
         <Card icon={"add-draw"} name={"Cadastrar Desenho"} desktop={desktop} />
         <Card

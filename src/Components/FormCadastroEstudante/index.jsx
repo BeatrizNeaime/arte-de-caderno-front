@@ -1,4 +1,4 @@
-import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useState, useContext, useEffect } from "react";
 import {
   Column,
@@ -7,7 +7,9 @@ import {
   Label,
   Linha,
   Mandatory,
+  Option,
   Select,
+  Title,
 } from "../../styles/sharedStyles";
 
 import { toast } from "react-toastify";
@@ -24,17 +26,15 @@ import { userContext } from "../../contexts/userContext";
 
 const FormCadastroEstudante = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const logged = useContext(LoggedContext);
-  const { isLogged } = logged;
   const [desabilitado, setDesabilitado] = useState({ rua: true, bairro: true });
-  const context = useContext(userContext)
-  const {user} = context 
+  const [schools, setSchools] = useState(null);
+  const { user } = useContext(userContext);
+  const { isLogged } = useContext(LoggedContext);
 
   useEffect(() => {
     if (!isLogged) {
       window.location.href = "/login";
     }
-    console.log(`===> ${JSON.stringify(user.name)}`);
   }, []);
 
   const [aluno, setAluno] = useState({
@@ -51,6 +51,27 @@ const FormCadastroEstudante = () => {
     uf: "",
     email: "",
   });
+
+  const getSchools = async () => {
+    let url = `http://localhost:8080/professor/school/${user.id}`;
+    let options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    console.log("pegando escola --- ", user.id);
+    setSchools("Carregando...");
+    try {
+      const a = await fetch(url, options);
+      const b = await a.json();
+      setSchools(b);
+      console.log(schools);
+    } catch (err) {
+      console.log("erro ao buscar os dados");
+    }
+  };
 
   const handleAluno = (e) => {
     const { name, value } = e.target;
@@ -140,175 +161,99 @@ const FormCadastroEstudante = () => {
   };
 
   return (
-    <Form>
-      <Column style={{ width: "90%" }}>
-        <AnotherLine>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+    <Column
+      width={desktop ? "80%" : "90%"}
+      style={{
+        background: "rgba(255, 255, 255, 0.04)",
+        backdropFilter: "blur(5px)",
+        border: "1px solid black",
+        padding: "1rem",
+        borderRadius: "12px",
+      }}
+    >
+      <Title>Cadastrar aluno</Title>
+      <Form
+        style={{
+          gap: "1rem",
+        }}
+      >
+        <Linha>
+          <InputColumn width={desktop ? "60%" : "100%"}>
             <Label>
               Nome Completo:<Mandatory>*</Mandatory>
             </Label>
             <Input
               type="text"
-              required
+              name="name"
               value={aluno.name}
               onChange={handleAluno}
-              name="name"
+              required
             />
           </InputColumn>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+          <InputColumn width={desktop ? "20%" : "100%"}>
             <Label>
               Data de Nascimento:<Mandatory>*</Mandatory>
             </Label>
             <Input
               type="text"
-              required
-              onChange={handleBday}
+              name="date_of_birth"
               value={aluno.date_of_birth}
+              onChange={handleBday}
+              required
             />
           </InputColumn>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+          <InputColumn width={desktop ? "20%" : "100%"}>
             <Label>
               CPF:<Mandatory>*</Mandatory>
             </Label>
             <Input
               type="text"
-              required
-              onChange={handleCPF}
               value={aluno.cpf}
+              onChange={handleCPF}
               onBlur={checkCPF}
+              required
             />
           </InputColumn>
-        </AnotherLine>
-        <AnotherLine>
+        </Linha>
+        <Linha>
           <InputColumn width={desktop ? "33%" : "100%"}>
             <Label>
-              Celular:<Mandatory>*</Mandatory>
+              Telefone:<Mandatory>*</Mandatory>
             </Label>
             <Input
               type="text"
-              required
               value={aluno.phone}
               onChange={handleCel}
-            />
-          </InputColumn>
-          <InputColumn width={desktop ? "33%" : "100%"}>
-            <Linha>
-              <Label>
-                CEP:<Mandatory>*</Mandatory>
-              </Label>
-              <ForgotLink
-                style={{ alignSelf: "flex-end" }}
-                href={
-                  "https://buscacepinter.correios.com.br/app/endereco/index.php"
-                }
-                target="_blank"
-              >
-                Não sei meu CEP
-              </ForgotLink>
-            </Linha>
-            <Input
-              type="text"
-              onChange={handleCep}
-              value={aluno.cep}
-              onBlur={getCep}
               required
             />
           </InputColumn>
           <InputColumn width={desktop ? "33%" : "100%"}>
             <Label>
-              Cidade:<Mandatory>*</Mandatory>
+              E-mail:<Mandatory>*</Mandatory>
             </Label>
             <Input
-              type="text"
-              value={aluno.city}
-              style={{ borderColor: `${deepGrey}` }}
+              type="email"
               required
-            />
-          </InputColumn>
-        </AnotherLine>
-        <AnotherLine>
-          <InputColumn width={desktop ? "10%" : "100%"}>
-            <Label>
-              UF:<Mandatory>*</Mandatory>
-            </Label>
-            <Input
-              type="text"
-              value={aluno.uf}
-              style={{ borderColor: `${deepGrey}` }}
-              required
-              disabled
-            />
-          </InputColumn>
-          <InputColumn width={desktop ? "45%" : "100%"}>
-            <Label>
-              Rua:<Mandatory>*</Mandatory>
-            </Label>
-            <Input
-              type="text"
-              value={aluno.rua}
-              disabled={desabilitado.rua}
-              style={{ borderColor: desabilitado.rua ? deepGrey : blue_color }}
-              required
-            />
-          </InputColumn>
-          <InputColumn width={desktop ? "45%" : "100%"}>
-            <Label>
-              Bairro:<Mandatory>*</Mandatory>
-            </Label>
-            <Input
-              type="text"
-              value={aluno.bairro}
-              disabled={desabilitado.bairro}
-              style={{ borderColor: desabilitado.rua ? deepGrey : blue_color }}
-              required
-            />
-          </InputColumn>
-        </AnotherLine>
-        <AnotherLine>
-          <InputColumn width={desktop ? "50%" : "100%"}>
-            <Label>
-              Número:<Mandatory>*</Mandatory>
-            </Label>
-            <Input
-              type="text"
-              value={aluno.numero}
+              value={aluno.email}
+              name="email"
               onChange={handleAluno}
-              name="numero"
             />
           </InputColumn>
-          <InputColumn width={desktop ? "50%" : "100%"}>
-            <Label>Complemento:</Label>
-            <Input type="text" value={aluno.complemento} onBlur={handleAluno} />
-          </InputColumn>
-        </AnotherLine>
-        <AnotherLine>
-          <InputColumn width={desktop ? "50%" : "100%"}>
+          <InputColumn width={desktop ? "33%" : "100%"}>
             <Label>
               Escola:<Mandatory>*</Mandatory>
             </Label>
-            <Select required width={"100%"}>
-              <option value="" disabled selected>
-                Escolha a escola
-              </option>
-              <option value={user.schoolId}>
-                {user.schoolId}
-              </option>
+            <Select width={"100%"}>
+              {!schools && <Option>Selecione...</Option>}
+              {schools &&
+                schools.map((school) => {
+                  return <Option>{school.name}</Option>;
+                })}
             </Select>
           </InputColumn>
-          <InputColumn width={desktop ? "50%" : "100%"}>
-            <Label>
-              Professor Responsável:<Mandatory>*</Mandatory>
-            </Label>
-            <Input
-              type="text"
-              disabled
-              value={user.name} 
-              style={{ borderColor: `${deepGrey}` }}
-            />
-          </InputColumn>
-        </AnotherLine>
-      </Column>
-    </Form>
+        </Linha>
+      </Form>
+    </Column>
   );
 };
 
@@ -320,8 +265,4 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-`;
-
-const AnotherLine = styled(Linha)`
-  margin-bottom: 1rem;
 `;
