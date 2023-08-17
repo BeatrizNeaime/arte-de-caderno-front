@@ -1,6 +1,7 @@
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useState, useContext, useEffect } from "react";
 import {
+  Button,
   Column,
   Input,
   InputColumn,
@@ -19,10 +20,10 @@ import { maskcpf } from "../../hooks/mascara-cpf";
 import { maskcel } from "../../hooks/mascara-celular";
 import { maskcep } from "../../hooks/mascara-cep";
 
-import { ForgotLink } from "../../pages/login";
 import styled from "styled-components";
-import { blue_color, deepGrey } from "../UI/contants";
 import { userContext } from "../../contexts/userContext";
+import { blue_color, deepGrey } from "../UI/contants";
+import { Navigate } from "react-router-dom";
 
 const FormCadastroEstudante = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -30,11 +31,14 @@ const FormCadastroEstudante = () => {
   const [schools, setSchools] = useState(null);
   const { user } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     if (!isLogged) {
       window.location.href = "/login";
     }
+    console.log(user);
+    getSchools();
   }, []);
 
   const [aluno, setAluno] = useState({
@@ -50,6 +54,7 @@ const FormCadastroEstudante = () => {
     city: "",
     uf: "",
     email: "",
+    school: "",
   });
 
   const getSchools = async () => {
@@ -61,15 +66,13 @@ const FormCadastroEstudante = () => {
       },
     };
 
-    console.log("pegando escola --- ", user.id);
-    setSchools("Carregando...");
     try {
       const a = await fetch(url, options);
       const b = await a.json();
       setSchools(b);
-      console.log(schools);
+      console.log("schools ---> ", schools);
     } catch (err) {
-      console.log("erro ao buscar os dados");
+      console.error(err);
     }
   };
 
@@ -160,6 +163,49 @@ const FormCadastroEstudante = () => {
     }
   };
 
+  const postAluno = async (e) => {
+    e.preventDefault();
+    let address =
+      "Rua " +
+      aluno.rua +
+      ", " +
+      aluno.numero +
+      " " +
+      aluno?.complemento +
+      ", " +
+      aluno.bairro;
+    console.log(aluno.school);
+    let url = `http://localhost:8080/professor`;
+    let options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: `${aluno.name}`,
+        date_of_birth: `${aluno.date_of_birth}`,
+        cpf: `${aluno.cpf}`,
+        phone: `${aluno.cel}`,
+        cep: `${aluno.cep}`,
+        address: `${address}`,
+        email: `${aluno.email}`,
+        city: `${aluno.city}`,
+        uf: `${aluno.uf}`,
+        schoolId: `${aluno.school}`,
+      }),
+    };
+
+    try {
+      const a = await fetch(url, options);
+      console.log("b: ", a);
+      toast.success("Aluno cadastrado com sucesso!");
+      setRedirect(true);
+    } catch (error) {
+      toast.error("Ocorreu um erro, tente novamente");
+      console.error(error);
+    }
+  };
   return (
     <Column
       width={desktop ? "80%" : "90%"}
@@ -171,11 +217,13 @@ const FormCadastroEstudante = () => {
         borderRadius: "12px",
       }}
     >
+      {redirect && <Navigate to="/dashboard" replace />}
       <Title>Cadastrar aluno</Title>
       <Form
         style={{
           gap: "1rem",
         }}
+        onSubmit={postAluno}
       >
         <Linha>
           <InputColumn width={desktop ? "60%" : "100%"}>
@@ -216,7 +264,7 @@ const FormCadastroEstudante = () => {
           </InputColumn>
         </Linha>
         <Linha>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+          <InputColumn width={desktop ? "20%" : "100%"}>
             <Label>
               Telefone:<Mandatory>*</Mandatory>
             </Label>
@@ -227,7 +275,7 @@ const FormCadastroEstudante = () => {
               required
             />
           </InputColumn>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+          <InputColumn width={desktop ? "30%" : "100%"}>
             <Label>
               E-mail:<Mandatory>*</Mandatory>
             </Label>
@@ -239,18 +287,127 @@ const FormCadastroEstudante = () => {
               onChange={handleAluno}
             />
           </InputColumn>
-          <InputColumn width={desktop ? "33%" : "100%"}>
+          <InputColumn width={desktop ? "50%" : "100%"}>
             <Label>
               Escola:<Mandatory>*</Mandatory>
             </Label>
-            <Select width={"100%"}>
-              {!schools && <Option>Selecione...</Option>}
-              {schools &&
-                schools.map((school) => {
-                  return <Option>{school.name}</Option>;
-                })}
+            <Select
+              width={"100%"}
+              required
+              name="school"
+              onChange={handleAluno}
+            >
+              <Option selected disabled>
+                Selecione...
+              </Option>
+              {schools?.map((school) => {
+                return (
+                  <Option key={school.code} value={school._id}>
+                    {school.name}
+                  </Option>
+                );
+              })}
             </Select>
           </InputColumn>
+        </Linha>
+        <Linha>
+          <InputColumn width={desktop ? "20%" : "100%"}>
+            <Label>
+              <Label>
+                CEP:<Mandatory>* </Mandatory>
+              </Label>
+              <LinkCep
+                href="https://buscacepinter.correios.com.br/app/endereco/index.php"
+                target="_blank"
+              >
+                Não sei o CEP
+              </LinkCep>
+            </Label>
+            <Input
+              type="text"
+              value={aluno.cep}
+              onChange={handleCep}
+              onBlur={getCep}
+            />
+          </InputColumn>
+          <InputColumn width={desktop ? "60%" : "100%"}>
+            <Label>
+              Rua:<Mandatory>*</Mandatory>
+            </Label>
+            <Input
+              style={{
+                borderColor: `${desabilitado.rua ? deepGrey : blue_color} `,
+              }}
+              disabled={desabilitado.rua}
+              value={aluno.rua}
+              required
+              name="rua"
+              onChange={handleAluno}
+            />
+          </InputColumn>
+          <InputColumn width={desktop ? "20%" : "100%"}>
+            <Label>
+              Número:<Mandatory>*</Mandatory>
+            </Label>
+            <Input
+              value={aluno.numero}
+              onChange={handleAluno}
+              name="numero"
+              required
+            />
+          </InputColumn>
+        </Linha>
+        <Linha>
+          <InputColumn width={desktop ? "50%" : "100%"}>
+            <Label>
+              Bairro:<Mandatory>*</Mandatory>
+            </Label>
+            <Input
+              value={aluno.bairro}
+              name="bairro"
+              required
+              disabled={desabilitado.bairro}
+              onChange={handleAluno}
+              style={{
+                borderColor: `${desabilitado.rua ? deepGrey : blue_color} `,
+              }}
+            />
+          </InputColumn>
+          <InputColumn width={desktop ? "50%" : "100%"}>
+            <Label>Complemento:</Label>
+            <Input
+              value={aluno.complemento}
+              onChange={handleAluno}
+              name="complemento"
+            />
+          </InputColumn>
+        </Linha>
+        <Linha>
+          <InputColumn width={desktop ? "80%" : "100%"}>
+            <Label>
+              Cidade:<Mandatory>*</Mandatory>
+            </Label>
+            <Input
+              disabled
+              value={aluno.city}
+              required
+              style={{ borderColor: `${deepGrey}` }}
+            />
+          </InputColumn>
+          <InputColumn width={desktop ? "20%" : "100%"}>
+            <Label>
+              UF:<Mandatory>*</Mandatory>
+            </Label>
+            <Input
+              disabled
+              value={aluno.uf}
+              required
+              style={{ borderColor: `${deepGrey}` }}
+            />
+          </InputColumn>
+        </Linha>
+        <Linha>
+          <Button primary>cadastrar</Button>
         </Linha>
       </Form>
     </Column>
@@ -265,4 +422,13 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
+`;
+
+const LinkCep = styled.a`
+  color: black;
+  text-transform: none;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
 `;

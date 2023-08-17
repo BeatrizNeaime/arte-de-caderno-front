@@ -65,6 +65,7 @@ const UserCheckUpView2 = () => {
     try {
       const a = await fetch(url, options);
       const b = await a.json();
+      toast.success("Cadastro realizado com sucesso!")
       setRedirect(true)
     } catch (err) {
       toast.error("Erro ao cadastrar aluno");

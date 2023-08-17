@@ -16,6 +16,11 @@ const Select = styled.select`
   padding: 5px 10px;
   text-align: left;
   width: ${(props) => (props.width ? props.width : "auto")};
+
+  &:hover{
+    cursor: pointer;
+  }
+
 `;
 
 const Option = styled.option`

@@ -22,7 +22,7 @@ const DashboardRouter = () => {
 
   return (
     <PageContainer>
-      {/* {!isLogged && <Navigate to="/login" replace />} */}
+       {!isLogged && <Navigate to="/login" replace />} 
       <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Dashboard"} />
         <ContentContainer>
