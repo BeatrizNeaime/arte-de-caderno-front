@@ -171,7 +171,7 @@ const FormCadastroEstudante = () => {
       ", " +
       aluno.numero +
       " " +
-      aluno?.complemento +
+      aluno?.complemento || null+
       ", " +
       aluno.bairro;
     console.log(aluno.school);

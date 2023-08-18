@@ -33,7 +33,7 @@ const DashboardRouter = () => {
             <DashboardProfessorView user={user} />
           )}
           {user.accessType === "student" && <DashboardAlunoView user={user} />}
-          <DashboardAvaliadorView user={user} />
+          {user.accessType === "judge" && <DashboardAvaliadorView user={user} />}
         </ContentContainer>
       </ImgContainer>
     </PageContainer>

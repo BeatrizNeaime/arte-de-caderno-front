@@ -18,6 +18,7 @@ const DashboardProfessorView = ({ user }) => {
           name={"Alunos Cadastrados"}
           value={user.studentsId.length}
           desktop={desktop}
+          path={"/estudantes-cadastrados"}
         />
         <Card
           icon={"draw"}
@@ -39,7 +40,12 @@ const DashboardProfessorView = ({ user }) => {
           desktop={desktop}
           path={"/add-student"}
         />
-        <Card icon={"add-draw"} name={"Cadastrar Desenho"} desktop={desktop} />
+        <Card
+          icon={"add-draw"}
+          name={"Cadastrar Desenho"}
+          desktop={desktop}
+          path={"/add-desenho"}
+        />
         <Card
           icon={"add-circle"}
           name={"Vincular nova escola"}
