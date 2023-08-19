@@ -17,6 +17,7 @@ const DashboardAlunoView = ({ user }) => {
           icon={"create-1"}
           name={"Editar dados pessoais"}
           desktop={desktop}
+          path={"/perfil"}
         />
         <Card
           icon={"add-draw"}

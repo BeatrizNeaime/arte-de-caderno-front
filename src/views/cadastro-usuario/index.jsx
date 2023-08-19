@@ -21,7 +21,7 @@ import { maskcpf } from "../../hooks/mascara-cpf";
 import { maskcep } from "../../hooks/mascara-cep";
 import { toast } from "react-toastify";
 import { ForgotLink } from "../../pages/login";
-import { deepGrey, blue_color, deepBlue } from "../../Components/UI/contants";
+import { blue_color, deepBlue } from "../../Components/UI/contants";
 import singUpValidation from "../../hooks/SingUpValidation";
 import styled from "styled-components";
 import { CheckupContainer } from "./components";
@@ -372,11 +372,6 @@ const UserCheckUpView = () => {
                         value={pessoa.rua}
                         required
                         disabled={desabilitado.bairro}
-                        style={{
-                          borderColor: `${
-                            desabilitado.bairro ? deepGrey : blue_color
-                          } `,
-                        }}
                       />
                     </InputColumn>
                     <InputColumn style={{ width: desktop ? "33%" : "100%" }}>
@@ -397,11 +392,6 @@ const UserCheckUpView = () => {
                         value={pessoa.bairro}
                         required
                         disabled={desabilitado.bairro}
-                        style={{
-                          borderColor: `${
-                            desabilitado.bairro ? deepGrey : blue_color
-                          } `,
-                        }}
                       />
                     </InputColumn>
                     <InputColumn style={{ width: desktop ? "33%" : "100%" }}>
@@ -423,11 +413,6 @@ const UserCheckUpView = () => {
                         value={pessoa.numero}
                         onChange={handlechangePessoa}
                         disabled={desabilitado.number}
-                        style={{
-                          borderColor: `${
-                            desabilitado.number ? deepGrey : blue_color
-                          } `,
-                        }}
                       />
                     </InputColumn>
                   </Linha>
@@ -449,11 +434,6 @@ const UserCheckUpView = () => {
                         onChange={handlechangePessoa}
                         name="complemento"
                         disabled={desabilitado.number}
-                        style={{
-                          borderColor: `${
-                            desabilitado.number ? deepGrey : blue_color
-                          } `,
-                        }}
                       />
                     </InputColumn>
                     <InputColumn style={{ width: desktop ? "33%" : "100%" }}>
@@ -475,9 +455,6 @@ const UserCheckUpView = () => {
                         name="cidade"
                         required
                         disabled
-                        style={{
-                          borderColor: `${deepGrey} `,
-                        }}
                       />
                     </InputColumn>
                     <InputColumn style={{ width: desktop ? "33%" : "100%" }}>
@@ -499,9 +476,6 @@ const UserCheckUpView = () => {
                         name="uf"
                         required
                         disabled
-                        style={{
-                          borderColor: `${deepGrey} `,
-                        }}
                       />
                     </InputColumn>
                   </Linha>
