@@ -82,16 +82,16 @@ const LoginView = () => {
           cpf: json.user.cpf,
           accessType: json.accessType,
           email: json.user.email,
-          password: json.user.password,
+          password: json.user.password || null,
           phone: json.user.phone,
           cep: json.user.cep,
           city: json.user.city,
           loginId: json.user.name,
           state: json.user.state,
-          school: json.user.school,
           schoolId: json.user.schoolId,
-          studentsId: json.user.studentsId,
-          token: json.token
+          studentsId: json.user.studentsId || null,
+          token: json.token,
+          drawsId: json.user.drawsId
         }));
         setIsLogged(true);
       }

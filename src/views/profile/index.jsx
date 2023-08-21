@@ -109,7 +109,7 @@ const ProfileView = () => {
                   <Label>
                     CEP:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.cep} name="cep" disabled={!edit}/>
+                  <Input value={user.cep} name="cep" disabled={!edit}  />
                 </InputColumn>
               </Linha>
               <Linha>

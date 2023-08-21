@@ -1,10 +1,10 @@
-import React from "react";
-import { Column, ContentContainer, Linha } from "../../../styles/sharedStyles";
+import { Column,  Linha } from "../../../styles/sharedStyles";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import Card from "../../../Components/Cards";
 
 const DashboardAlunoView = ({ user }) => {
   const desktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <Column
       style={{
@@ -29,7 +29,7 @@ const DashboardAlunoView = ({ user }) => {
           icon={"draw"}
           name={"Desenhos Cadastrados"}
           desktop={desktop}
-          value={user.drawsId ? user.drawsId.length : "0"}
+          value={user.drawsId.length}
         />
       </Linha>
     </Column>

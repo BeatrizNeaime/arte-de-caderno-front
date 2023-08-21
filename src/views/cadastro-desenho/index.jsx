@@ -125,13 +125,9 @@ const CadastroDesenhoView = () => {
                     Autor:<Mandatory>*</Mandatory>{" "}
                   </Label>
                   {user.accessType === "professor" && (
-                    <Input
-                      type="text"
-                      value={desenho.autor}
-                      name="autor"
-                      onChange={handleDesenho}
-                      required
-                    />
+                    <Select name="autor" >
+                      
+                    </Select>
                   )}
                   {user.accessType === "student" && (
                     <Input type="text" disabled value={user.name} required />

@@ -18,11 +18,42 @@ import DashboardAvaliadorView from "./avaliador";
 const DashboardRouter = () => {
   const { user } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
-  const desktop = useMediaQuery("(min-width: 768px)");
+  const [profData, setProfData] = useState({
+    students: [],
+    draws: [],
+    schools: [],
+  });
+
+  const getStudentsData = async () => {
+    const url = `http://localhost:8080/professor/student/${user.id}`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    try {
+      const a = await fetch(url, options)
+      const b = await a.json()
+      setProfData({...profData, students: b})
+    } catch (error) {
+      console.error(error)
+    }
+
+  };
+
+  useEffect(() => {
+    if(user.accessType === "professor"){
+      getStudentsData()
+    } else if(user.accessType === "student"){
+      return
+    }
+  }, []);
 
   return (
     <PageContainer>
-       {!isLogged && <Navigate to="/login" replace />} 
+      {!isLogged && <Navigate to="/login" replace />}
       <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Dashboard"} />
         <ContentContainer>
@@ -30,10 +61,12 @@ const DashboardRouter = () => {
             <DashTitle>Olá, {user.name}!</DashTitle>
           </Linha>
           {user.accessType === "professor" && (
-            <DashboardProfessorView user={user} />
+            <DashboardProfessorView user={user} profData={profData} />
           )}
           {user.accessType === "student" && <DashboardAlunoView user={user} />}
-          {user.accessType === "judge" && <DashboardAvaliadorView user={user} />}
+          {user.accessType === "judge" && (
+            <DashboardAvaliadorView user={user} />
+          )}
         </ContentContainer>
       </ImgContainer>
     </PageContainer>
