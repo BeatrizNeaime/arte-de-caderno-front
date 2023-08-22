@@ -163,7 +163,7 @@ const UserCheckUpView = () => {
     try {
       const a = await fetch(url);
       if (a.status !== 200) {
-        toast.error("CPF inválido!");
+        toast.error(`CPF inválido!`);
       } else {
         setPessoa((pessoa) => ({
           ...pessoa,
