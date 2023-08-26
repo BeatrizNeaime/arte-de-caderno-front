@@ -12,7 +12,6 @@ import {
   Option,
   Button,
 } from "../../styles/sharedStyles";
-import NavBoot from "../../Components/Navbar";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { singupContext } from "../../contexts/singupContext";
 import { maskbday } from "../../hooks/mascara-data";
