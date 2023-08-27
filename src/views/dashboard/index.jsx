@@ -12,42 +12,24 @@ import DashboardProfessorView from "./professor";
 import { DashTitle } from "./style";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { Navigate } from "react-router-dom";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 import DashboardAvaliadorView from "./avaliador";
+import { loadDashProfessor } from "../../services/loadDashProfessor";
 
 const DashboardRouter = () => {
   const { user } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
   const [profData, setProfData] = useState({
     students: [],
-    draws: [],
     schools: [],
+    draws: [],
   });
 
-  const getStudentsData = async () => {
-    const url = `http://localhost:8080/professor/student/${user.id}`;
-    const options = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    try {
-      const a = await fetch(url, options)
-      const b = await a.json()
-      setProfData({...profData, students: b})
-    } catch (error) {
-      console.error(error)
-    }
-
-  };
-
   useEffect(() => {
-    if(user.accessType === "professor"){
-      getStudentsData()
-    } else if(user.accessType === "student"){
-      return
+    if (user.accessType === "professor") {
+      const a = loadDashProfessor.getStudents(user);
+      const b = loadDashProfessor.getSchools(user);
+      setProfData({ ...profData, schools: b });
+    } else if (user.accessType === "student") {
     }
   }, []);
 

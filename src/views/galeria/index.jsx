@@ -1,4 +1,4 @@
-import React from "react";
+import {useEffect, useState} from "react";
 import {
   Container,
   ContentContainer,
@@ -14,11 +14,16 @@ import GalleryContainer from "./style/GalleryContainer";
 
 const GalleryView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+
+
+
   return (
-    <PageContainer>
-      <ImgContainer img={require("../../assets/img/op-background.png")}>
+    <PageContainer style={{overflowX: "hidden"}} >
+      <ImgContainer img={require("../../assets/img/op-background.png")} style={{overflowX: "hidden"}} >
         <NavBoot currentPage={"Galeria"} />
-        <ContentContainer>
+        <ContentContainer style={{overflowX: "hidden"}} >
           <Title>Galeria</Title>
           <Linha>
             {desktop && <Sidebar style={{ alignSelf: "flex-start" }} />}

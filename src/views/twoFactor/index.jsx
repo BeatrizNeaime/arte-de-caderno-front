@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import {
   Column,
@@ -7,44 +7,57 @@ import {
   PageContainer,
   Subtitle,
   Input,
+  Form,
+  Button,
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { blue_color, pink_color } from "../../Components/UI/contants";
 import PreviousArrow from "../../Components/PreviousArrow";
+import { userContext } from "../../contexts/userContext";
+import { LoggedContext } from "../../contexts/loggedContext";
+import { loadLogin } from "../../services/loadLogin";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
 const TwoFactorView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const [twoFactorCode, setTwoFactorCode] = useState(new Array(8).fill(""));
-  const [border, setBorder] = useState(blue_color)
-  const refs = [
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-  ];
+  const [twoFactorCode, setTwoFactorCode] = useState(null);
+  const [border, setBorder] = useState(blue_color);
 
-  const handleChangeCode = (index, e) => {
-    console.log("=> ", index);
-    const { value } = e.target;
-    const newValues = [...twoFactorCode];
-    newValues[index] = value;
-    setTwoFactorCode(newValues);
+  const { user, setUser } = useContext(userContext);
+  const { isLogged, setIsLogged } = useContext(LoggedContext);
 
-    if (value && index + 1 < refs.length) {
-      refs[index+1].current.focus()
+  const logar = async () => {
+    const a = await loadLogin.logar(user.cpf, user.password, twoFactorCode);
+    if (!a) {
+      toast.error("Código incorreto!");
+    } else {
+      setUser((user) => ({
+        ...user,
+        id: a.user._id,
+        name: a.user.name,
+        date_of_birth: a.user.date_of_birth,
+        cpf: a.user.cpf,
+        accessType: a.accessType,
+        email: a.user.email,
+        password: a.user.password,
+        phone: a.user.phone,
+        cep: a.user.cep,
+        city: a.user.city,
+        loginId: a.user.name,
+        state: a.user.state,
+        schoolId: a.user.schoolId,
+        studentsId: a.user.studentsId || null,
+        token: a.token,
+        drawsId: a.user.drawsId,
+      }));
+      setIsLogged(true);
     }
-    if(index == 7){
-        //TODO: send code to server and verify it
-    }
-
   };
 
   return (
     <PageContainer>
+      {isLogged && <Navigate to="/dashboard" replace />}
       <ImgContainer img={require("../../assets/img/background.png")}>
         <Column
           width={desktop ? "70%" : "90%"}
@@ -57,6 +70,7 @@ const TwoFactorView = () => {
           <Subtitle
             style={{
               fontWeight: "600",
+              marginBottom: "1rem",
             }}
           >
             Insira o código enviado para seu e-mail:
@@ -64,25 +78,18 @@ const TwoFactorView = () => {
           <Linha
             width={desktop ? "50%" : "100%"}
             style={{
-              gap: desktop ? "2px" : "2px",
               flexDirection: "row",
+              justifyContent: "center",
             }}
           >
-            {twoFactorCode.map((code, index) => {
-              return (
-                <TwoFInput
-                  type="text"
-                  desktop={desktop}
-                  border={border}
-                  value={twoFactorCode[index]}
-                  key={index}
-                  ref={refs[index]}
-                  maxLength={1}
-                  onChange={(e) => handleChangeCode(index, e)}
-                  onFocus={() => console.log("index: ", index)}
-                />
-              );
-            })}
+            <TwoFInput
+              value={twoFactorCode}
+              border={border}
+              onBlur={(e) => setTwoFactorCode(e.target.value)}
+            />
+            <Button primary onClick={logar}>
+              verificar
+            </Button>
           </Linha>
           <PreviousArrow navigate={"login"} />
         </Column>
@@ -94,7 +101,7 @@ const TwoFactorView = () => {
 export default TwoFactorView;
 
 const TwoFInput = styled(Input)`
-  width: 40px;
+  width: 40%;
   border: 1px solid ${(props) => props.border};
   text-align: center;
   text-transform: uppercase;

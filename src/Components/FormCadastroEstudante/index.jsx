@@ -38,7 +38,7 @@ const FormCadastroEstudante = () => {
       window.location.href = "/login";
     }
     console.log(user);
-    getSchools();
+    //getSchools();
   }, []);
 
   const [aluno, setAluno] = useState({
@@ -56,25 +56,6 @@ const FormCadastroEstudante = () => {
     email: "",
     school: "",
   });
-
-  const getSchools = async () => {
-    let url = `http://localhost:8080/professor/school/${user.id}`;
-    let options = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    try {
-      const a = await fetch(url, options);
-      const b = await a.json();
-      setSchools(b);
-      console.log("schools ---> ", schools);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const handleAluno = (e) => {
     const { name, value } = e.target;
