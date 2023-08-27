@@ -26,6 +26,7 @@ import styled from "styled-components";
 import { CheckupContainer } from "./components";
 import Cadastro2 from "../../pages/cadastro/index2";
 import { useNavigate } from "react-router-dom";
+import { CPFroutes } from "../../services/CPFroutes";
 
 const checkPassword = (auxPwd, setPessoa, pessoa) => {
   const { pwd1, pwd2 } = auxPwd;
@@ -157,11 +158,9 @@ const UserCheckUpView = () => {
   };
 
   const checkCPF = async (e) => {
-    const cpf = e.target.value.replace(/\D/g, "");
-    const url = `http://localhost:8080/cpf/${cpf}`;
-    try {
-      const a = await fetch(url);
-      if (a.status !== 200) {
+    const cpf = e.target.value.replace(/\D/g, "")
+    const a = await CPFroutes.verifyCPF(cpf)
+      if (!a) {
         toast.error(`CPF inválido!`);
       } else {
         setPessoa((pessoa) => ({
@@ -169,9 +168,6 @@ const UserCheckUpView = () => {
           cpf: maskcpf(cpf),
         }));
       }
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (

@@ -12,63 +12,72 @@ import DashboardProfessorView from "./professor";
 import { DashTitle } from "./style";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { Navigate } from "react-router-dom";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 import DashboardAvaliadorView from "./avaliador";
+import { loadDashProfessor } from "../../services/loadDashProfessor";
+import Loading from "../../Components/Loading";
 
 const DashboardRouter = () => {
-  const { user } = useContext(userContext);
+  const { user, setUser } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
-  const [profData, setProfData] = useState({
-    students: [],
-    draws: [],
-    schools: [],
-  });
+  const [loading, setLoading] = useState(true);
 
-  const getStudentsData = async () => {
-    const url = `http://localhost:8080/professor/student/${user.id}`;
-    const options = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    try {
-      const a = await fetch(url, options)
-      const b = await a.json()
-      setProfData({...profData, students: b})
-    } catch (error) {
-      console.error(error)
+  const getProf = async () => {
+    const a = await loadDashProfessor.getProfById(user);
+    console.log(a);
+    if (a.accessTYpe) {
+      setUser((user) => ({
+        ...user,
+        id: a._id,
+        name: a.name,
+        date_of_birth: a.date_of_birth,
+        cpf: a.cpf,
+        accessType: a.accessType,
+        email: a.email,
+        password: a.password,
+        phone: a.phone,
+        cep: a.cep,
+        city: a.city,
+        loginId: a.name,
+        state: a.state,
+        schoolId: a.schoolId,
+        studentsId: a.studentsId || null,
+        token: a.token,
+        drawsId: a.drawsId,
+      }));
+      setLoading(false);
     }
-
   };
 
   useEffect(() => {
-    if(user.accessType === "professor"){
-      getStudentsData()
-    } else if(user.accessType === "student"){
-      return
+    if (user.accessType === "professor") {
+      getProf();
+    } else if (user.accessType === "student") {
     }
   }, []);
 
   return (
     <PageContainer>
+      {loading && <Loading />}
       {!isLogged && <Navigate to="/login" replace />}
-      <ImgContainer img={require("../../assets/img/op-background.png")}>
-        <NavBoot currentPage={"Dashboard"} />
-        <ContentContainer>
-          <Linha>
-            <DashTitle>Olá, {user.name}!</DashTitle>
-          </Linha>
-          {user.accessType === "professor" && (
-            <DashboardProfessorView user={user} profData={profData} />
-          )}
-          {user.accessType === "student" && <DashboardAlunoView user={user} />}
-          {user.accessType === "judge" && (
-            <DashboardAvaliadorView user={user} />
-          )}
-        </ContentContainer>
-      </ImgContainer>
+      {!loading && (
+        <ImgContainer img={require("../../assets/img/op-background.png")}>
+          <NavBoot currentPage={"Dashboard"} />
+          <ContentContainer>
+            <Linha>
+              <DashTitle>Olá, {user.name}!</DashTitle>
+            </Linha>
+            {user.accessType === "professor" && (
+              <DashboardProfessorView user={user} />
+            )}
+            {user.accessType === "student" && (
+              <DashboardAlunoView user={user} />
+            )}
+            {user.accessType === "judge" && (
+              <DashboardAvaliadorView user={user} />
+            )}
+          </ContentContainer>
+        </ImgContainer>
+      )}
     </PageContainer>
   );
 };

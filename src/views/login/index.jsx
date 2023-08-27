@@ -29,16 +29,19 @@ import { userContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import { LoginCard } from "./components";
 import PreviousArrow from "../../Components/PreviousArrow";
+import { loadLogin } from "../../services/loadLogin";
 
 const LoginView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [showPassword, setShowPassword] = useState(false);
+  const [twoF, setTwoF] = useState(false);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const { isLogged, setIsLogged } = useContext(LoggedContext);
-  const { setUser } = useContext(userContext);
+
+  const { isLogged } = useContext(LoggedContext);
+  const { user, setUser } = useContext(userContext);
 
   const handleCPF = (e) => {
     setCredentials((credentials) => ({
@@ -56,53 +59,26 @@ const LoginView = () => {
 
   const login = async (e) => {
     e.preventDefault();
-    let url = "http://localhost:8080/login";
-    let options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: credentials.username,
+    const a = await loadLogin.login(credentials.username, credentials.password);
+    const customId = "custom-id-yes";
+    if (!a) {
+      toast.error("Usuário/senha incorreto(s)!", { toastId: customId });
+    } else {
+      toast.info("Insira o código enviado para seu e-mail", {
+        toastId: customId,
+      });
+      setUser({
+        ...user,
+        cpf: credentials.username,
         password: credentials.password,
-      }),
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const json = await response.json();
-      const status = response.status;
-      const customId = "custom-id-yes";
-
-      if (status !== 200) {
-        toast.error(json.message, { toastId: customId });
-      } else {
-        setUser((user) => ({
-          ...user,
-          id: json.user._id,
-          name: json.user.name,
-          date_of_birth: json.user.date_of_birth,
-          cpf: json.user.cpf,
-          accessType: json.accessType,
-          email: json.user.email,
-          password: json.user.password || null,
-          phone: json.user.phone,
-          cep: json.user.cep,
-          city: json.user.city,
-          loginId: json.user.name,
-          state: json.user.state,
-          schoolId: json.user.schoolId,
-          studentsId: json.user.studentsId || null,
-          token: json.token,
-          drawsId: json.user.drawsId,
-        }));
-        setIsLogged(true);
-      }
-    } catch (error) {
-      console.log(`~~~> ${error}`);
+      });
+      setTwoF(true);
     }
   };
 
   return (
     <PageContainer>
+      {twoF && <Navigate to={"/dois-fatores"} state={{ credentials }} />}
       <ImgContainer img={require("../../assets/img/background.png")}>
         <LoginCard width={desktop ? "30%" : "90%"}>
           <Title>entrar</Title>
@@ -172,7 +148,7 @@ const LoginView = () => {
             </Linha>
           </form>
         </LoginCard>
-        <Linha style={{width: `${desktop ? "30%" : "90%"}`}}>
+        <Linha style={{ width: `${desktop ? "30%" : "90%"}` }}>
           <PreviousArrow navigate={""} />
         </Linha>
       </ImgContainer>

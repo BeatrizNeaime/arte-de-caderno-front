@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
 import { Column, Linha } from "../../../styles/sharedStyles";
 import Card from "../../../Components/Cards";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
-const DashboardProfessorView = ({user, profData}) => {
+const DashboardProfessorView = ({user}) => {
   const desktop = useMediaQuery("(min-width: 768px)");
   
   return (
@@ -17,7 +16,7 @@ const DashboardProfessorView = ({user, profData}) => {
         <Card
           icon={"people-1"}
           name={"Alunos Cadastrados"}
-          value={profData.students.length}
+          value={user.studentsId.length}
           desktop={desktop}
           path={"/estudantes-cadastrados"}
         />

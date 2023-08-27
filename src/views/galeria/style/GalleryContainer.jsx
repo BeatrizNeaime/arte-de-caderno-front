@@ -8,7 +8,7 @@ const GalleryContainer = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <DrawContainers width={desktop ? "90%" : "100%"} style={{marginBottom: "1rem"}}>
+    <DrawContainers width={"100%"} style={{marginBottom: "1rem"}}>
       <Draws
         author={"Aluno"}
         age={"22"}
@@ -75,7 +75,7 @@ const DrawContainers = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  max-width: ${(p) => p.width};
+  width: ${(p) => p.width};
   flex-wrap: wrap;
   gap: 1rem;
 `;
