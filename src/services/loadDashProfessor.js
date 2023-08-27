@@ -32,5 +32,19 @@ export const loadDashProfessor = {
         })
         console.log(escolas);
 
+    },
+    getProfById: async function (user) {
+        const url = `http://localhost:8080/professor/${user.id}`
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            },
+        }
+
+        const a = await fetch(url, options)
+        const b = await a.json()
+        return await b
+
     }
 }

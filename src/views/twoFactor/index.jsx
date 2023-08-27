@@ -85,7 +85,7 @@ const TwoFactorView = () => {
             <TwoFInput
               value={twoFactorCode}
               border={border}
-              onBlur={(e) => setTwoFactorCode(e.target.value)}
+              onChange={(e) => setTwoFactorCode(e.target.value)}
             />
             <Button primary onClick={logar}>
               verificar
