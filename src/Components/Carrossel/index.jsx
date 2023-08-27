@@ -1,31 +1,22 @@
-import React, { Component } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-import { carouselData } from "../../mocks/carouselData";
-import { Container } from "../../styles/sharedStyles";
+import React from "react";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
-const Carrossel = () => {
+const Carrossel = ({data}) => {
   const desktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Container
-      height={"50vh"}
-      style={{ marginTop: desktop ? "90px" : "0", width: "100vw" }}
-    >
-      <Carousel autoPlay infiniteLoop>
-        {carouselData.map((c) => {
-          return (
-            <div style={{ maxHeight: "600px" }}>
-              <img src={require(`../../assets/img/Desenhos/${c.img}.png`)} />
-              <p className="legend">
-                {c.name} - {c.school}{" "}
-              </p>
-            </div>
-          );
-        })}
-      </Carousel>
-    </Container>
+    <ImageGallery
+      items={data}
+      showThumbnails={false}
+      showFullscreenButton={false}
+      showPlayButton={false}
+      autoPlay
+      showBullets={false}
+      showNav={false}
+      lazyLoad
+    />
   );
 };
 

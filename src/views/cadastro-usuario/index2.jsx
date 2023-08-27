@@ -31,7 +31,7 @@ const UserCheckUpView2 = () => {
   const [cities, setCities] = useState(null);
   const [selected, setSelected] = useState(initialState);
   const [show, setShow] = useState(false);
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
   const postStudent = async () => {
@@ -63,10 +63,16 @@ const UserCheckUpView2 = () => {
     };
 
     try {
-      const a = await fetch(url, options);
-      const b = await a.json();
-      toast.success("Cadastro realizado com sucesso!")
-      setRedirect(true)
+      const a = await toast.promise(
+        fetch(url, options),
+        {
+          pending: "Aguarde...",
+          success: "Cadastro realizado com sucesso!",
+          error: "Erro ao cadastrar!"
+        }
+      )
+      
+      setRedirect(true);
     } catch (err) {
       toast.error("Erro ao cadastrar aluno");
     }
@@ -98,13 +104,19 @@ const UserCheckUpView2 = () => {
       }),
     };
 
-     try {
-       const a = await fetch(url, options);
-       const b = await a.json();
-       setRedirect(true)
-     } catch (err) {
-       toast.error("Erro ao cadastrar");
-     }
+    try {
+      const a = await toast.promise(
+        fetch(url, options),
+        {
+          pending: "Aguarde...",
+          success: "Cadastro realizado com sucesso!",
+          error: "Erro ao cadastrar!"
+        }
+      )
+      setRedirect(true);
+    } catch (err) {
+      toast.error("Erro ao cadastrar");
+    }
   };
 
   const getSchools = async () => {
@@ -204,7 +216,7 @@ const UserCheckUpView2 = () => {
       width={desktop ? "80%" : "90%"}
       style={{ margin: desktop ? "0" : "1rem 0" }}
     >
-      {redirect && <Navigate to="/login" replace /> }
+      {redirect && <Navigate to="/login" replace />}
       <Title>Selecione sua escola</Title>
       <InputColumn width={"100%"}>
         <Linha style={{ margin: "1rem 0" }}>

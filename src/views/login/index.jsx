@@ -28,6 +28,7 @@ import SocialMediaButton from "../../Components/SocialMediaButton";
 import { userContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import { LoginCard } from "./components";
+import PreviousArrow from "../../Components/PreviousArrow";
 
 const LoginView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -82,16 +83,16 @@ const LoginView = () => {
           cpf: json.user.cpf,
           accessType: json.accessType,
           email: json.user.email,
-          password: json.user.password,
+          password: json.user.password || null,
           phone: json.user.phone,
           cep: json.user.cep,
           city: json.user.city,
           loginId: json.user.name,
           state: json.user.state,
-          school: json.user.school,
           schoolId: json.user.schoolId,
-          studentsId: json.user.studentsId,
-          token: json.token
+          studentsId: json.user.studentsId || null,
+          token: json.token,
+          drawsId: json.user.drawsId,
         }));
         setIsLogged(true);
       }
@@ -163,7 +164,7 @@ const LoginView = () => {
                 txt={"Entrar com Gmail"}
                 img={"mail-outline"}
                 desktop={desktop}
-                bg={gmail_hover} 
+                bg={gmail_hover}
               />
             </InputColumn>
             <Linha style={{ marginTop: "0.5rem" }}>
@@ -171,6 +172,9 @@ const LoginView = () => {
             </Linha>
           </form>
         </LoginCard>
+        <Linha style={{width: `${desktop ? "30%" : "90%"}`}}>
+          <PreviousArrow navigate={""} />
+        </Linha>
       </ImgContainer>
       {isLogged && <Navigate to={`/dashboard`} />}
     </PageContainer>

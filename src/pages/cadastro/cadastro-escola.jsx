@@ -9,7 +9,7 @@ import {
   Button,
 } from "../../styles/sharedStyles";
 
-import { deepGrey, blue_color } from "../../Components/UI/contants";
+import {  blue_color } from "../../Components/UI/contants";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styled from "styled-components";
 import { useState } from "react";
@@ -176,9 +176,6 @@ const CadastroEscola = () => {
                   name="bairro"
                   disabled={desabilitado}
                   value={escola.bairro}
-                  style={{
-                    borderColor: `${desabilitado ? deepGrey : blue_color} `,
-                  }}
                 />
               </InputColumn>
               <InputColumn width={desktop ? "50%" : "100%"}>
@@ -190,9 +187,6 @@ const CadastroEscola = () => {
                   name="rua"
                   disabled={desabilitado}
                   value={escola.rua}
-                  style={{
-                    borderColor: `${desabilitado ? deepGrey : blue_color} `,
-                  }}
                 />
               </InputColumn>
             </Linha>

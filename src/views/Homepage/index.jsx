@@ -1,35 +1,42 @@
-import { useState, useEffect, useContext } from "react";
-import { Container, ImgContainer, PageContainer, Title } from "../../styles/sharedStyles";
-import styled from "styled-components";
-import MonthDictionary from "../../hooks/monthDic";
+import { useState, useEffect } from "react";
+import {
+  ContentContainer,
+  ImgContainer,
+  PageContainer,
+  Title,
+  Column,
+} from "../../styles/sharedStyles";
+import Carrossel from "../../Components/Carrossel";
+import { loadHome } from "../../utils/loadData";
+import Loading from "../../Components/Loading";
 import NavBoot from '../../Components/Navbar'
-import Carrossel from '../../Components/Carrossel'
 
 const HomeView = () => {
-  const [mes, setMes] = useState();
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const date = new Date();
-    const m = date.getMonth() + 1;
-    setMes(MonthDictionary(m));
+    const res = loadHome();
+    setData(res);
   }, []);
 
   return (
     <PageContainer>
       <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Início"} />
-
-        <Carrossel/>
+        <ContentContainer>
+          <Column>
+            {!data && <Loading />}
+            {data && (
+              <>
+                <Title>Destaques do mês!</Title>
+                <Carrossel data={data} />
+              </>
+            )}
+          </Column>
+        </ContentContainer>
       </ImgContainer>
     </PageContainer>
   );
 };
 
 export default HomeView;
-
-const Column = styled.div`
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;

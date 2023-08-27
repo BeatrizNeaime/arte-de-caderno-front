@@ -42,10 +42,19 @@ const CadastroDesenhoView = () => {
     if (!isLogged) {
       setRedirect(true);
     }
+    if (user.accessType === "student") {
+      setDesenho((desenho) => {
+        return {
+          ...desenho,
+          autor: user.id,
+        };
+      });
+    }
   }, []);
 
   const postDraw = async (e) => {
     e.preventDefault();
+    console.log(desenho);
 
     let url = "http://localhost:8080/draw";
 
@@ -59,17 +68,20 @@ const CadastroDesenhoView = () => {
         title: `${desenho.titulo}`,
         linkImage: `${desenho.link}`,
         category: `${desenho.categoria}`,
-        author: `${desenho.autor.trim()}`,
+        author: `${desenho.autor}`,
       }),
     };
 
     try {
       const a = await fetch(url, options);
-      if (a !== 201) {
+      if (a.status !== 201) {
         toast.error("Ocorreu um erro. Tente novamente!");
+      } else {
+        toast.success("Desenho cadastrado com sucesso!");
+        setDone(true)
       }
     } catch (error) {
-      toast.success("Desenho cadastrado com sucesso!");
+      console.log(error);
     }
   };
 
@@ -113,23 +125,12 @@ const CadastroDesenhoView = () => {
                     Autor:<Mandatory>*</Mandatory>{" "}
                   </Label>
                   {user.accessType === "professor" && (
-                    <Input
-                      type="text"
-                      value={desenho.autor}
-                      name="autor"
-                      onChange={handleDesenho}
-                      required
-                    />
+                    <Select name="autor" >
+                      
+                    </Select>
                   )}
                   {user.accessType === "student" && (
-                    <Input
-                      type="text"
-                      disabled
-                      value={user.id.trim()}
-                      name="autor"
-                      required
-                      onChange={handleDesenho}  
-                    />
+                    <Input type="text" disabled value={user.name} required />
                   )}
                 </InputColumn>
               </Linha>

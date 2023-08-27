@@ -43,9 +43,9 @@ function App() {
     city: "",
     loginId: "",
     state: "",
-    school: "",
     schoolId: "",
     studentsId: [],
+    drawsId: []
   });
 
   const [currentPage, setCurrentPage] = useState("Início");

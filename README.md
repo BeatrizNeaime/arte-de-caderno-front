@@ -40,8 +40,6 @@ To share data through components I created a context, named `userContext`. Basic
 - [ ] Make sure all pages are correctly integrated with backend server
 - [x] Finish student dash
 - [ ] Develop judges functions
-  - [ ] Distribute draws through judges
   - [ ] Screen showing all draws waiting for a note (per judge)
   - [ ] Screen to teach how to attribute a note to a draw
-  - [ ] Autosort by note
   - [ ] Screen showing the final

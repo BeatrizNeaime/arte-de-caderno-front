@@ -16,19 +16,42 @@ const PreviousArrow = ({ navigate }) => {
       }}
     >
       {navigate && NavigateBack && <Navigate to={`/${navigate}`} replace />}
-      <Arrow
-        src={require("../../assets/img/icons/previous.png")}
-        onClick={() => {
-          setNavigate(true);
-        }}
-      />
-      <BackLabel
-        onClick={() => {
-          setNavigate(true);
-        }}
-      >
-        Voltar
-      </BackLabel>
+
+      {navigate && (
+        <>
+          <Arrow
+            src={require("../../assets/img/icons/previous.png")}
+            onClick={() => {
+              setNavigate(true);
+            }}
+          />
+          <BackLabel
+            onClick={() => {
+              setNavigate(true);
+            }}
+          >
+            Voltar
+          </BackLabel>
+        </>
+      )}
+
+      {!navigate && (
+        <>
+          <Arrow
+            src={require("../../assets/img/icons/previous.png")}
+            onClick={() => {
+              volta(-1);
+            }}
+          />
+          <BackLabel
+            onClick={() => {
+              volta(-1);
+            }}
+          >
+            Voltar
+          </BackLabel>
+        </>
+      )}
     </Linha>
   );
 };

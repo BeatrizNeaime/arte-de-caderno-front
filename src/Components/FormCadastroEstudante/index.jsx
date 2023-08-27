@@ -335,9 +335,7 @@ const FormCadastroEstudante = () => {
               Rua:<Mandatory>*</Mandatory>
             </Label>
             <Input
-              style={{
-                borderColor: `${desabilitado.rua ? deepGrey : blue_color} `,
-              }}
+              
               disabled={desabilitado.rua}
               value={aluno.rua}
               required
@@ -391,7 +389,6 @@ const FormCadastroEstudante = () => {
               disabled
               value={aluno.city}
               required
-              style={{ borderColor: `${deepGrey}` }}
             />
           </InputColumn>
           <InputColumn width={desktop ? "20%" : "100%"}>
@@ -402,7 +399,6 @@ const FormCadastroEstudante = () => {
               disabled
               value={aluno.uf}
               required
-              style={{ borderColor: `${deepGrey}` }}
             />
           </InputColumn>
         </Linha>

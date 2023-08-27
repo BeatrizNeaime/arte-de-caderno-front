@@ -69,6 +69,10 @@ const Input = styled.input`
   padding: 5px 10px;
   text-align: left;
   width: ${(props) => (props.width ? props.width : "100%")};
+  &:disabled{
+    cursor: not-allowed;
+    border-color: ${deepGrey}
+  }
 `;
 
 const Column = styled.div`
@@ -187,6 +191,11 @@ const RateButton = styled(Button)`
   }
 `;
 
+const Form = styled(Column)`
+  width: 100%;
+  gap: 1rem;
+`
+
 export {
   Column,
   InputColumn,
@@ -208,4 +217,5 @@ export {
   PageContainer,
   ContentContainer,
   RateButton,
+  Form
 };
