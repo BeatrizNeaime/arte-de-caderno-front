@@ -29,7 +29,7 @@ import { userContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import { LoginCard } from "./components";
 import PreviousArrow from "../../Components/PreviousArrow";
-import { loadLogin } from "../../services/loadLogin";
+import { loginRoutes } from "../../services/loginRoutes";
 
 const LoginView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -59,7 +59,7 @@ const LoginView = () => {
 
   const login = async (e) => {
     e.preventDefault();
-    const a = await loadLogin.login(credentials.username, credentials.password);
+    const a = await loginRoutes.login(credentials.username, credentials.password);
     const customId = "custom-id-yes";
     if (!a) {
       toast.error("Usuário/senha incorreto(s)!", { toastId: customId });

@@ -92,7 +92,7 @@ const UserCheckUpView2 = () => {
       body: JSON.stringify({
         name: `${pessoa.nome}`,
         date_of_birth: `${pessoa.bday}`,
-        cpf: `${pessoa.cpf}`,
+        cpf: `${pessoa.cpf.replace(/\D/g, "")}`,
         phone: `${pessoa.cel}`,
         cep: `${pessoa.cep}`,
         email: ` ${pessoa.email} `,

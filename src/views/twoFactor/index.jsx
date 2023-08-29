@@ -15,7 +15,7 @@ import { blue_color, pink_color } from "../../Components/UI/contants";
 import PreviousArrow from "../../Components/PreviousArrow";
 import { userContext } from "../../contexts/userContext";
 import { LoggedContext } from "../../contexts/loggedContext";
-import { loadLogin } from "../../services/loadLogin";
+import { loginRoutes } from "../../services/loginRoutes";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const TwoFactorView = () => {
   const { isLogged, setIsLogged } = useContext(LoggedContext);
 
   const logar = async () => {
-    const a = await loadLogin.logar(user.cpf, user.password, twoFactorCode);
+    const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
     if (!a) {
       toast.error("Código incorreto!");
     } else {

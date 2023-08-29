@@ -24,6 +24,7 @@ import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
 import { blue_color, deepGrey } from "../UI/contants";
 import { Navigate } from "react-router-dom";
+import { CPFroutes } from "../../services/CPFroutes";
 
 const FormCadastroEstudante = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -88,19 +89,14 @@ const FormCadastroEstudante = () => {
 
   const checkCPF = async (e) => {
     const cpf = e.target.value.replace(/\D/g, "");
-    const url = `http://localhost:8080/cpf/${cpf}`;
-    try {
-      const a = await fetch(url);
-      if (a.status !== 200) {
-        toast.error("CPF inválido!");
-      } else {
-        setAluno((aluno) => ({
-          ...aluno,
-          cpf: maskcpf(cpf),
-        }));
-      }
-    } catch (err) {
-      console.log(err);
+    const a = await CPFroutes.verifyCPF(cpf);
+    if (a.status !== 200) {
+      toast.error(a.message);
+    } else {
+      setAluno((aluno) => ({
+        ...aluno,
+        cpf: maskcpf(cpf),
+      }));
     }
   };
 
@@ -147,14 +143,8 @@ const FormCadastroEstudante = () => {
   const postAluno = async (e) => {
     e.preventDefault();
     let address =
-      "Rua " +
-      aluno.rua +
-      ", " +
-      aluno.numero +
-      " " +
-      aluno?.complemento || null+
-      ", " +
-      aluno.bairro;
+      "Rua " + aluno.rua + ", " + aluno.numero + " " + aluno?.complemento ||
+      null + ", " + aluno.bairro;
     console.log(aluno.school);
     let url = `http://localhost:8080/professor`;
     let options = {
@@ -316,7 +306,6 @@ const FormCadastroEstudante = () => {
               Rua:<Mandatory>*</Mandatory>
             </Label>
             <Input
-              
               disabled={desabilitado.rua}
               value={aluno.rua}
               required
@@ -366,21 +355,13 @@ const FormCadastroEstudante = () => {
             <Label>
               Cidade:<Mandatory>*</Mandatory>
             </Label>
-            <Input
-              disabled
-              value={aluno.city}
-              required
-            />
+            <Input disabled value={aluno.city} required />
           </InputColumn>
           <InputColumn width={desktop ? "20%" : "100%"}>
             <Label>
               UF:<Mandatory>*</Mandatory>
             </Label>
-            <Input
-              disabled
-              value={aluno.uf}
-              required
-            />
+            <Input disabled value={aluno.uf} required />
           </InputColumn>
         </Linha>
         <Linha>

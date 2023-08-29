@@ -1,14 +1,17 @@
 export const carouselData = [
   {
-    original: require("../assets/img/Desenhos/Athos_Henrique_Lana_Reis.png"),
-    description: "Athos Henrique Lana Reis, Escola Municipal João Pinheiro, Poços de Caldas - MG",
+    author: "Athos Henrique Lana Reis",
+    img: "Athos_Henrique_Lana_Reis",
+    edicao: 2022
   },
   {
-    original: require("../assets/img/Desenhos/Maycon_Douglas.png"),
-    description: "Maycon Douglas Azevedo Alves, Escola Estadual Diretor Nelson Rodrigues, Serrania - MG",
+    author: "Maycon Douglas Azevedo Alves",
+    img: "Maycon_Douglas",
+    edicao: 2022
   },
   {
-    original: require("../assets/img/Desenhos/Felipe_Hebert.png"),
-    description: "Felipe Hebert Couto Heleno, Escola Municipal Rafael dos Santos Netto, Poços de Caldas - MG",
+    author: "Felipe Hebert Couto Heleno",
+    img: "Felipe_Hebert",
+    edicao: 2022
   }
 ];

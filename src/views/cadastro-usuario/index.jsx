@@ -158,16 +158,17 @@ const UserCheckUpView = () => {
   };
 
   const checkCPF = async (e) => {
-    const cpf = e.target.value.replace(/\D/g, "")
-    const a = await CPFroutes.verifyCPF(cpf)
-      if (!a) {
-        toast.error(`CPF inválido!`);
-      } else {
-        setPessoa((pessoa) => ({
-          ...pessoa,
-          cpf: maskcpf(cpf),
-        }));
-      }
+    const cpf = e.target.value.replace(/\D/g, "");
+    const a = await CPFroutes.verifyCPF(cpf);
+
+    if (a.status !== 200) {
+      toast.error(a.message);
+    } else {
+      setPessoa((pessoa) => ({
+        ...pessoa,
+        cpf: maskcpf(cpf),
+      }));
+    }
   };
 
   return (

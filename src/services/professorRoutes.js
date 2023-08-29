@@ -1,6 +1,6 @@
-import { loadSchoolData } from "./loadSchoolData";
+import { schoolRoutes } from "./schoolRoutes";
 
-export const loadDashProfessor = {
+export const professorRoutes = {
     getStudents: async function (user) {
         const url = `http://localhost:8080/professor/student/${user.id}`;
         const options = {
@@ -28,7 +28,7 @@ export const loadDashProfessor = {
         const a = await fetch(url, options)
         const b = await a.json()
         b.map((school) => {
-            escolas.push(loadSchoolData.getSchoolById(user, school.id))
+            escolas.push(schoolRoutes.getSchoolById(user, school.id))
         })
         console.log(escolas);
 

@@ -1,11 +1,11 @@
-export const loadLogin = {
+export const loginRoutes = {
     login: async function (user, pwd) {
         let url = "http://localhost:8080/login";
         let options = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                username: user,
+                username: user.replace(/\D/g, ""),
                 password: pwd,
             }),
         };
@@ -23,7 +23,7 @@ export const loadLogin = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                username: user,
+                username: user.replace(/\D/g, ""),
                 password: pwd,
                 code2factor: code,
             }),

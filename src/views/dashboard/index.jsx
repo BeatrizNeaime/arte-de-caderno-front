@@ -13,7 +13,7 @@ import { DashTitle } from "./style";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { Navigate } from "react-router-dom";
 import DashboardAvaliadorView from "./avaliador";
-import { loadDashProfessor } from "../../services/loadDashProfessor";
+import { professorRoutes } from "../../services/professorRoutes";
 import Loading from "../../Components/Loading";
 
 const DashboardRouter = () => {
@@ -22,8 +22,7 @@ const DashboardRouter = () => {
   const [loading, setLoading] = useState(true);
 
   const getProf = async () => {
-    const a = await loadDashProfessor.getProfById(user);
-    console.log(a);
+    const a = await professorRoutes.getProfById(user);
     if (a.accessTYpe) {
       setUser((user) => ({
         ...user,

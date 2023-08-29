@@ -1,4 +1,4 @@
-export const loadSchoolData = {
+export const schoolRoutes = {
     getSchoolById: async function (user, id) {
         const url = `http://localhost:8080/school/${id}`
         const options = {
