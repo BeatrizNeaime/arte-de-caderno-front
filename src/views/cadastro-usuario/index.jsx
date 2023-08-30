@@ -14,10 +14,7 @@ import {
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { singupContext } from "../../contexts/singupContext";
-import { maskbday } from "../../hooks/mascara-data";
-import { maskcel } from "../../hooks/mascara-celular";
-import { maskcpf } from "../../hooks/mascara-cpf";
-import { maskcep } from "../../hooks/mascara-cep";
+import { masks } from "../../hooks/masks";
 import { toast } from "react-toastify";
 import { ForgotLink } from "../../pages/login";
 import { blue_color, deepBlue } from "../../Components/UI/contants";
@@ -68,7 +65,7 @@ const UserCheckUpView = () => {
     const { value } = e.target;
     setPessoa((pessoa) => ({
       ...pessoa,
-      bday: maskbday(value),
+      bday: masks.bday(value),
     }));
   };
 
@@ -76,7 +73,7 @@ const UserCheckUpView = () => {
     const { value } = e.target;
     setPessoa((pessoa) => ({
       ...pessoa,
-      cel: maskcel(value),
+      cel: masks.cel(value),
     }));
   };
 
@@ -84,7 +81,7 @@ const UserCheckUpView = () => {
     const { value } = e.target;
     setPessoa((pessoa) => ({
       ...pessoa,
-      cep: maskcep(value),
+      cep: masks.cep(value),
     }));
   };
 
@@ -92,7 +89,7 @@ const UserCheckUpView = () => {
     const { value } = e.target;
     setPessoa((pessoa) => ({
       ...pessoa,
-      cpf: maskcpf(value),
+      cpf: masks.cpf(value),
     }));
   };
 
@@ -166,7 +163,7 @@ const UserCheckUpView = () => {
     } else {
       setPessoa((pessoa) => ({
         ...pessoa,
-        cpf: maskcpf(cpf),
+        cpf: masks.cpf(cpf),
       }));
     }
   };

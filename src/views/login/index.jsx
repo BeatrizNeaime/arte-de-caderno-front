@@ -12,7 +12,7 @@ import {
   Button,
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { maskcpf } from "../../hooks/mascara-cpf";
+import { masks } from "../../hooks/masks";
 import { ImgButton } from "../../views/cadastro-usuario";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { Link, Navigate } from "react-router-dom";
@@ -46,7 +46,7 @@ const LoginView = () => {
   const handleCPF = (e) => {
     setCredentials((credentials) => ({
       ...credentials,
-      username: maskcpf(e.target.value),
+      username: masks.cpf(e.target.value),
     }));
   };
 

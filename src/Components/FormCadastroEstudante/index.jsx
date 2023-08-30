@@ -15,10 +15,7 @@ import {
 
 import { toast } from "react-toastify";
 import { LoggedContext } from "../../contexts/loggedContext";
-import { maskbday } from "../../hooks/mascara-data";
-import { maskcpf } from "../../hooks/mascara-cpf";
-import { maskcel } from "../../hooks/mascara-celular";
-import { maskcep } from "../../hooks/mascara-cep";
+import {masks} from '../../hooks/masks'
 
 import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
@@ -65,25 +62,25 @@ const FormCadastroEstudante = () => {
 
   const handleBday = (e) => {
     const { value } = e.target;
-    const bday = maskbday(value);
+    const bday = masks.bday(value);
     setAluno({ ...aluno, date_of_birth: bday });
   };
 
   const handleCel = (e) => {
     const { value } = e.target;
-    const cel = maskcel(value);
+    const cel = masks.bday(value);
     setAluno({ ...aluno, phone: cel });
   };
 
   const handleCep = (e) => {
     const { value } = e.target;
-    const cep = maskcep(value);
+    const cep = masks.cep(value);
     setAluno({ ...aluno, cep });
   };
 
   const handleCPF = (e) => {
     const { value } = e.target;
-    const cpf = maskcpf(value);
+    const cpf = masks.cpf(value);
     setAluno({ ...aluno, cpf });
   };
 
@@ -95,7 +92,7 @@ const FormCadastroEstudante = () => {
     } else {
       setAluno((aluno) => ({
         ...aluno,
-        cpf: maskcpf(cpf),
+        cpf: masks.cpf(cpf),
       }));
     }
   };

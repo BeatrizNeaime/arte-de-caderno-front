@@ -7,7 +7,7 @@ import {
   Title,
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
-import devs from "../../hooks/devs";
+import devs from "../../mocks/devs";
 import DevsCard from "../../Components/Devs";
 
 const DesenvolvedoresView = () => {

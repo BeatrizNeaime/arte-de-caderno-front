@@ -20,10 +20,10 @@ const DashboardRouter = () => {
   const { user, setUser } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
   const [loading, setLoading] = useState(true);
-
+  
   const getProf = async () => {
     const a = await professorRoutes.getProfById(user);
-    if (a.accessTYpe) {
+    if (a.accessType) {
       setUser((user) => ({
         ...user,
         id: a._id,

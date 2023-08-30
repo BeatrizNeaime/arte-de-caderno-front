@@ -6,9 +6,7 @@ import {
   Title,
   Column,
 } from "../../styles/sharedStyles";
-import Carrossel from "../../Components/Carrossel";
 import { loadHome } from "../../services/loadHome";
-import Loading from "../../Components/Loading";
 import NavBoot from '../../Components/Navbar'
 import Spotlight from "../../Components/Spotlight";
 import NewsNotebook from "../../Components/NewsNotebook";

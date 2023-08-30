@@ -159,8 +159,9 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
+  max-width: 100vw !important;
   background-color: white;
+  overflow-x: hidden;
 `;
 
 const ImgContainer = styled(PageContainer)`
@@ -170,6 +171,8 @@ const ImgContainer = styled(PageContainer)`
   background-size: cover;
   min-height: 100vh;
   height: auto;
+  width: 100vw;
+  max-width: 100vw;
 `;
 
 const ContentContainer = styled.div`
