@@ -13,15 +13,17 @@ Frontend application for 'Arte de Caderno'
 
 ### Styles
 
-At first, I started using simple CSS files. During the process I decided to change to [TailwindCSS](https://tailwindcss.com), as a try to turn the styling easier. After a few months I noticed the code was too long due code repetitions, then I decided to change the styling completely by using [Styled Components](https://styled-components.com). The main components can be found at `styles/sharedStyles.jsx`.
-If the component need some changes, the new version will be at the file which the changes were needed. If, by need, there's a need to a new different component but not used as much as main, it can be found at `Components/[component_name]`. All the CSS constants, like colors and fonts, are at `Components/UI/constants.js`.
+- Style: [Styled Components](https://styled-components.com).
+  The main components can be found at `styles/sharedStyles.jsx`.
+  If the component need some changes, the new version will be at the file which the changes were needed. If there's a need to a new different component but not used as much as main, it can be found at `Components/[component_name]`.
+- All the CSS constants, like colors and fonts, are at `Components/UI/constants.js`.
 
 ### Responsibility
 
-To check the window size, the dev can use a function from `Material UI` named `useMediaQuery`. The usage is simple:
+To check the window size, the dev can use a function  named `useMediaQuery`. It can be found at `hooks/useMediaQuery`. Usage:
 
 ```js
-const desktop = useMediaQuery("(min-width: 768px)"); //parenthesis needed
+const desktop = useMediaQuery("(min-width: 768px)"); //parenthesis must come
 ```
 
 and the function will return `true` if the window width is above `768px` (tablet size) or `false`if its below.
@@ -32,14 +34,55 @@ The Front Routing was made by using [React Router Dom](https://reactrouter.com/e
 
 ### Contexts
 
-To share data through components I created a context, named `userContext`. Basically all pages have access to user data.
+To share data through components I created a context, named `userContext`.
 
-## To do (front-end side)
+### Services
 
-- [x] Finish singup pages
-- [ ] Make sure all pages are correctly integrated with backend server
-- [x] Finish student dash
-- [ ] Develop judges functions
-  - [ ] Screen showing all draws waiting for a note (per judge)
-  - [ ] Screen to teach how to attribute a note to a draw
-  - [ ] Screen showing the final
+To make sure front-end is not overloaded and repeating code to communicate with server, all server communication are located at `./src/services/[name]`.
+
+#### Services available
+
+- AuthService (`services/loginRoutes`)
+
+  - Login: the first step of login. Arguments: `cpf, password`
+  - Logar: send the CPF, password and two factor code to server side. Arguments: `cpf, password, code`
+
+- CPFroutes (`services/CPFroutes`)
+
+  - verifyCPF: server communication tp validate the CPF. Arguments: `cpf`
+
+- Get Date (`services/getDate`)
+
+  - getDay: returns the current day. No args
+  - getMonth: returns the current month. No args
+
+- Get Draws for Gallery (`services/loadGallery`)
+  No other functions yet. No args
+
+- Load Home (`services/loadHome`)
+  Returns home data from mocks. No args
+
+- Load New (`services/loadNews`)
+  Returns news data. No args
+
+- Professor Routes (`services/professorRoutes`)
+
+  - getStudents: returns the students. Args: `user`
+  - getSchools: returns the schools. Args: `user`
+  - getProfById: returns professor data. Args: `user`
+
+- School Routes (`services/schoolRoutes`)
+  - getSchoolById: returns the school data. Args: `user, id`
+
+#### How to use services - e.g.: CPFroutes
+
+```js
+import { CPFroutes } from "[path]/services/CPFroutes";
+
+const checkCPF = async (e) => {
+  const cpf = e.target.value.replace(/\D/g, "");
+  const a = await CPFroutes.verifyCPF(cpf);
+
+  /*do what you want here*/
+};
+```
