@@ -9,7 +9,7 @@ import {
 } from "./navComponents";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import DropDown from "../DropDown";
-import { jetbrains } from "../UI/contants";
+import { fonts } from "../UI/contants";
 import { LoggedContext } from "../../contexts/loggedContext";
 
 function NavBoot({ currentPage }) {
@@ -81,7 +81,7 @@ function NavBoot({ currentPage }) {
                     to={link.path}
                     style={{
                       textDecoration: "none",
-                      fontFamily: `${jetbrains}`,
+                      fontFamily: `${fonts.jetbrains}`,
                       textDecoration:
                         link.name === currentPage ? "underline" : "none",
                     }}
@@ -89,7 +89,7 @@ function NavBoot({ currentPage }) {
                     <NavLink
                       style={{
                         textDecoration: "none",
-                        fontFamily: `${jetbrains}`,
+                        fontFamily: `${fonts.jetbrains}`,
                       }}
                     >
                       {link.name}

@@ -15,8 +15,7 @@ import NavBoot from "../../Components/Navbar";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styled from "styled-components";
 import {
-  deepBlue,
-  yellow_color,
+  colors, fonts
 } from "../../Components/UI/contants";
 import DiscardModal from "../../Components/DismissModal";
 import RateModal from "../../Components/RateModal";
@@ -43,7 +42,7 @@ const RatingView = () => {
         <ContentContainer>
           <Title
             style={{
-              fontFamily: "JetBrains Mono",
+              fontFamily: `${fonts.jetbrains}`,
               textTransform: "uppercase",
               fontWeight: "600",
             }}
@@ -76,7 +75,7 @@ const RatingView = () => {
                 style={{
                   gap: "1rem",
                   alignItems: "flex-start",
-                  borderBottom: `1px solid ${deepBlue}`,
+                  borderBottom: `1px solid ${colors.deepBlue}`,
                   paddingBottom: "1rem",
                   paddingLeft: desktop ? 0 : "1rem",
                 }}
@@ -121,7 +120,7 @@ const RatingView = () => {
                   onChange={handleNota}
                   style={{ textAlign: "right", paddingRight: "10px" }}
                 />
-                <Alert cor={yellow_color} style={{ borderRadius: "12px" }}>
+                <Alert cor={colors.yellow_color} style={{ borderRadius: "12px" }}>
                   <DrawInfo style={{ textTransform: "none" }}>
                     <b>ATENÇÃO:</b> a avaliação é feita apenas <b>UMA</b> vez e{" "}
                     <b>NÃO</b> pode ser alterada.

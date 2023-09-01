@@ -13,6 +13,7 @@ const PreviousArrow = ({ navigate }) => {
         justifyContent: "flex-start",
         marginTop: "1rem",
         padding: "0 1rem",
+        flexDirection: "row"
       }}
     >
       {navigate && NavigateBack && <Navigate to={`/${navigate}`} replace />}

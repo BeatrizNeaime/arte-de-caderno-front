@@ -13,7 +13,7 @@ import { DashTitle } from "./style";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { Navigate } from "react-router-dom";
 import DashboardAvaliadorView from "./avaliador";
-import { loadDashProfessor } from "../../services/loadDashProfessor";
+import { professorRoutes } from "../../services/professorRoutes";
 import Loading from "../../Components/Loading";
 
 const DashboardRouter = () => {
@@ -22,30 +22,29 @@ const DashboardRouter = () => {
   const [loading, setLoading] = useState(true);
 
   const getProf = async () => {
-    const a = await loadDashProfessor.getProfById(user);
-    console.log(a);
-    if (a.accessTYpe) {
+    const a = await professorRoutes.getProfById(user);
+    if (a) {
       setUser((user) => ({
         ...user,
-        id: a._id,
-        name: a.name,
-        date_of_birth: a.date_of_birth,
-        cpf: a.cpf,
+        id: a.professor._id,
+        name: a.professor.name,
+        date_of_birth: a.professor.date_of_birth,
+        cpf: a.professor.cpf,
         accessType: a.accessType,
-        email: a.email,
-        password: a.password,
-        phone: a.phone,
-        cep: a.cep,
-        city: a.city,
+        email: a.professor.email,
+        password: a.professor.password,
+        phone: a.professor.phone,
+        cep: a.professor.cep,
+        city: a.professor.city,
         loginId: a.name,
-        state: a.state,
-        schoolId: a.schoolId,
-        studentsId: a.studentsId || null,
-        token: a.token,
-        drawsId: a.drawsId,
+        state: a.professor.state,
+        schoolId: a.professor.schoolId,
+        studentsId: a.professor.studentsId || null,
+        drawsId: a.professor.drawsId,
       }));
       setLoading(false);
     }
+    console.log(a);
   };
 
   useEffect(() => {

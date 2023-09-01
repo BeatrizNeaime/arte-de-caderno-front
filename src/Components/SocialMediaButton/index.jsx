@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { jetbrains } from "../UI/contants";
+import { fonts } from "../UI/contants";
 
 const SocialMediaButton = ({ color, width, img, bg }) => {
   return (
@@ -19,7 +19,7 @@ const SocialMediaBtn = styled.button`
   color: #fefefe;
   display: flex;
   flex-direction: row;
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   min-height: 30px;
   justify-content: space-evenly;
   padding: 5px;

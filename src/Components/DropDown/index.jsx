@@ -40,8 +40,7 @@ const items = [
       <Link
         to="/login"
         onClick={() => {
-          const [isLogged, setisLogged] = useContext(LoggedContext);
-          setisLogged(false);
+          localStorage.removeItem('token')
         }}
         style={{ textDecoration: "none", fontFamily: "JetBrains Mono" }}
       >

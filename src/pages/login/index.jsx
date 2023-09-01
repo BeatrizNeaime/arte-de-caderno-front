@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LoginView from "../../views/login";
-import { deepBlue } from "../../Components/UI/contants";
+import { colors } from "../../Components/UI/contants";
 
 const Login = () => {
   return <LoginView />;
@@ -14,7 +14,7 @@ const ForgotLink = styled.a`
   font-size: 12px;
   text-align: center;
   &:hover {
-    color: ${deepBlue};
+    color: ${colors.deepBlue};
     cursor: pointer;
   }
 `;

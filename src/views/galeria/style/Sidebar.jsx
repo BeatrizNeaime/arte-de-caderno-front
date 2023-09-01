@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Column } from "../../../styles/sharedStyles";
-import { green_color, jetbrains } from "../../../Components/UI/contants";
+import { colors, fonts } from "../../../Components/UI/contants";
 const years = ["2019", "2020", "2021", "2022"];
 
 function Sidebar() {
@@ -16,20 +16,20 @@ function Sidebar() {
 export default Sidebar;
 
 const Year = styled.p`
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   padding: 0.7rem;
   text-align: center;
   color: black;
 
   &:hover {
-    background-color: ${green_color};
+    background-color: ${colors.green_color};
     color: white;
     cursor: pointer;
   }
 `;
 
 const SideColumn = styled(Column)`
-  border-right: 2px solid ${green_color};
+  border-right: 2px solid ${colors.green_color};
   max-width: 20%;
   position: sticky;
 `;

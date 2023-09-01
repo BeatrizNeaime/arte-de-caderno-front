@@ -15,15 +15,15 @@ import {
 
 import { toast } from "react-toastify";
 import { LoggedContext } from "../../contexts/loggedContext";
-import { maskbday } from "../../hooks/mascara-data";
-import { maskcpf } from "../../hooks/mascara-cpf";
-import { maskcel } from "../../hooks/mascara-celular";
-import { maskcep } from "../../hooks/mascara-cep";
+import { masks } from "../../utils/masks";
 
 import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
-import { blue_color, deepGrey } from "../UI/contants";
+import { colors } from "../UI/contants";
 import { Navigate } from "react-router-dom";
+import { CPFroutes } from "../../services/CPFroutes";
+import { CEProutes } from "../../services/CEProutes";
+import { professorRoutes } from "../../services/professorRoutes";
 
 const FormCadastroEstudante = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -32,16 +32,7 @@ const FormCadastroEstudante = () => {
   const { user } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
   const [redirect, setRedirect] = useState(false);
-
-  useEffect(() => {
-    if (!isLogged) {
-      window.location.href = "/login";
-    }
-    console.log(user);
-    //getSchools();
-  }, []);
-
-  const [aluno, setAluno] = useState({
+    const [aluno, setAluno] = useState({
     name: "",
     date_of_birth: "",
     cpf: "",
@@ -56,6 +47,29 @@ const FormCadastroEstudante = () => {
     email: "",
     school: "",
   });
+  
+  useEffect(() => {
+    if (!isLogged) {
+      window.location.href = "/login";
+    }
+    console.log(user);
+    getSchools();
+  }, []);
+
+  const getSchools = async () => {
+    const a = await professorRoutes.getSchools(user);
+    if (a) {
+      setSchools(a);
+    }
+  };
+
+  useEffect(() => {
+    if (!isLogged) {
+      window.location.href = "/login";
+    }
+    getSchools();
+  }, []);
+
 
   const handleAluno = (e) => {
     const { name, value } = e.target;
@@ -64,109 +78,94 @@ const FormCadastroEstudante = () => {
 
   const handleBday = (e) => {
     const { value } = e.target;
-    const bday = maskbday(value);
+    const bday = masks.bday(value);
     setAluno({ ...aluno, date_of_birth: bday });
   };
 
   const handleCel = (e) => {
     const { value } = e.target;
-    const cel = maskcel(value);
+    const cel = masks.cel(value);
     setAluno({ ...aluno, phone: cel });
   };
 
   const handleCep = (e) => {
     const { value } = e.target;
-    const cep = maskcep(value);
+    const cep = masks.cep(value);
     setAluno({ ...aluno, cep });
   };
 
   const handleCPF = (e) => {
     const { value } = e.target;
-    const cpf = maskcpf(value);
+    const cpf = masks.cpf(value);
     setAluno({ ...aluno, cpf });
   };
 
   const checkCPF = async (e) => {
     const cpf = e.target.value.replace(/\D/g, "");
-    const url = `http://localhost:8080/cpf/${cpf}`;
-    try {
-      const a = await fetch(url);
-      if (a.status !== 200) {
-        toast.error("CPF inválido!");
-      } else {
-        setAluno((aluno) => ({
-          ...aluno,
-          cpf: maskcpf(cpf),
-        }));
-      }
-    } catch (err) {
-      console.log(err);
+    const a = await CPFroutes.verifyCPF(cpf);
+    if (a) {
+      setAluno((aluno) => ({
+        ...aluno,
+        cpf: masks.cpf(cpf),
+      }));
     }
   };
 
   const getCep = async (e) => {
-    const cep = e.target.value.replace(/\D/g, "");
-    const url = `http://localhost:8080/cep/${cep}`;
     try {
-      const a = await fetch(url);
-      if (a.status !== 200) {
-        toast.error("CEP incorreto!");
+      const cep = e.target.value.replace(/\D/g, "");
+      const a = await CEProutes.viacep(cep);
+
+      if (!a.logradouro || !a.bairro) {
+        setDesabilitado((desabilitado) => ({
+          ...desabilitado,
+          bairro: false,
+          number: false,
+        }));
+        setAluno((aluno) => ({
+          ...aluno,
+          cep: a.cep,
+          city: a.localidade,
+          uf: a.uf,
+          bairro: "",
+          rua: "",
+        }));
       } else {
-        const d = await a.json();
-        if (d.logradouro === "" || d.bairro === "") {
-          setDesabilitado(false);
-          toast.warning(
-            "Notamos que seu CEP não fornece dados de rua e bairro. Por favor, preencha manualmente"
-          );
-          setAluno((aluno) => ({
-            ...aluno,
-            cep: d.cep,
-            rua: "",
-            bairro: "",
-            city: d.localidade,
-            uf: d.uf,
-          }));
-        } else {
-          setDesabilitado(true);
-          setAluno((aluno) => ({
-            ...aluno,
-            cep: d.cep,
-            rua: d.logradouro,
-            bairro: d.bairro,
-            city: d.localidade,
-            uf: d.uf,
-          }));
-        }
-        console.log(aluno);
+        setDesabilitado((desabilitado) => ({
+          ...desabilitado,
+          bairro: true,
+          number: false,
+        }));
+        setAluno((aluno) => ({
+          ...aluno,
+          cep: a.cep,
+          rua: a.logradouro,
+          bairro: a.bairro,
+          city: a.localidade,
+          uf: a.uf,
+        }));
       }
     } catch (err) {
-      console.log(err);
+      console.error("Erro ao buscar o endereço pelo cep", err);
     }
   };
 
   const postAluno = async (e) => {
     e.preventDefault();
     let address =
-      "Rua " +
-      aluno.rua +
-      ", " +
-      aluno.numero +
-      " " +
-      aluno?.complemento || null+
-      ", " +
-      aluno.bairro;
-    console.log(aluno.school);
-    let url = `http://localhost:8080/professor`;
+      "Rua " + aluno.rua + ", " + aluno.numero + " " + aluno?.complemento ||
+      null + ", " + aluno.bairro + ". " + aluno.city;
+    let url = `http://localhost:8080/professor/${user.id}`;
     let options = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: `${aluno.name}`,
         date_of_birth: `${aluno.date_of_birth}`,
-        cpf: `${aluno.cpf}`,
+        cpf: `${aluno.cpf.replace(/\D/g, "")}`,
         phone: `${aluno.cel}`,
         cep: `${aluno.cep}`,
         address: `${address}`,
@@ -177,11 +176,16 @@ const FormCadastroEstudante = () => {
       }),
     };
 
+    console.log(url)
+
     try {
       const a = await fetch(url, options);
-      console.log("b: ", a);
-      toast.success("Aluno cadastrado com sucesso!");
-      setRedirect(true);
+      if (!a.ok) {
+        console.log("erro");
+      } else {
+        toast.success("Aluno cadastrado com sucesso!");
+        setRedirect(true);
+      }
     } catch (error) {
       toast.error("Ocorreu um erro, tente novamente");
       console.error(error);
@@ -316,7 +320,6 @@ const FormCadastroEstudante = () => {
               Rua:<Mandatory>*</Mandatory>
             </Label>
             <Input
-              
               disabled={desabilitado.rua}
               value={aluno.rua}
               required
@@ -347,9 +350,6 @@ const FormCadastroEstudante = () => {
               required
               disabled={desabilitado.bairro}
               onChange={handleAluno}
-              style={{
-                borderColor: `${desabilitado.rua ? deepGrey : blue_color} `,
-              }}
             />
           </InputColumn>
           <InputColumn width={desktop ? "50%" : "100%"}>
@@ -366,21 +366,13 @@ const FormCadastroEstudante = () => {
             <Label>
               Cidade:<Mandatory>*</Mandatory>
             </Label>
-            <Input
-              disabled
-              value={aluno.city}
-              required
-            />
+            <Input disabled value={aluno.city} required />
           </InputColumn>
           <InputColumn width={desktop ? "20%" : "100%"}>
             <Label>
               UF:<Mandatory>*</Mandatory>
             </Label>
-            <Input
-              disabled
-              value={aluno.uf}
-              required
-            />
+            <Input disabled value={aluno.uf} required />
           </InputColumn>
         </Linha>
         <Linha>

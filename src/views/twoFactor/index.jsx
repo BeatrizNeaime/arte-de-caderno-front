@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import {
   Column,
@@ -7,33 +7,32 @@ import {
   PageContainer,
   Subtitle,
   Input,
-  Form,
   Button,
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { blue_color, pink_color } from "../../Components/UI/contants";
+import { colors } from "../../Components/UI/contants";
 import PreviousArrow from "../../Components/PreviousArrow";
 import { userContext } from "../../contexts/userContext";
 import { LoggedContext } from "../../contexts/loggedContext";
-import { loadLogin } from "../../services/loadLogin";
+import { loginRoutes } from "../../services/loginRoutes";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 
 const TwoFactorView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [twoFactorCode, setTwoFactorCode] = useState(null);
-  const [border, setBorder] = useState(blue_color);
+  const [border] = useState(colors.blue_color);
 
   const { user, setUser } = useContext(userContext);
   const { isLogged, setIsLogged } = useContext(LoggedContext);
 
   const logar = async () => {
-    const a = await loadLogin.logar(user.cpf, user.password, twoFactorCode);
+    const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
     if (!a) {
       toast.error("Código incorreto!");
     } else {
-      setUser((user) => ({
-        ...user,
+      setUser((u) => ({
+        ...u,
         id: a.user._id,
         name: a.user.name,
         date_of_birth: a.user.date_of_birth,
@@ -48,9 +47,10 @@ const TwoFactorView = () => {
         state: a.user.state,
         schoolId: a.user.schoolId,
         studentsId: a.user.studentsId || null,
-        token: a.token,
         drawsId: a.user.drawsId,
       }));
+      localStorage.setItem('token', a.token)
+      localStorage.setItem('isLogged', true)
       setIsLogged(true);
     }
   };
@@ -107,6 +107,6 @@ const TwoFInput = styled(Input)`
   text-transform: uppercase;
 
   &:focus {
-    outline-color: ${pink_color};
+    outline-color: ${colors.pink_color};
   }
 `;

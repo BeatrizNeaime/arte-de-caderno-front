@@ -8,7 +8,7 @@ import {
   Label,
   Input,
 } from "../../styles/sharedStyles";
-import { green_rate, green_rate_hover, yellow_color } from "../UI/contants";
+import { colors } from "../UI/contants";
 import Modal from "react-bootstrap/Modal";
 
 const RateModal = ({ nota }) => {
@@ -19,7 +19,7 @@ const RateModal = ({ nota }) => {
 
   return (
     <>
-      <RateButton bg={green_rate} hover={green_rate_hover} onClick={showModal}>
+      <RateButton bg={colors.green_rate} hover={colors.green_rate_hover} onClick={showModal}>
         avaliar
       </RateButton>
       <Modal show={show} onHide={closeModal}>
@@ -29,7 +29,7 @@ const RateModal = ({ nota }) => {
         <Modal.Body>
           <Column>
             <Alert
-              cor={yellow_color}
+              cor={colors.yellow_color}
               style={{
                 borderRadius: "3px",
                 padding: "5px",
@@ -56,7 +56,7 @@ const RateModal = ({ nota }) => {
           <Button variant="secondary" onClick={closeModal}>
             cancelar
           </Button>
-          <RateButton bg={green_rate} hover={green_rate_hover}>
+          <RateButton bg={colors.green_rate} hover={colors.green_rate_hover}>
             confirmar
           </RateButton>
         </Modal.Footer>

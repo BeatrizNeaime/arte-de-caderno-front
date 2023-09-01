@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { CheckupContainer } from "./components";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import {
   InputColumn,
@@ -10,12 +9,18 @@ import {
   Button,
   Label,
   Mandatory,
+  ImgContainer,
+  PageContainer,
+  Form,
 } from "../../styles/sharedStyles";
 import { ForgotLink } from "../../pages/login";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { singupContext } from "../../contexts/singupContext";
 import { toast } from "react-toastify";
 import singUpValidation from "../../hooks/SingUpValidation";
+import { CheckupContainer } from "./components";
+import { schoolRoutes } from "../../services/schoolRoutes";
+import PreviousArrow from "../../Components/PreviousArrow";
 
 const initialState = {
   uf: "",
@@ -63,15 +68,12 @@ const UserCheckUpView2 = () => {
     };
 
     try {
-      const a = await toast.promise(
-        fetch(url, options),
-        {
-          pending: "Aguarde...",
-          success: "Cadastro realizado com sucesso!",
-          error: "Erro ao cadastrar!"
-        }
-      )
-      
+      const a = await toast.promise(fetch(url, options), {
+        pending: "Aguarde...",
+        success: "Cadastro realizado com sucesso!",
+        error: "Erro ao cadastrar!",
+      });
+
       setRedirect(true);
     } catch (err) {
       toast.error("Erro ao cadastrar aluno");
@@ -92,7 +94,7 @@ const UserCheckUpView2 = () => {
       body: JSON.stringify({
         name: `${pessoa.nome}`,
         date_of_birth: `${pessoa.bday}`,
-        cpf: `${pessoa.cpf}`,
+        cpf: `${pessoa.cpf.replace(/\D/g, "")}`,
         phone: `${pessoa.cel}`,
         cep: `${pessoa.cep}`,
         email: ` ${pessoa.email} `,
@@ -105,14 +107,11 @@ const UserCheckUpView2 = () => {
     };
 
     try {
-      const a = await toast.promise(
-        fetch(url, options),
-        {
-          pending: "Aguarde...",
-          success: "Cadastro realizado com sucesso!",
-          error: "Erro ao cadastrar!"
-        }
-      )
+      const a = await toast.promise(fetch(url, options), {
+        pending: "Aguarde...",
+        success: "Cadastro realizado com sucesso!",
+        error: "Erro ao cadastrar!",
+      });
       setRedirect(true);
     } catch (err) {
       toast.error("Erro ao cadastrar");
@@ -120,43 +119,31 @@ const UserCheckUpView2 = () => {
   };
 
   const getSchools = async () => {
-    let url = "http://localhost:8080/school/listByCity";
-
-    let options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: `{"city":${JSON.stringify(selected.city)}}`,
-    };
-    console.log("getting schools...");
     try {
-      fetch(url, options)
-        .then((res) => res.json())
-        .then((json) => setSchools(json));
-      setShow(true);
-      console.log(schools);
+      const a = await schoolRoutes.getSchools(selected.city);
+      console.log(a);
+      if (a) {
+        setSchools(a);
+        setShow(true);
+      }
     } catch (e) {
-      console.error(e.message);
+      toast.error("Ocorreu um erro. Tente novamente mais tarde!");
     }
   };
 
   const getUf = async () => {
-    const a = await fetch("http://localhost:8080/school/uf");
-    const b = await a.json();
-    setUfs(b);
+    const a = await schoolRoutes.getUfs();
+    try {
+      setUfs(a);
+    } catch (err) {
+      toast.error("Ocorreu um erro, tente novamente mais tarde!");
+    }
   };
 
   const getCities = async (uf) => {
-    let url = "http://localhost:8080/school/city";
-
-    let options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: `{"uf":${JSON.stringify(uf)}}`,
-    };
     try {
-      fetch(url, options)
-        .then((res) => res.json())
-        .then((json) => setCities(json));
+      const a = await schoolRoutes.getCities(uf);
+      setCities(a);
     } catch (e) {
       console.log(e.message);
     }
@@ -212,15 +199,14 @@ const UserCheckUpView2 = () => {
   };
 
   return (
-    <CheckupContainer
-      width={desktop ? "80%" : "90%"}
-      style={{ margin: desktop ? "0" : "1rem 0" }}
-    >
-      {redirect && <Navigate to="/login" replace />}
-      <Title>Selecione sua escola</Title>
-      <InputColumn width={"100%"}>
-        <Linha style={{ margin: "1rem 0" }}>
-          <InputColumn width={"100%"}>
+    <PageContainer>
+      <ImgContainer img={require("../../assets/img/background.png")}>
+        <CheckupContainer
+          width={desktop ? "80%" : "90%"}
+          style={{ margin: desktop ? "0" : "1rem 0" }}
+        >
+          <Title>Selecione sua escola</Title>
+          <Form>
             <Linha style={{ alignItems: "flex-end" }}>
               <InputColumn width={desktop ? "45%" : "100%"}>
                 <Label>
@@ -275,8 +261,8 @@ const UserCheckUpView2 = () => {
                 filtrar
               </Button>
             </Linha>
-            <Linha style={{ margin: "1rem 0" }}>
-              <InputColumn width={"100%"}>
+            <Linha style={{ margin: "1rem 0", alignItems: "flex-end" }}>
+              <InputColumn width={desktop ? "90%" : "100%"}>
                 <Linha
                   style={{
                     alignItems: "center",
@@ -290,6 +276,7 @@ const UserCheckUpView2 = () => {
                     <ForgotLink>Cadastre sua escola</ForgotLink>
                   </Link>
                 </Linha>
+
                 <Select
                   width={"100%"}
                   disabled={selected.uf !== null ? false : true}
@@ -318,24 +305,18 @@ const UserCheckUpView2 = () => {
                     : null}
                 </Select>
               </InputColumn>
+              <Button primary>cadastrar</Button>
             </Linha>
-            <Linha style={{ margin: "1rem 0", flexDirection: "row" }}>
-              <Button
-                type="button"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                voltar
-              </Button>
-              <Button primary type="button" onClick={print}>
-                enviar
-              </Button>
-            </Linha>
-          </InputColumn>
+          </Form>
+        </CheckupContainer>
+        <Linha style={{
+          width: `${desktop ? "80%" : "100%"}`,
+          flexDirection: "row"
+        }} >
+          <PreviousArrow navigate="cadastro-usuario" />
         </Linha>
-      </InputColumn>
-    </CheckupContainer>
+      </ImgContainer>
+    </PageContainer>
   );
 };
 

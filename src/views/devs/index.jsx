@@ -7,7 +7,7 @@ import {
   Title,
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
-import devs from "../../hooks/devs";
+import devs from "../../mocks/devs";
 import DevsCard from "../../Components/Devs";
 
 const DesenvolvedoresView = () => {
@@ -17,8 +17,18 @@ const DesenvolvedoresView = () => {
         <NavBoot currentPage={"Sobre"} />
         <ContentContainer>
           <Title>Os Desenvolvedores</Title>
-          <Linha>
-           
+          <Linha style={{
+            flexWrap: "wrap",
+            gap: "1rem",
+            marginBottom: "1rem"
+          }} >
+           {
+            devs.map((dev, index)=>{
+              return(
+                <DevsCard key={index} {...dev} />
+              )
+            })
+           }
           </Linha>
         </ContentContainer>
       </ImgContainer>

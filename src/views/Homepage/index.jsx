@@ -6,10 +6,10 @@ import {
   Title,
   Column,
 } from "../../styles/sharedStyles";
-import Carrossel from "../../Components/Carrossel";
 import { loadHome } from "../../services/loadHome";
-import Loading from "../../Components/Loading";
 import NavBoot from '../../Components/Navbar'
+import Spotlight from "../../Components/Spotlight";
+import NewsNotebook from "../../Components/NewsNotebook";
 
 const HomeView = () => {
   const [data, setData] = useState(null);
@@ -23,16 +23,9 @@ const HomeView = () => {
     <PageContainer>
       <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Início"} />
-        <ContentContainer>
-          <Column>
-            {!data && <Loading />}
-            {data && (
-              <>
-                <Title>Destaques do mês!</Title>
-                <Carrossel data={data} />
-              </>
-            )}
-          </Column>
+        <ContentContainer style={{gap: "1rem"}} >
+         <Spotlight nome={"Athos Henrique Lana Reis"} edicao={2022} img={"Athos_Henrique_Lana_Reis"} />
+         <NewsNotebook/>
         </ContentContainer>
       </ImgContainer>
     </PageContainer>
