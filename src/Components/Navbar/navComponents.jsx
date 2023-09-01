@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { deepBlue, jetbrains } from "../UI/contants";
+import { colors, fonts } from "../UI/contants";
 
 const AuxDiv = styled.div`
   align-items: center;
@@ -34,10 +34,10 @@ const Navnav = styled.div`
 
 const NavLink = styled.a`
   color: #000;
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
 
   &:hover {
-    color: ${deepBlue};
+    color: ${colors.deepBlue};
     text-decoration: underline;
     cursor: pointer;
   }

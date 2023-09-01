@@ -15,5 +15,4 @@ export const dismissReasons = [
         name: "Plágio",
         value: "plágio"
     }
-
 ]

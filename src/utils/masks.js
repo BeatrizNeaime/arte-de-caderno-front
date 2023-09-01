@@ -14,7 +14,7 @@ export const masks = {
         return v
     },
     cep: function (v) {
-        v = v.replace(/\D/g, "")
+        v = v.replace(/\D/g, "") 
         v = v.substring(0, 8);
         v = v.replace(/(\d{5})(\d{3})$/, "$1-$2")
         return v
@@ -32,6 +32,11 @@ export const masks = {
         v = v.replace(/(\d{3})(\d)/, "$1.$2")
         v = v.replace(/(\d{3})(\d)/, "$1.$2")
         v = v.replace(/(\d{3})(\d{2})$/, "$1-$2")
+        return v
+    },
+    inep: function(v) {
+        v = v.replace(/\D/g, "")
+        v = v.substring(0,8)
         return v
     }
 }

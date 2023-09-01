@@ -11,7 +11,7 @@ import {
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
 import styled from "styled-components";
-import { jetbrains } from "../../Components/UI/contants";
+import { fonts } from "../../Components/UI/contants";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { Link } from "react-router-dom";
 
@@ -218,7 +218,7 @@ const Img = styled.img`
 `;
 
 const Legenda = styled.p`
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   font-size: 12px;
 `;
 

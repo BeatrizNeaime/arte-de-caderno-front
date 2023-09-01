@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { jetbrains, pink_color } from "../UI/contants";
+import { colors, fonts } from "../UI/contants";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -58,7 +58,7 @@ const CardDisplay = styled.div`
 
 const CardHeader = styled.div`
   align-items: center;
-  color: ${pink_color};
+  color: ${colors.pink_color};
   display: flex;
   height: 40%;
   justify-content: space-evenly;
@@ -66,7 +66,7 @@ const CardHeader = styled.div`
 `;
 
 const CardSpan = styled.span`
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   font-size: 30px;
   text-align: right;
 `;

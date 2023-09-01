@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { jetbrains } from "../../UI/contants";
+import { fonts } from "../../UI/contants";
 
 const SpotlightContainer = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const SpotlightImg = styled.img`
 `;
 
 const SpotlightMonth = styled.p`
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   text-align: right;
   font-size: 14px;
 `;

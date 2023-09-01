@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Column, RateButton, Button } from "../../styles/sharedStyles";
-import { gmail, gmail_hover } from "../UI/contants";
+import { colors } from "../UI/contants";
 import { dismissReasons } from "../../utils/dismiss";
 
 const DiscardModal = () => {
@@ -33,10 +33,9 @@ const DiscardModal = () => {
 
   return (
     <>
-      <RateButton onClick={openModal} bg={gmail} hover={gmail_hover}>
+      <RateButton onClick={openModal} bg={colors.gmail} hover={colors.gmail_hover}>
         desclassificar
       </RateButton>
-      {/* The modal */}
       {showModal && (
         <div
           className="modal show"
@@ -81,8 +80,8 @@ const DiscardModal = () => {
             <Modal.Footer>
               <Button onClick={closeModal}>cancelar</Button>
               <RateButton
-                bg={gmail}
-                hover={gmail_hover}
+                bg={colors.gmail}
+                hover={colors.gmail_hover}
                 onClick={desclassificar}
               >
                 desclassificar

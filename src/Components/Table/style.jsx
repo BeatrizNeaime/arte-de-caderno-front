@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { deepBlue } from "../UI/contants";
+import { colors, fonts } from "../UI/contants";
 
 const MyTable = styled.table`
   width: 100%;
@@ -17,7 +17,7 @@ const THead = styled.thead`
 `;
 
 const TH = styled.th`
-  font-family: "JetBrains Mono";
+  font-family: ${fonts.jetbrains};
   text-transform: uppercase;
   width: 100%;
 `;
@@ -51,13 +51,13 @@ const TD = styled.td`
 `;
 
 const ShowBtn = styled.button`
-  background-color: ${deepBlue};
+  background-color: ${colors.deepBlue};
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   color: white;
-  font-family: 'JetBrains Mono';
+  font-family: ${fonts.jetbrains};
   padding: 5px;
   width: 100%;
   text-transform: uppercase;

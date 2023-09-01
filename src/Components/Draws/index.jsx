@@ -1,7 +1,7 @@
 import { TbWriting, TbInfoCircle } from "react-icons/tb";
 import React from "react";
 import styled from "styled-components";
-import { deepGrey } from "../UI/contants";
+import { colors } from "../UI/contants";
 
 const Draws = ({ path, author, age }) => {
   return (
@@ -35,7 +35,7 @@ const DrawCard = styled.div`
   justify-content: space-evenly;
   padding: 10px;
   border-radius: 15px;
-  background-color: ${deepGrey};
+  background-color: ${colors.deepGrey};
   max-width: 250px;
 `;
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { jetbrains } from "../../UI/contants";
+import { fonts } from "../../UI/contants";
 
 const NewsContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const NewsThumbnail = styled.img`
 
 const NewsTitle = styled.p`
   margin-top: 1rem;
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   text-align: right;
   text-transform: uppercase;
 `;

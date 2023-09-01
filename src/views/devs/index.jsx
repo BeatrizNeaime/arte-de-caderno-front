@@ -17,8 +17,18 @@ const DesenvolvedoresView = () => {
         <NavBoot currentPage={"Sobre"} />
         <ContentContainer>
           <Title>Os Desenvolvedores</Title>
-          <Linha>
-           
+          <Linha style={{
+            flexWrap: "wrap",
+            gap: "1rem",
+            marginBottom: "1rem"
+          }} >
+           {
+            devs.map((dev, index)=>{
+              return(
+                <DevsCard key={index} {...dev} />
+              )
+            })
+           }
           </Linha>
         </ContentContainer>
       </ImgContainer>

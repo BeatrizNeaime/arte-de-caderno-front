@@ -20,7 +20,7 @@ Frontend application for 'Arte de Caderno'
 
 ### Responsibility
 
-To check the window size, the dev can use a function  named `useMediaQuery`. It can be found at `hooks/useMediaQuery`. Usage:
+To check the window size, the dev can use a function named `useMediaQuery`. It can be found at `hooks/useMediaQuery`. Usage:
 
 ```js
 const desktop = useMediaQuery("(min-width: 768px)"); //parenthesis must come
@@ -85,4 +85,25 @@ const checkCPF = async (e) => {
 
   /*do what you want here*/
 };
+```
+
+### Masks
+
+Masks are important to format input values to the pattern adopted. It can be found at `utils/masks`.
+
+#### How to use - e.g.: CPF
+
+```js
+import { masks } from "[path]/utils/masks";
+import { useState } from "react";
+
+export default function App() {
+  const [cpf, setCpf] = useState();
+
+  const handleChange = (e) => {
+    setCpf(masks.cpf(e.target.value));
+  };
+
+  return <input value={cpf} onChange={handleChange} />;
+}
 ```

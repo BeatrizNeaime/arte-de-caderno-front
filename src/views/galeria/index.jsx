@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   ContentContainer,
@@ -17,13 +17,11 @@ const GalleryView = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
-
-
   return (
-    <PageContainer style={{overflowX: "hidden"}} >
-      <ImgContainer img={require("../../assets/img/op-background.png")} style={{overflowX: "hidden"}} >
+    <PageContainer>
+      <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Galeria"} />
-        <ContentContainer style={{overflowX: "hidden"}} >
+        <ContentContainer>
           <Title>Galeria</Title>
           <Linha>
             {desktop && <Sidebar style={{ alignSelf: "flex-start" }} />}

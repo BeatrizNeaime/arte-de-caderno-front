@@ -1,37 +1,36 @@
 import React from "react";
 import styled from "styled-components";
-import { Column, Container } from "../../styles/sharedStyles";
-import {
-  deepBlue,
-  facebook_hover,
-  jetbrains,
-  pink_color,
-  purple_color,
-} from "../UI/contants";
+import { Column, Linha } from "../../styles/sharedStyles";
+import { colors, fonts } from "../UI/contants";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const DevsCard = ({ name, func, linkedin, git, portfolio, img }) => {
+  const desktop = useMediaQuery("(min-width: 768px)");
   return (
-    <CardDiv>
-      <Container width={"100%"} height={"auto"}>
-        <Container width={"40%"} height={"auto"}>
-          {!img && (
-            <CardImg
-              src={require(`../../assets/img/gatorujo.jpg`)}
-              alt={name}
-            />
-          )}
-          {/* {img && <CardImg src={require(`../../assets/img/devs/${img}.png`)} />} */}
-        </Container>
-        <Column width={"60%"}>
+    <CardDiv width={desktop ? "40%" : "90%"}>
+      <Linha>
+        {!img && (
+          <CardImg src={require(`../../assets/img/gatorujo.jpg`)} alt={name} />
+        )}
+        {img && <CardImg src={img} />}
+
+        <Column>
           <CardTitle>{name}</CardTitle>
           <CardSubtitle>{func}</CardSubtitle>
-          <Container
-            width={"auto"}
-            height={"auto"}
-            style={{ marginTop: "1rem", gap: "10px" }}
+          <Linha
+            style={{
+              marginTop: "1rem",
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: "1rem",
+            }}
           >
             {linkedin && (
-              <CardIcons target="_blank" href={linkedin} color={facebook_hover}>
+              <CardIcons
+                target="_blank"
+                href={linkedin}
+                color={colors.facebook_hover}
+              >
                 <ion-icon name="logo-linkedin"></ion-icon>
               </CardIcons>
             )}
@@ -41,13 +40,17 @@ const DevsCard = ({ name, func, linkedin, git, portfolio, img }) => {
               </CardIcons>
             )}
             {portfolio && (
-              <CardIcons target="_blank" href={portfolio} color={pink_color}>
+              <CardIcons
+                target="_blank"
+                href={portfolio}
+                color={colors.pink_color}
+              >
                 <ion-icon name="person-circle-outline"></ion-icon>
               </CardIcons>
             )}
-          </Container>
+          </Linha>
         </Column>
-      </Container>
+      </Linha>
     </CardDiv>
   );
 };
@@ -56,23 +59,26 @@ export default DevsCard;
 
 const CardDiv = styled.div`
   display: flex;
-  width: 40%;
+  flex-direction: column;
   height: auto;
+  width: ${(p) => p.width};
   border-radius: 6px;
-  box-shadow: 10px 10px 17px 0px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  border-left: 3px solid ${purple_color};
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border: 1px solid ${colors.purple_color};
+  padding: 5px;
 `;
 
-const CardTitle = styled.span`
-  font-family: ${jetbrains};
+const CardTitle = styled.p`
+  font-family: ${fonts.jetbrains};
   font-size: 18px;
-  border-bottom: 1px solid ${deepBlue};
-  margin-bottom: 5px; 
+  border-bottom: 1px solid ${colors.deepBlue};
+  margin-bottom: 5px;
+  width: auto;
 `;
 
-const CardSubtitle = styled.span`
-  font-family: ${jetbrains};
+const CardSubtitle = styled.p`
+  font-family: ${fonts.jetbrains};
   font-size: 14px;
   color: rgb(122 122 122);
 `;

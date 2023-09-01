@@ -30,6 +30,7 @@ export const loginRoutes = {
         };
         const a = await fetch(url, options)
         const b = await a.json()
+        console.log(b)
         if (a.status !== 200) {
             return false
         } else {

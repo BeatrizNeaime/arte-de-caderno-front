@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
 import {
-  Column,
-  Container,
   ImgContainer,
   Input,
   InputColumn,
@@ -12,17 +10,13 @@ import {
   Button,
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { masks } from "../../hooks/masks";
+import { masks } from "../../utils/masks";
 import { ImgButton } from "../../views/cadastro-usuario";
 import { LoggedContext } from "../../contexts/loggedContext";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import {
-  deepBlue,
-  facebook,
-  facebook_hover,
-  gmail,
-  gmail_hover,
+  colors
 } from "../../Components/UI/contants";
 import SocialMediaButton from "../../Components/SocialMediaButton";
 import { userContext } from "../../contexts/userContext";
@@ -78,7 +72,7 @@ const LoginView = () => {
 
   return (
     <PageContainer>
-      {twoF && <Navigate to={"/dois-fatores"} state={{ credentials }} />}
+      {twoF && <Navigate to={"/dois-fatores"}/>}
       <ImgContainer img={require("../../assets/img/background.png")}>
         <LoginCard width={desktop ? "30%" : "90%"}>
           <Title>entrar</Title>
@@ -127,20 +121,20 @@ const LoginView = () => {
               width={"100%"}
             >
               <SocialMediaButton
-                color={facebook}
+                color={colors.facebook}
                 width={"50%"}
                 txt={"Entrar com Facebook"}
                 img={"logo-facebook"}
                 desktop={desktop}
-                bg={facebook_hover}
+                bg={colors.facebook_hover}
               />
               <SocialMediaButton
-                color={gmail}
+                color={colors.gmail}
                 width={"50%"}
                 txt={"Entrar com Gmail"}
                 img={"mail-outline"}
                 desktop={desktop}
-                bg={gmail_hover}
+                bg={colors.gmail_hover}
               />
             </InputColumn>
             <Linha style={{ marginTop: "0.5rem" }}>
@@ -164,7 +158,7 @@ const ForgotLink = styled.a`
   font-size: 12px;
   text-align: center;
   &:hover {
-    color: ${deepBlue};
+    color: ${colors.deepBlue};
     cursor: pointer;
   }
 `;

@@ -1,22 +1,3 @@
-import {useState} from 'react'
-
-import {
-  Container,
-  InputColumn,
-  Linha,
-  Mandatory,
-  Title,
-  Label,
-  Input,
-  Button,
-} from "../../styles/sharedStyles";
-
-import { blue_color } from "../../Components/UI/contants";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { toast } from "react-toastify";
-
-import { masks } from "../../hooks/masks";
-
 import CadastroEscolaView from "../../views/cadastro-escola";
 
 const CadastroEscola = () => {

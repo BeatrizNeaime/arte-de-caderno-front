@@ -1,39 +1,29 @@
 import styled from "styled-components";
-import {
-  blue_color,
-  red_color,
-  deepGrey,
-  deepBlue,
-  lightGrey,
-  magicRetro,
-  jetbrains,
-  facebook_hover,
-} from "../Components/UI/contants";
+import { fonts, colors } from "../Components/UI/contants";
 
 const Select = styled.select`
-  border: 1px solid ${blue_color};
+  border: 1px solid ${colors.blue_color};
   border-radius: 30px;
   padding: 5px 10px;
   text-align: left;
   width: ${(props) => (props.width ? props.width : "auto")};
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-
 `;
 
 const Option = styled.option`
   border-radius: 8px;
 
   &:hover {
-    background-color: ${blue_color};
+    background-color: ${colors.blue_color};
     cursor: pointer;
   }
 `;
 
 const Mandatory = styled.sup`
-  color: ${red_color};
+  color: ${colors.red_color};
 `;
 
 const Linha = styled.div`
@@ -51,7 +41,7 @@ const Linha = styled.div`
 const Label = styled.label`
   align-self: flex-start;
   padding-bottom: 5px;
-  font-family: "JetBrains Mono";
+  font-family: ${fonts.jetbrains};
 `;
 
 const InputColumn = styled.div`
@@ -64,14 +54,14 @@ const InputColumn = styled.div`
 `;
 
 const Input = styled.input`
-  border: 1px solid ${blue_color};
+  border: 1px solid ${colors.blue_color};
   border-radius: 30px;
   padding: 5px 10px;
   text-align: left;
   width: ${(props) => (props.width ? props.width : "100%")};
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
-    border-color: ${deepGrey}
+    border-color: ${colors.deepGrey};
   }
 `;
 
@@ -84,7 +74,7 @@ const Column = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: ${(props) => (props.primary ? blue_color : deepGrey)};
+  background-color: ${(props) => (props.primary ? colors.blue_color : colors.deepGrey)};
   border-radius: 6px;
   color: black;
   justify-content: center;
@@ -93,7 +83,7 @@ const Button = styled.button`
   text-transform: uppercase;
 
   &:hover {
-    background-color: ${(props) => (props.primary ? deepBlue : lightGrey)};
+    background-color: ${(props) => (props.primary ? colors.deepBlue : colors.lightGrey)};
   }
 `;
 
@@ -118,7 +108,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: ${magicRetro};
+  font-family: ${fonts.magicRetro};
   border-bottom: 2px solid #7bc9e7;
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -130,7 +120,7 @@ const LinkSPA = styled.p`
   font-size: 12px;
   text-align: center;
   &:hover {
-    color: ${deepBlue};
+    color: ${colors.deepBlue};
     cursor: pointer;
   }
 `;
@@ -144,7 +134,7 @@ const Card = styled.div`
 `;
 
 const Subtitle = styled.h4`
-  font-family: ${jetbrains};
+  font-family: ${fonts.jetbrains};
   border-bottom: 2px dotted #7bc9e7;
   margin-bottom: 1rem;
 `;
@@ -197,7 +187,7 @@ const RateButton = styled(Button)`
 const Form = styled(Column)`
   width: 100%;
   gap: 1rem;
-`
+`;
 
 export {
   Column,
@@ -220,5 +210,5 @@ export {
   PageContainer,
   ContentContainer,
   RateButton,
-  Form
+  Form,
 };

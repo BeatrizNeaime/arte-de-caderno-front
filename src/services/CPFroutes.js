@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 export const CPFroutes = {
     verifyCPF: async function (cpf) {
         let url = `http://localhost:8080/cpf/${cpf.replace(/\D/g, "")}`
@@ -6,21 +8,15 @@ export const CPFroutes = {
         const b = await a.json()
 
         if (a.status !== 200 && b.message) {
-            res = {
-                status: 400,
-                message: "CPF já cadastrado"
-            }
+            toast.error("CPF já cadastrado!", { toastId: "toastId" })
         } else if (a.status !== 200 && !b.message) {
-            res = {
-                status: 400,
-                message: "CPF inválido!"
-            }
+            toast.error("CPF inválido!", { toastId: "toastId" })
         } else if (a.status === 200) {
             res = {
                 status: 200,
                 message: "CPF válido"
             }
+            return res
         }
-        return res
     }
 }
