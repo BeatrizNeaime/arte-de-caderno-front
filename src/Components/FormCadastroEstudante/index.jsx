@@ -32,7 +32,7 @@ const FormCadastroEstudante = () => {
   const { user } = useContext(userContext);
   const { isLogged } = useContext(LoggedContext);
   const [redirect, setRedirect] = useState(false);
-  const [aluno, setAluno] = useState({
+    const [aluno, setAluno] = useState({
     name: "",
     date_of_birth: "",
     cpf: "",
@@ -47,6 +47,14 @@ const FormCadastroEstudante = () => {
     email: "",
     school: "",
   });
+  
+  useEffect(() => {
+    if (!isLogged) {
+      window.location.href = "/login";
+    }
+    console.log(user);
+    getSchools();
+  }, []);
 
   const getSchools = async () => {
     const a = await professorRoutes.getSchools(user);
@@ -61,6 +69,7 @@ const FormCadastroEstudante = () => {
     }
     getSchools();
   }, []);
+
 
   const handleAluno = (e) => {
     const { name, value } = e.target;
