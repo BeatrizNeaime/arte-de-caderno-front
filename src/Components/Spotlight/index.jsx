@@ -3,7 +3,7 @@ import { SpotlightContainer, SpotlightImg, SpotlightMonth } from "./components";
 import { Column, Title } from "../../styles/sharedStyles";
 import { monthDic } from "../../hooks/monthDic";
 import Info from "./components/Info";
-import { getDate } from "../../services/getDate";
+import { getDate } from "../../utils/getDate";
 
 const Spotlight = ({ img, nome, edicao }) => {
   return (
