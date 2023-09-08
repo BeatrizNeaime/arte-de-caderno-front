@@ -16,6 +16,7 @@ import StudentsControl from "../pages/students-control";
 import StudentInfo from "../Components/Student-info";
 import Rating from "../pages/rating";
 import TwoFactor from "../pages/twoFactor";
+import LinkedSchools from "src/pages/linked-schools";
 
 const Rotas = () => {
   return (
@@ -28,7 +29,6 @@ const Rotas = () => {
       <Route path="/cadastro-usuario/escola" element={<Cadastro2 />} />
       <Route path="/cadastro-escola" element={<CadastroEscola />} />
       <Route path="/dashboard" element={<DashboardRouter />} />
-      <Route path="/add-school" element={<Cadastro2 />} />
       <Route path="/add-student" element={<CadastroAluno />} />
       <Route path="/add-desenho" element={<CadastroDesenho />} />
       <Route path="/perfil" element={<Profile />} />
@@ -38,6 +38,7 @@ const Rotas = () => {
       <Route path="/info" element={<StudentInfo />} />
       <Route path="/avaliar" element={<Rating />} />
       <Route path="/dois-fatores" element={<TwoFactor />} />
+      <Route path="/escolas-vinculadas" element={<LinkedSchools />} />
     </Routes>
   );
 };

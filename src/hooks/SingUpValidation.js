@@ -15,10 +15,10 @@ const requiredFields = [
 ]
 
 function singUpValidation(inputs) {
-    let errors = {}
+    let errors = []
     requiredFields.forEach(field => {
         if (!inputs[field]) {
-            errors[field] = 'O campo ' + field + ' é obrigatório'
+            errors.push('O campo ' + field.toUpperCase() + ' é obrigatório')
         }
     })
     return errors

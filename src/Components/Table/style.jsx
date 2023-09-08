@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { colors, fonts } from "../UI/contants";
 
 const MyTable = styled.table`
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(5px);
   width: 100%;
 `;
 
@@ -35,10 +37,9 @@ const TR = styled.tr`
   justify-content: space-evenly;
   width: 100%;
 
-  &:hover{
+  &:hover {
     background-color: #ecebe8;
   }
-
 `;
 
 const TD = styled.td`
@@ -59,13 +60,12 @@ const ShowBtn = styled.button`
   color: white;
   font-family: ${fonts.jetbrains};
   padding: 5px;
-  width: 100%;
+  width: 50%;
   text-transform: uppercase;
 
-  &:hover{
+  &:hover {
     background-color: #92bac9;
   }
-
-`
+`;
 
 export { MyTable, TBody, TH, THead, TR, TD, ShowBtn };

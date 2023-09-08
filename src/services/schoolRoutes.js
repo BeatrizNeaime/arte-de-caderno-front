@@ -1,16 +1,18 @@
+const token = localStorage.getItem('token')
+
 export const schoolRoutes = {
-    getSchoolById: async function (user, id) {
+    getSchoolById: async function (id) {
         const url = `http://localhost:8080/school/${id}`
         const options = {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${user.token}`,
+                Authorization: `Bearer ${token}`,
             },
         }
 
         const a = await fetch(url, options)
         const b = await a.json()
-        console.log('schools.getById: ', b);
+        return b
     },
     getUfs: async function () {
         const a = await fetch("http://localhost:8080/school/uf");

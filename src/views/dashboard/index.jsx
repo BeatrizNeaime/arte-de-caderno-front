@@ -54,11 +54,20 @@ const DashboardRouter = () => {
     }
   }, []);
 
-  return (
-    <PageContainer>
-      {loading && <Loading />}
-      {!isLogged && <Navigate to="/login" replace />}
-      {!loading && (
+  if (loading) {
+    return (
+      <PageContainer>
+        {!isLogged && <Navigate to="/login" replace />}
+        <ImgContainer img={require("../../assets/img/op-background.png")}>
+          <NavBoot />
+          <Loading />
+        </ImgContainer>
+      </PageContainer>
+    );
+  } else {
+    return (
+      <PageContainer>
+        {!isLogged && <Navigate to="/login" replace />}
         <ImgContainer img={require("../../assets/img/op-background.png")}>
           <NavBoot currentPage={"Dashboard"} />
           <ContentContainer>
@@ -76,9 +85,9 @@ const DashboardRouter = () => {
             )}
           </ContentContainer>
         </ImgContainer>
-      )}
-    </PageContainer>
-  );
+      </PageContainer>
+    );
+  }
 };
 
 export default DashboardRouter;
