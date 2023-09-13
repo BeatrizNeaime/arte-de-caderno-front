@@ -28,7 +28,6 @@ const DiscardModal = () => {
         reasons.push(dismissReasons[i].value);
       }
     }
-    console.log(reasons);
   };
 
   return (

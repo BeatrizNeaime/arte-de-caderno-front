@@ -52,7 +52,6 @@ const FormCadastroEstudante = () => {
     if (!isLogged) {
       window.location.href = "/login";
     }
-    console.log(user);
     getSchools();
   }, []);
 
@@ -152,43 +151,10 @@ const FormCadastroEstudante = () => {
 
   const postAluno = async (e) => {
     e.preventDefault();
-    let address =
-      "Rua " + aluno.rua + ", " + aluno.numero + " " + aluno?.complemento ||
-      null + ", " + aluno.bairro + ". " + aluno.city;
-    let url = `http://localhost:8080/professor/${user.id}`;
-    let options = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: `${aluno.name}`,
-        date_of_birth: `${aluno.date_of_birth}`,
-        cpf: `${aluno.cpf.replace(/\D/g, "")}`,
-        phone: `${aluno.cel}`,
-        cep: `${aluno.cep}`,
-        address: `${address}`,
-        email: `${aluno.email}`,
-        city: `${aluno.city}`,
-        uf: `${aluno.uf}`,
-        schoolId: `${aluno.school}`,
-      }),
-    };
-
-    console.log(url)
-
-    try {
-      const a = await fetch(url, options);
-      if (!a.ok) {
-        console.log("erro");
-      } else {
-        toast.success("Aluno cadastrado com sucesso!");
-        setRedirect(true);
-      }
-    } catch (error) {
-      toast.error("Ocorreu um erro, tente novamente");
-      console.error(error);
+    const a = await professorRoutes.postStudent(aluno, user);
+    if (a) {
+      toast.success("Estudante cadastrado com sucesso!")
+      setRedirect(true);
     }
   };
   return (

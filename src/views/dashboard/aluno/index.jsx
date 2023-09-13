@@ -30,6 +30,7 @@ const DashboardAlunoView = ({ user }) => {
           name={"Desenhos Cadastrados"}
           desktop={desktop}
           value={user.drawsId.length}
+          path={"/desenhos"}
         />
       </Linha>
     </Column>

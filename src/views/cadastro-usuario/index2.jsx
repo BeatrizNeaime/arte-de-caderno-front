@@ -21,11 +21,12 @@ import singUpValidation from "../../hooks/SingUpValidation";
 import { CheckupContainer } from "./components";
 import { schoolRoutes } from "../../services/schoolRoutes";
 import PreviousArrow from "../../Components/PreviousArrow";
+import { studentRoutes } from "src/services/studentRoutes";
 
 const initialState = {
-  uf: "",
-  city: "",
-  school: "",
+  uf: null,
+  city: null,
+  school: null,
 };
 
 const UserCheckUpView2 = () => {
@@ -40,44 +41,8 @@ const UserCheckUpView2 = () => {
   const navigate = useNavigate();
 
   const postStudent = async () => {
-    console.log("posting aluno");
-    console.log(pessoa.escola);
-
-    let address =
-      pessoa.rua + ", " + pessoa.numero + " " + pessoa.complemento ||
-      null + "." + pessoa.bairro;
-
-    let url = "http://localhost:8080/insertStudent";
-    let options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: `${pessoa.nome}`,
-        date_of_birth: `${pessoa.bday}`,
-        cpf: `${pessoa.cpf}`,
-        phone: `${pessoa.cel}`,
-        cep: `${pessoa.cep}`,
-        email: ` ${pessoa.email} `,
-        address: `${address}`,
-        city: `${pessoa.cidade}`,
-        uf: `${pessoa.uf}`,
-        schoolId: `${selected.school.trim()}`,
-        password: `${pessoa.senha}`,
-        isFromProfessor: false,
-      }),
-    };
-
-    try {
-      const a = await toast.promise(fetch(url, options), {
-        pending: "Aguarde...",
-        success: "Cadastro realizado com sucesso!",
-        error: "Erro ao cadastrar!",
-      });
-
-      setRedirect(true);
-    } catch (err) {
-      toast.error("Erro ao cadastrar aluno");
-    }
+    const a = await studentRoutes.insertStudent(pessoa, selected.school.trim())
+    setRedirect(a)
   };
 
   const postProf = async () => {
@@ -107,12 +72,10 @@ const UserCheckUpView2 = () => {
     };
 
     try {
-      const a = await toast.promise(fetch(url, options), {
-        pending: "Aguarde...",
-        success: "Cadastro realizado com sucesso!",
-        error: "Erro ao cadastrar!",
-      });
-      setRedirect(true);
+      const a = await fetch(url, options);
+      if (a.ok) {
+        setRedirect(true);
+      }
     } catch (err) {
       toast.error("Erro ao cadastrar");
     }
@@ -200,6 +163,7 @@ const UserCheckUpView2 = () => {
 
   return (
     <PageContainer>
+      {redirect && <Navigate to="/login" replace />}
       <ImgContainer img={require("../../assets/img/background.png")}>
         <CheckupContainer
           width={desktop ? "80%" : "90%"}
@@ -305,14 +269,18 @@ const UserCheckUpView2 = () => {
                     : null}
                 </Select>
               </InputColumn>
-              <Button primary>cadastrar</Button>
+              <Button primary onClick={print}>
+                cadastrar
+              </Button>
             </Linha>
           </Form>
         </CheckupContainer>
-        <Linha style={{
-          width: `${desktop ? "80%" : "100%"}`,
-          flexDirection: "row"
-        }} >
+        <Linha
+          style={{
+            width: `${desktop ? "80%" : "100%"}`,
+            flexDirection: "row",
+          }}
+        >
           <PreviousArrow navigate="cadastro-usuario" />
         </Linha>
       </ImgContainer>

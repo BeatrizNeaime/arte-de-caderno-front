@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import loadNews from "../../services/loadNews";
 import { Column, Title, Linha } from "../../styles/sharedStyles";
 import { SpotlightMonth } from "../Spotlight/components/index";
-import { getDate } from "../../services/getDate";
+import { getDate } from "../../utils/getDate";
 import NewsCard from "./components/NewsCard";
 import Loading from "../Loading";
 

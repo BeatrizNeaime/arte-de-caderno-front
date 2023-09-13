@@ -20,4 +20,11 @@ export const fonts = {
     jetbrains: "'JetBrains Mono', monospace;",
     magicRetro: "Magic Retro"
 }
+
+export const effects = {
+    glass: {
+        bg: "rgba(255, 255, 255, 0.04)",
+        filter: "blur(5px)"
+    }
+}
  

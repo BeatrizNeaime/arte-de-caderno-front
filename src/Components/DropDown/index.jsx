@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState, useContext, cloneElement } from "react";
+import { useState, useContext } from "react";
 import { LoggedContext } from "../../contexts/loggedContext";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
@@ -40,7 +40,11 @@ const items = [
       <Link
         to="/login"
         onClick={() => {
+          const {setIsLogged} = useContext(LoggedContext)
           localStorage.removeItem('token')
+          localStorage.removeItem('isLogged')
+          localStorage.removeItem('user')
+          setIsLogged(false)
         }}
         style={{ textDecoration: "none", fontFamily: "JetBrains Mono" }}
       >

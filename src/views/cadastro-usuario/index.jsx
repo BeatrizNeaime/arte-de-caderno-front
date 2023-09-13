@@ -24,35 +24,31 @@ import { CheckupContainer } from "./components";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CPFroutes } from "../../services/CPFroutes";
 import { CEProutes } from "../../services/CEProutes";
-import PreviousArrow from '../../Components/PreviousArrow'
-
-const checkPassword = (auxPwd, setPessoa, pessoa) => {
-  const { pwd1, pwd2 } = auxPwd;
-  if (pwd1 === pwd2) {
-    setPessoa((pessoa) => ({
-      ...pessoa,
-      senha: pwd2,
-    }));
-    console.log(pessoa.senha);
-    return true;
-  } else {
-    toast.error("As senhas não coincidem");
-  }
-};
+import PreviousArrow from "../../Components/PreviousArrow";
+import { checkPassword } from "src/utils/checkPassword";
+import { throwToast } from "src/utils/toast";
 
 const UserCheckUpView = () => {
   const [currentPage, setCurrentPage] = useState("inicial");
   const desktop = useMediaQuery("(min-width: 768px)");
-  const [showPassword, setShowPassword] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [auxPwd, setAuxPwd] = useState(true);
-  const [erro, setErro] = useState();
   const { pessoa, setPessoa } = useContext(singupContext);
-  const navigate = useNavigate();
 
   const [desabilitado, setDesabilitado] = useState({
     bairro: true,
     number: true,
   });
+
+  const checkPwd = () => {
+    const a = checkPassword(auxPwd);
+    if (a) {
+      setPessoa((pessoa)=>({
+        ...pessoa,
+        senha: auxPwd.pwd1
+      }));
+    }
+  };
 
   const handlechangePessoa = (e) => {
     const { name, value } = e.target;
@@ -94,18 +90,14 @@ const UserCheckUpView = () => {
     }));
   };
 
-  /*----- COMUNICAÇÃO COM O  SERVIDOR ----- */
-
   const checkInput = (e) => {
     e.preventDefault();
     const err = singUpValidation(pessoa);
-    console.log("click", err);
 
     if (Object.keys(err).length === 0) {
       setCurrentPage("escola");
     } else {
-      setErro(err);
-      toast.error("Preencha os campos obrigatórios!");
+      throwToast.error(err[0])
     }
   };
 
@@ -545,9 +537,7 @@ const UserCheckUpView = () => {
                               pwd2: e.target.value,
                             }));
                           }}
-                          onBlur={() => {
-                            checkPassword(auxPwd, setPessoa, pessoa);
-                          }}
+                          onBlur={checkPwd}
                         />
                       </InputColumn>
                     </Linha>

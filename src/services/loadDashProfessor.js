@@ -30,7 +30,6 @@ export const loadDashProfessor = {
         b.map((school) => {
             escolas.push(loadSchoolData.getSchoolById(user, school.id))
         })
-        console.log(escolas);
 
     },
     getProfById: async function (user) {

@@ -15,6 +15,7 @@ import { Navigate } from "react-router-dom";
 import DashboardAvaliadorView from "./avaliador";
 import { professorRoutes } from "../../services/professorRoutes";
 import Loading from "../../Components/Loading";
+import { studentRoutes } from "src/services/studentRoutes";
 
 const DashboardRouter = () => {
   const { user, setUser } = useContext(userContext);
@@ -44,21 +45,56 @@ const DashboardRouter = () => {
       }));
       setLoading(false);
     }
-    console.log(a);
   };
+
+  const getStudent = async()=>{
+    const a = await studentRoutes.getStudentById(user)
+    if (a) {
+      setUser((user) => ({
+        ...user,
+        id: a.student._id,
+        name: a.student.name,
+        date_of_birth: a.student.date_of_birth,
+        cpf: a.student.cpf,
+        accessType: a.accessType,
+        email: a.student.email,
+        password: a.student.password,
+        phone: a.student.phone,
+        cep: a.student.cep,
+        city: a.student.city,
+        loginId: a.name,
+        state: a.student.state,
+        schoolId: a.student.schoolId,
+        studentsId: a.student.studentsId || null,
+        drawsId: a.student.drawsId,
+      }));
+      setLoading(false);
+    }
+    console.log(a);
+  }
 
   useEffect(() => {
     if (user.accessType === "professor") {
       getProf();
     } else if (user.accessType === "student") {
+      getStudent()
     }
   }, []);
 
-  return (
-    <PageContainer>
-      {loading && <Loading />}
-      {!isLogged && <Navigate to="/login" replace />}
-      {!loading && (
+  if (loading) {
+    return (
+      <PageContainer>
+        {!isLogged && <Navigate to="/login" replace />}
+        <ImgContainer img={require("../../assets/img/op-background.png")}>
+          <NavBoot />
+          <Loading />
+        </ImgContainer>
+      </PageContainer>
+    );
+  } else {
+    return (
+      <PageContainer>
+        {!isLogged && <Navigate to="/login" replace />}
         <ImgContainer img={require("../../assets/img/op-background.png")}>
           <NavBoot currentPage={"Dashboard"} />
           <ContentContainer>
@@ -76,9 +112,9 @@ const DashboardRouter = () => {
             )}
           </ContentContainer>
         </ImgContainer>
-      )}
-    </PageContainer>
-  );
+      </PageContainer>
+    );
+  }
 };
 
 export default DashboardRouter;

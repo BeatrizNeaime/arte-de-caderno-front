@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import {
   Column,
@@ -28,9 +28,7 @@ const TwoFactorView = () => {
 
   const logar = async () => {
     const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
-    if (!a) {
-      toast.error("Código incorreto!");
-    } else {
+    if (a) {
       setUser((u) => ({
         ...u,
         id: a.user._id,
@@ -49,11 +47,14 @@ const TwoFactorView = () => {
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
       }));
-      localStorage.setItem('token', a.token)
-      localStorage.setItem('isLogged', true)
+      localStorage.setItem("token", a.token);
       setIsLogged(true);
     }
   };
+
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <PageContainer>

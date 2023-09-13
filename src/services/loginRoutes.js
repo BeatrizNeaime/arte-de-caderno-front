@@ -1,3 +1,5 @@
+import { toast, customId } from 'react-toastify'
+
 export const loginRoutes = {
     login: async function (user, pwd) {
         let url = "http://localhost:8080/login";
@@ -25,13 +27,16 @@ export const loginRoutes = {
             body: JSON.stringify({
                 username: user.replace(/\D/g, ""),
                 password: pwd,
-                code2factor: code,
+                code2factor: code.toUpperCase(),
             }),
         };
+        const customId = "my-custom-id"
         const a = await fetch(url, options)
         const b = await a.json()
         console.log(b)
         if (a.status !== 200) {
+            toast.error("Código incorreto!", { customId: customId })
+            console.log(code)
             return false
         } else {
             return await b

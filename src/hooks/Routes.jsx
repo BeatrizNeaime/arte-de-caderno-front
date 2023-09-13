@@ -16,19 +16,20 @@ import StudentsControl from "../pages/students-control";
 import StudentInfo from "../Components/Student-info";
 import Rating from "../pages/rating";
 import TwoFactor from "../pages/twoFactor";
+import LinkedSchools from "src/pages/linked-schools";
+import MyDraws from "src/pages/my-draws";
 
 const Rotas = () => {
   return (
     <Routes>
-      <Route path="/sobre" element={<About />} />
       <Route path="/" element={<Home />} />
+      <Route path="/sobre" element={<About />} />
       <Route path="/galeria" element={<Gallery />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro-usuario" element={<Cadastro />} />
       <Route path="/cadastro-usuario/escola" element={<Cadastro2 />} />
       <Route path="/cadastro-escola" element={<CadastroEscola />} />
       <Route path="/dashboard" element={<DashboardRouter />} />
-      <Route path="/add-school" element={<Cadastro2 />} />
       <Route path="/add-student" element={<CadastroAluno />} />
       <Route path="/add-desenho" element={<CadastroDesenho />} />
       <Route path="/perfil" element={<Profile />} />
@@ -38,6 +39,8 @@ const Rotas = () => {
       <Route path="/info" element={<StudentInfo />} />
       <Route path="/avaliar" element={<Rating />} />
       <Route path="/dois-fatores" element={<TwoFactor />} />
+      <Route path="/escolas-vinculadas" element={<LinkedSchools />} />
+      <Route path="/desenhos" element={<MyDraws />} />
     </Routes>
   );
 };

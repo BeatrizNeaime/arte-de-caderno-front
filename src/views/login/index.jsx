@@ -29,9 +29,10 @@ const LoginView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [showPassword, setShowPassword] = useState(false);
   const [twoF, setTwoF] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
+    username: null,
+    password: null,
   });
 
   const { isLogged } = useContext(LoggedContext);
@@ -72,8 +73,9 @@ const LoginView = () => {
 
   return (
     <PageContainer>
-      {twoF && <Navigate to={"/dois-fatores"}/>}
       <ImgContainer img={require("../../assets/img/background.png")}>
+      {twoF && <Navigate to={"/dois-fatores"}/>}
+      {isLogged && <Navigate to={"/dashboard"}/>}
         <LoginCard width={desktop ? "30%" : "90%"}>
           <Title>entrar</Title>
           <form style={{ width: "100%" }} onSubmit={login}>
