@@ -17,13 +17,11 @@ const Table = ({ header, data }) => {
   const getSchool = async (id) => {
     const a = await schoolRoutes.getSchoolById(id);
     if (a) {
-      console.log(a);
       setSchool(a.name);
     }
   };
 
   useEffect(() => {
-    console.log(data);
   }, []);
 
   return (

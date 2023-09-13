@@ -26,6 +26,7 @@ import { CPFroutes } from "../../services/CPFroutes";
 import { CEProutes } from "../../services/CEProutes";
 import PreviousArrow from "../../Components/PreviousArrow";
 import { checkPassword } from "src/utils/checkPassword";
+import { throwToast } from "src/utils/toast";
 
 const UserCheckUpView = () => {
   const [currentPage, setCurrentPage] = useState("inicial");
@@ -42,12 +43,10 @@ const UserCheckUpView = () => {
   const checkPwd = () => {
     const a = checkPassword(auxPwd);
     if (a) {
-      console.log(auxPwd.pwd1);
       setPessoa((pessoa)=>({
         ...pessoa,
-        password: auxPwd.pwd1
+        senha: auxPwd.pwd1
       }));
-      console.log("->",pessoa.password)
     }
   };
 
@@ -91,17 +90,14 @@ const UserCheckUpView = () => {
     }));
   };
 
-  /*----- COMUNICAÇÃO COM O  SERVIDOR ----- */
-
   const checkInput = (e) => {
     e.preventDefault();
     const err = singUpValidation(pessoa);
-    console.log("click", err);
 
     if (Object.keys(err).length === 0) {
       setCurrentPage("escola");
     } else {
-      toast.error(err[0]);
+      throwToast.error(err[0])
     }
   };
 

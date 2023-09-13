@@ -8,6 +8,8 @@
         "IFSC",
         "singup",
         "toastify",
-        "usuario"
+        "usuario",
+        "inep",
+        "bday"
     ]
 }

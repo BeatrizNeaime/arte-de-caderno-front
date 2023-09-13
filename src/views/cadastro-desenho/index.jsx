@@ -61,9 +61,9 @@ const CadastroDesenhoView = () => {
           autor: user.id,
         };
       });
+      setLoading(false)
     } else if (user.accessType === "professor") {
       getStudents();
-      console.log(students)
     }
   }, []);
 

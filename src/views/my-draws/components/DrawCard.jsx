@@ -1,10 +1,15 @@
 import React from 'react'
-import { ContainerCover, DrawContainer } from './style'
+import { CardBody, ContainerCover, DrawContainer, DrawTitle } from './style'
 
 const DrawCard = ({draw}) => {
   return (
     <DrawContainer>
-        <ContainerCover img={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhHDGA4P4XRmaO-YgMFrgUSkX5m-3vpIdtidxDTI5hkQ&s"} />
+        <ContainerCover img={draw.linkImg} />
+        <CardBody>
+          <DrawTitle>
+            {draw.title}
+          </DrawTitle>
+        </CardBody>
     </DrawContainer>
   )
 }

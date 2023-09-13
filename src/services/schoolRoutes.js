@@ -1,3 +1,5 @@
+import { throwToast } from "src/utils/toast"
+
 const token = localStorage.getItem('token')
 
 export const schoolRoutes = {
@@ -32,7 +34,6 @@ export const schoolRoutes = {
         return b
     },
     getSchools: async function (city) {
-        console.log('get')
         let url = "http://localhost:8080/school/listByCity";
 
         let options = {
@@ -43,5 +44,44 @@ export const schoolRoutes = {
         const a = await fetch(url, options)
         const b = await a.json()
         return b
+    },
+    insertSchool: async function (school) {
+        let address = school.rua + ", " + school.numero + " " + school.complemento + ". " + school.bairro
+        const url = "http://localhost:8080/school/insertSchool"
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "name": school.nome,
+            "code": school.inep,
+            "city": school.city,
+            "cep": school.cep,
+            "uf": school.uf,
+            "phone": school.phone,
+            "address": address,
+            "email": school.email,
+            "site": school.site
+        });
+        const options = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        }
+
+        try {
+            const a = await fetch(url, options)
+            if (a.ok) {
+                throwToast.success("Escola cadastrada com sucesso!")
+                return true
+            }
+            throwToast.error("Erro. Tente novamente mais tarde!")
+            return false
+
+        } catch (error) {
+            console.error(error)
+        }
+
+
     }
 }

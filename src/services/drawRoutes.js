@@ -1,4 +1,4 @@
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const token = localStorage.getItem('token')
 
@@ -28,10 +28,39 @@ export const drawRoutes = {
                 return true
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
-    getDrawsByUser: async function(user){
-        const url = `http://localhost:8080/draw/${user.id}`
+    getDrawsByUser: async function (user) {
+        const url = `http://localhost:8080/draw/student/${user.id}`
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        }
+
+        try {
+            const a = await fetch(url, options)
+            const b = await a.json()
+            console.log(b)
+        } catch (error) {
+            console.error(error)
+        }
+    },
+    getAllDraws: async function () {
+        const url = "http://localhost:8080/draw/classified"
+        try {
+            const a = await fetch(url)
+            const b = await a.json()
+            if (a.ok) {
+                return b
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
 }

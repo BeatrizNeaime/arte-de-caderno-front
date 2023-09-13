@@ -6,22 +6,13 @@ import {
   Linha,
   Column,
 } from "../../styles/sharedStyles";
-import { loadHome } from "../../services/loadHome";
 import NavBoot from "../../Components/Navbar";
-import Spotlight from "../../Components/Spotlight";
-import NewsNotebook from "../../Components/NewsNotebook";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { styled } from "styled-components";
 import { fonts } from "src/Components/UI/contants";
 
 const HomeView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const res = loadHome();
-    setData(res);
-  }, []);
 
   return (
     <PageContainer>

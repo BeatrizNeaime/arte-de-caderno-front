@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify'
+import { throwToast } from 'src/utils/toast';
 
 export const CEProutes = {
     viacep: async function (cep) {
@@ -7,9 +7,9 @@ export const CEProutes = {
         const b = await a.json();
 
         if (b.erro) {
-            toast.error("CEP incorreto!", { toastId: "toastId" });
+            throwToast.error("CEP incorreto!");
         } else if (!b.logradouro || !b.bairro) {
-            toast.warning("Notamos que seu CEP não fornece dados de rua e bairro. Por favor, preencha manualmente!", { toastId: "toastId" })
+            throwToast.warning("Notamos que seu CEP não fornece dados de rua e bairro. Por favor, preencha manualmente!")
             return b
         } else {
             return b

@@ -52,7 +52,6 @@ const FormCadastroEstudante = () => {
     if (!isLogged) {
       window.location.href = "/login";
     }
-    console.log(user);
     getSchools();
   }, []);
 

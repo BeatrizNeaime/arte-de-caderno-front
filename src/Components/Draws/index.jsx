@@ -1,14 +1,15 @@
-import { TbWriting, TbInfoCircle } from "react-icons/tb";
+import { TbInfoCircle } from "react-icons/tb";
 import React from "react";
 import styled from "styled-components";
 import { colors } from "../UI/contants";
 
-const Draws = ({ path, author, age }) => {
+const Draws = ({ draw }) => {
+
   return (
     <DrawCard>
       <div>
         <img
-          src={path}
+          src={draw.linkImage}
           width="200"
           height="200"
           className="rounded-md"
@@ -16,10 +17,7 @@ const Draws = ({ path, author, age }) => {
       </div>
       <DrawInfo>
         <DrawSpan>
-          <TbWriting /> Autor: {author}
-        </DrawSpan>
-        <DrawSpan>
-          <TbInfoCircle /> Idade: {age} anos
+          <TbInfoCircle /> Edição: 2023
         </DrawSpan>
       </DrawInfo>
     </DrawCard>
