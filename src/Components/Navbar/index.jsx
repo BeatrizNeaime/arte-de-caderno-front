@@ -36,7 +36,8 @@ function NavBoot({ currentPage }) {
     },
   ];
 
-  var logo = require("../../assets/img/logoG.png");
+  var logo = require("../../assets/img/logo setembro.png");
+  var logop = require("src/assets/img/logo p setembropng.png")
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +62,7 @@ function NavBoot({ currentPage }) {
         <Navnav width={desktop ? "40%" : "100%"}>
           <AuxDiv width={desktop ? "25%" : "100%"}>
             <img
-              src={logo}
+              src={desktop ? logo : logop}
               style={{
                 height: desktop ? "60px" : "45px",
               }}

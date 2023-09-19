@@ -10,7 +10,7 @@ const GalleryContainer = ({ data }) => {
   return (
     <DrawContainers width={"100%"} style={{ marginBottom: "1rem" }}>
       {data.map((d) => {
-        return <Draws draw={d} />;
+        return <Draws draw={d} key={d._id} />;
       })}
     </DrawContainers>
   );

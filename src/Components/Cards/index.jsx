@@ -69,6 +69,7 @@ const CardSpan = styled.span`
   font-family: ${fonts.jetbrains};
   font-size: 30px;
   text-align: right;
+  color: ${colors.pink_color}
 `;
 
 const CardIcon = styled.img`

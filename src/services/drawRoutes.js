@@ -62,5 +62,23 @@ export const drawRoutes = {
         } catch (error) {
             console.error(error)
         }
+    },
+    getAuthor: async function (id) {
+        const url = `http://localhost:8080/student/${id}`
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }
+
+        try {
+            const a = await fetch(url, options)
+            const b = await a.json()
+            return await b.student
+        } catch (error) {
+            console.error(error)
+        }
     }
+
 }
