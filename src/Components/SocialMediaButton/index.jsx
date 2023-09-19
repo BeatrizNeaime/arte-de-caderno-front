@@ -26,5 +26,6 @@ const SocialMediaBtn = styled.button`
   width: ${(props) => props.width};
   &:hover{
     background-color: ${(props) => props.bg};
+    cursor: pointer;
   };
 `;

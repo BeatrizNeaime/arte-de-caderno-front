@@ -40,7 +40,7 @@ const DiscardModal = () => {
           className="modal show"
           style={{ display: "flex", position: "initial" }}
         >
-          <Modal show={showModal}>
+          <Modal show={showModal} closeVariant={"black"} >
             <Modal.Header closeButton>
               <Modal.Title>Desclassificar Obra?</Modal.Title>
             </Modal.Header>

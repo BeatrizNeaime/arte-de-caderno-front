@@ -42,7 +42,7 @@ export const studentRoutes = {
             console.error(error)
         }
     },
-    getStudentById: async function (user) {
+    getUserById: async function (user) {
         const url = `http://localhost:8080/student/${user.id}`
         const options = {
             method: 'GET',
@@ -58,5 +58,5 @@ export const studentRoutes = {
         } catch (error) {
             console.error(error)
         }
-    }
+    },
 }

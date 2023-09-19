@@ -48,7 +48,7 @@ const DashboardRouter = () => {
   };
 
   const getStudent = async()=>{
-    const a = await studentRoutes.getStudentById(user)
+    const a = await studentRoutes.getUserById(user)
     if (a) {
       setUser((user) => ({
         ...user,
