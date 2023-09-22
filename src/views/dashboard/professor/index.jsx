@@ -25,6 +25,7 @@ const DashboardProfessorView = ({user}) => {
           name={"Desenhos Cadastrados"}
           value={0}
           desktop={desktop}
+          path={"/desenhos"}
         />
         <Card
           icon={"book11"}

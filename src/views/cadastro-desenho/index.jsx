@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   PageContainer,
   ImgContainer,
@@ -11,12 +11,10 @@ import {
   Mandatory,
   Select,
   Option,
-  Button,
+  Button
 } from "src/styles/sharedStyles";
-import NavBoot from "src/Components/Navbar";
-import { LoggedContext } from "src/contexts/loggedContext";
-import { userContext } from "src/contexts/userContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import NavBoot from "src/Components/Navbar";import { userContext } from "src/contexts/userContext";
+import { Navigate} from "react-router-dom";
 import { CheckupContainer } from "../cadastro-usuario/components";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
@@ -34,12 +32,10 @@ const initialState = {
 
 const CadastroDesenhoView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const [redirect, setRedirect] = useState(false);
   const [desenho, setDesenho] = useState(initialState);
   const [done, setDone] = useState(false);
   const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { isLogged } = useContext(LoggedContext);
   const { user } = useContext(userContext);
 
   const getStudents = async () => {
@@ -51,9 +47,7 @@ const CadastroDesenhoView = () => {
   };
 
   useEffect(() => {
-    if (!isLogged) {
-      setRedirect(true);
-    }
+
     if (user.accessType === "student") {
       setDesenho((desenho) => {
         return {
@@ -96,9 +90,7 @@ const CadastroDesenhoView = () => {
     );
   } else {
     return (
-      <PageContainer>
-        {redirect && <Navigate to="/login" replace />}
-        {done && <Navigate to="/dashboard" replace />}
+      <PageContainer>        {done && <Navigate to="/dashboard" replace />}
         <ImgContainer img={require("src/assets/img/op-background.png")}>
           <NavBoot currentPage={"Perfil"} />
           <ContentContainer

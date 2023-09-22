@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { userContext } from "../../contexts/userContext";
+import { useContext, useEffect, useState } from "react";
 import {
   ImgContainer,
   PageContainer,
@@ -10,20 +9,21 @@ import NavBoot from "../../Components/Navbar";
 import DashboardAlunoView from "./aluno";
 import DashboardProfessorView from "./professor";
 import { DashTitle } from "./style";
-import { LoggedContext } from "../../contexts/loggedContext";
-import { Navigate } from "react-router-dom";
 import DashboardAvaliadorView from "./avaliador";
-import { professorRoutes } from "../../services/professorRoutes";
 import Loading from "../../Components/Loading";
 import { studentRoutes } from "src/services/studentRoutes";
+import { userContext } from "../../contexts/userContext";
+import Cookies from "js-cookie";
+import { professorRoutes } from "src/services/professorRoutes";
 
 const DashboardRouter = () => {
   const { user, setUser } = useContext(userContext);
-  const { isLogged } = useContext(LoggedContext);
   const [loading, setLoading] = useState(true);
+  const accessType = Cookies.get("accessType");
 
   const getProf = async () => {
-    const a = await professorRoutes.getProfById(user);
+    const a = await professorRoutes.getProfById(Cookies.get("user"));
+
     if (a) {
       setUser((user) => ({
         ...user,
@@ -47,8 +47,8 @@ const DashboardRouter = () => {
     }
   };
 
-  const getStudent = async()=>{
-    const a = await studentRoutes.getUserById(user)
+  const getStudent = async () => {
+    const a = await studentRoutes.getUserById(user);
     if (a) {
       setUser((user) => ({
         ...user,
@@ -71,20 +71,19 @@ const DashboardRouter = () => {
       setLoading(false);
     }
     console.log(a);
-  }
+  };
 
   useEffect(() => {
-    if (user.accessType === "professor") {
+    if (accessType === "professor") {
       getProf();
-    } else if (user.accessType === "student") {
-      getStudent()
+    } else if (accessType === "student") {
+      getStudent();
     }
   }, []);
 
   if (loading) {
     return (
       <PageContainer>
-        {!isLogged && <Navigate to="/login" replace />}
         <ImgContainer img={require("../../assets/img/op-background.png")}>
           <NavBoot />
           <Loading />
@@ -94,7 +93,6 @@ const DashboardRouter = () => {
   } else {
     return (
       <PageContainer>
-        {!isLogged && <Navigate to="/login" replace />}
         <ImgContainer img={require("../../assets/img/op-background.png")}>
           <NavBoot currentPage={"Dashboard"} />
           <ContentContainer>

@@ -1,8 +1,10 @@
-const token = localStorage.getItem('token')
+import Cookies from "js-cookie";
+
+const token = Cookies.get('token')
 
 export const professorRoutes = {
-    getStudents: async function (user) {
-        const url = `http://localhost:8080/professor/student/${user.id}`;
+    getStudents: async function (id) {
+        const url = `http://localhost:8080/professor/student/${id}`;
         const options = {
             method: "GET",
             headers: {
@@ -14,8 +16,8 @@ export const professorRoutes = {
         const b = await a.json()
         return b;
     },
-    getSchools: async function (user) {
-        const url = `http://localhost:8080/professor/school/${user.id}`;
+    getSchools: async function (id) {
+        const url = `http://localhost:8080/professor/school/${id}`;
         const options = {
             method: "GET",
             headers: {
@@ -32,8 +34,8 @@ export const professorRoutes = {
         }
 
     },
-    getProfById: async function (user) {
-        const url = `http://localhost:8080/professor/${user.id}`
+    getProfById: async function (id) {
+        const url = `http://localhost:8080/professor/${id}`
         const options = {
             method: 'GET',
             headers: {
@@ -45,7 +47,7 @@ export const professorRoutes = {
         const b = await a.json()
         return await b
     },
-    postStudent: async function (aluno, user) {
+    postStudent: async function (aluno, id) {
         let address =
             "Rua " + aluno.rua + ", " + aluno.numero + " " + aluno?.complemento ||
             null + ", " + aluno.bairro + ". " + aluno.city;
@@ -75,7 +77,7 @@ export const professorRoutes = {
             redirect: 'follow'
         };
 
-        const a = await fetch(`http://localhost:8080/professor/student/${user.id}`, requestOptions)
+        const a = await fetch(`http://localhost:8080/professor/student/${id}`, requestOptions)
         const b = await a.json()
         return b
 

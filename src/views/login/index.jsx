@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import {
   ImgContainer,
   Input,
@@ -12,12 +12,9 @@ import {
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { masks } from "../../utils/masks";
 import { ImgButton } from "../../views/cadastro-usuario";
-import { LoggedContext } from "../../contexts/loggedContext";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  colors
-} from "../../Components/UI/contants";
+import { colors } from "../../Components/UI/contants";
 import SocialMediaButton from "../../Components/SocialMediaButton";
 import { userContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
@@ -29,13 +26,11 @@ const LoginView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [showPassword, setShowPassword] = useState(false);
   const [twoF, setTwoF] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [credentials, setCredentials] = useState({
     username: null,
     password: null,
   });
 
-  const { isLogged } = useContext(LoggedContext);
   const { user, setUser } = useContext(userContext);
 
   const handleCPF = (e) => {
@@ -54,7 +49,10 @@ const LoginView = () => {
 
   const login = async (e) => {
     e.preventDefault();
-    const a = await loginRoutes.login(credentials.username, credentials.password);
+    const a = await loginRoutes.login(
+      credentials.username,
+      credentials.password
+    );
     const customId = "custom-id-yes";
     if (!a) {
       toast.error("Usuário/senha incorreto(s)!", { toastId: customId });
@@ -74,8 +72,7 @@ const LoginView = () => {
   return (
     <PageContainer>
       <ImgContainer img={require("../../assets/img/background.png")}>
-      {twoF && <Navigate to={"/dois-fatores"}/>}
-      {isLogged && <Navigate to={"/dashboard"}/>}
+        {twoF && <Navigate to={"/dois-fatores"} />}
         <LoginCard width={desktop ? "30%" : "90%"}>
           <Title>entrar</Title>
           <form style={{ width: "100%" }} onSubmit={login}>
@@ -140,7 +137,15 @@ const LoginView = () => {
               />
             </InputColumn>
             <Linha style={{ marginTop: "0.5rem" }}>
-              <ForgotLink href="/cadastro-usuario">Cadastre-se</ForgotLink>
+              <p style={{ fontSize: "12px" }}>
+                Não tem uma conta?{" "}
+                <ForgotLink
+                  href="/cadastro-usuario"
+                  style={{ textDecoration: "underline" }}
+                >
+                  Cadastre-se
+                </ForgotLink>
+              </p>
             </Linha>
           </form>
         </LoginCard>
@@ -148,7 +153,6 @@ const LoginView = () => {
           <PreviousArrow navigate={""} />
         </Linha>
       </ImgContainer>
-      {isLogged && <Navigate to={`/dashboard`} />}
     </PageContainer>
   );
 };

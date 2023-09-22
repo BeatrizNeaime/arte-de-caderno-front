@@ -37,9 +37,6 @@ const Table = ({ header, data }) => {
           return (
             <TR>
               <TD>{d.name}</TD>
-              <TD>
-                {school}
-              </TD>
               <TD style={{ justifyContent: "center" }}>{d.drawsId.length}</TD>
               <TD style={{ justifyContent: "center" }}>
                 <StudentModal student={d} />

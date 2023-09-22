@@ -49,6 +49,7 @@ const CardDisplay = styled.div`
   flex-direction: column;
   height: 200px;
   width: ${(p)=> p.desktop ? "350px" : "90%"};
+  background-color: white;
   justify-content: space-between;
   &:hover {
     background-color: #ffdcde;
@@ -69,7 +70,6 @@ const CardSpan = styled.span`
   font-family: ${fonts.jetbrains};
   font-size: 30px;
   text-align: right;
-  color: ${colors.pink_color}
 `;
 
 const CardIcon = styled.img`

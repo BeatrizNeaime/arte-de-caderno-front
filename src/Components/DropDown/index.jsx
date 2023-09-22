@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { LoggedContext } from "../../contexts/loggedContext";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
+import Cookies from "js-cookie";
 
 const menuStyle = {
   margin: "0",
@@ -40,11 +39,11 @@ const items = [
       <Link
         to="/login"
         onClick={() => {
-          const {setIsLogged} = useContext(LoggedContext)
-          localStorage.removeItem('token')
-          localStorage.removeItem('isLogged')
-          localStorage.removeItem('user')
-          setIsLogged(false)
+          Cookies.remove('token')
+          Cookies.remove('isLogged')
+          Cookies.remove('accessType')
+          Cookies.remove('user')
+          
         }}
         style={{ textDecoration: "none", fontFamily: "JetBrains Mono" }}
       >

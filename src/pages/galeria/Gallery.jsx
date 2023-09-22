@@ -1,8 +1,7 @@
-import React from "react";
 import GalleryView from "../../views/galeria";
 
-const Galery = () => {
+const Gallery = () => {
   return <GalleryView />;
 };
 
-export default Galery;
+export default Gallery;

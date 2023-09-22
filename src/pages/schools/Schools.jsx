@@ -1,20 +1,11 @@
-import {useContext, useEffect} from "react";
-import { Container, Title, Button, Column } from "../../styles/sharedStyles";
+import {useContext} from "react";
+import { Container, Title, Button} from "../../styles/sharedStyles";
 import styled from "styled-components";
 import {userContext} from '../../contexts/userContext'
-import {LoggedContext} from '../../contexts/loggedContext'
 
 const Schools = () => {
-  const context = useContext(userContext);
-  const logged = useContext(LoggedContext);
-  const {user} = context
-  const {isLogged} = logged
+  const {user} = useContext(userContext);
 
-  useEffect(() => {
-    if(!isLogged){
-      window.location.href = "/login";
-    }
-  }, []);
   return (
     <Container>
       <MainContainer

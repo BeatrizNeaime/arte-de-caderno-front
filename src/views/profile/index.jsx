@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 import {
   PageContainer,
   ImgContainer,
@@ -11,35 +11,21 @@ import {
   Mandatory,
   Input,
   Button,
-  Form,
+  Form
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
-import { Navigate } from "react-router-dom";
-import { LoggedContext } from "../../contexts/loggedContext";
 
 const ProfileView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const [redirect, setRedirect] = useState(false);
   const [edit, setEdit] = useState(false);
   const { user } = useContext(userContext);
-  const { isLogged } = useContext(LoggedContext);
-
-  useEffect(() => {
-    if (!isLogged) {
-      setRedirect(true);
-    }
-  }, []);
 
   return (
     <PageContainer>
-      {redirect && <Navigate to="/login" replace />}
-      <ImgContainer
-        img={require("../../assets/img/op-background.png")}
-        
-      >
+      <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Perfil"} />
         <ContentContainer>
           <Column
@@ -71,22 +57,19 @@ const ProfileView = () => {
                   <Label>
                     Nome completo:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input
-                    name="name"
-                    value={user.name}
-                    disabled={!edit}
-                  />
+                  <Input name="name" value={user.name} disabled={!edit} />
                 </InputColumn>
                 <InputColumn width={desktop ? "30%" : "100%"}>
-                  <Label>Data de Nascimento:<Mandatory>*</Mandatory>
+                  <Label>
+                    Data de Nascimento:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.bday} name="bday" disabled/>
+                  <Input value={user.bday} name="bday" disabled />
                 </InputColumn>
                 <InputColumn width={desktop ? "20%" : "100%"}>
                   <Label>
                     CPF:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.cpf} name="cpf" disabled/>
+                  <Input value={user.cpf} name="cpf" disabled />
                 </InputColumn>
               </Linha>
               <Linha>
@@ -94,22 +77,19 @@ const ProfileView = () => {
                   <Label>
                     Telefone:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input
-                    name="cel"
-                    value={user.cel}
-                    disabled={!edit}
-                  />
+                  <Input name="cel" value={user.cel} disabled={!edit} />
                 </InputColumn>
                 <InputColumn width={desktop ? "60%" : "100%"}>
-                  <Label>E-mail:<Mandatory>*</Mandatory>
+                  <Label>
+                    E-mail:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.email} name="email" disabled={!edit}/>
+                  <Input value={user.email} name="email" disabled={!edit} />
                 </InputColumn>
                 <InputColumn width={desktop ? "20%" : "100%"}>
                   <Label>
                     CEP:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.cep} name="cep" disabled={!edit}  />
+                  <Input value={user.cep} name="cep" disabled={!edit} />
                 </InputColumn>
               </Linha>
               <Linha>
@@ -117,22 +97,19 @@ const ProfileView = () => {
                   <Label>
                     Rua:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input
-                    name="rua"
-                    value={user.rua}
-                    disabled={!edit}
-                  />
+                  <Input name="rua" value={user.rua} disabled={!edit} />
                 </InputColumn>
                 <InputColumn width={desktop ? "20%" : "100%"}>
-                  <Label>Numero:<Mandatory>*</Mandatory>
+                  <Label>
+                    Numero:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.numero} name="numero" disabled={!edit}/>
+                  <Input value={user.numero} name="numero" disabled={!edit} />
                 </InputColumn>
                 <InputColumn width={desktop ? "40%" : "100%"}>
                   <Label>
                     Bairro:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.bairro} name="bairro" disabled={!edit}/>
+                  <Input value={user.bairro} name="bairro" disabled={!edit} />
                 </InputColumn>
               </Linha>
               {edit && (

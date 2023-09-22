@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import Loading from "src/Components/Loading";
 import NavBoot from "src/Components/Navbar";
-import { LoggedContext } from "src/contexts/loggedContext";
 import { userContext } from "src/contexts/userContext";
 import { professorRoutes } from "src/services/professorRoutes";
 import {
@@ -9,7 +8,7 @@ import {
   ImgContainer,
   Linha,
   PageContainer,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import SchoolCard from "./components/card";
 import PreviousArrow from "src/Components/PreviousArrow";
@@ -20,12 +19,8 @@ const LinkedSchoolsView = () => {
   const [loading, setLoading] = useState(true);
   const [schools, setSchools] = useState(null);
   const { user } = useContext(userContext);
-  const { isLogged } = useContext(LoggedContext);
 
   useEffect(() => {
-    if (!isLogged) {
-      window.location.href = "/login";
-    }
     getSchools();
   }, []);
 

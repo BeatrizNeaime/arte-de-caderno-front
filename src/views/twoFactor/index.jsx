@@ -13,18 +13,16 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { colors } from "../../Components/UI/contants";
 import PreviousArrow from "../../Components/PreviousArrow";
 import { userContext } from "../../contexts/userContext";
-import { LoggedContext } from "../../contexts/loggedContext";
 import { loginRoutes } from "../../services/loginRoutes";
-import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const TwoFactorView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [twoFactorCode, setTwoFactorCode] = useState(null);
   const [border] = useState(colors.blue_color);
-
+  const [redirect, setRedirect] = useState(false);
   const { user, setUser } = useContext(userContext);
-  const { isLogged, setIsLogged } = useContext(LoggedContext);
 
   const logar = async () => {
     const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
@@ -47,18 +45,20 @@ const TwoFactorView = () => {
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
       }));
-      localStorage.setItem("token", a.token);
-      setIsLogged(true);
+
+      Cookies.set("user", a.user._id, { expires: 30, path: "/" });
+      Cookies.set("accessType", a.accessType, { expires: 30, path: "/" });
+      Cookies.set("token", a.token, { expires: 30, path: "/" });
+      Cookies.set("isLogged", true, { expires: 30, path: "/" });
+      setRedirect(true);
     }
   };
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <PageContainer>
-      {isLogged && <Navigate to="/dashboard" replace />}
+      {redirect && <Navigate to="/dashboard" replace />}
       <ImgContainer img={require("../../assets/img/background.png")}>
         <Column
           width={desktop ? "70%" : "90%"}

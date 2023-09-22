@@ -10,27 +10,23 @@ import {
   Mandatory,
   Option,
   Select,
-  Title,
+  Title
 } from "../../styles/sharedStyles";
-
 import { toast } from "react-toastify";
-import { LoggedContext } from "../../contexts/loggedContext";
 import { masks } from "../../utils/masks";
-
 import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
-import { colors } from "../UI/contants";
 import { Navigate } from "react-router-dom";
 import { CPFroutes } from "../../services/CPFroutes";
 import { CEProutes } from "../../services/CEProutes";
 import { professorRoutes } from "../../services/professorRoutes";
+import Cookies from "js-cookie";
 
 const FormCadastroEstudante = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [desabilitado, setDesabilitado] = useState({ rua: true, bairro: true });
   const [schools, setSchools] = useState(null);
   const { user } = useContext(userContext);
-  const { isLogged } = useContext(LoggedContext);
   const [redirect, setRedirect] = useState(false);
     const [aluno, setAluno] = useState({
     name: "",
@@ -49,25 +45,15 @@ const FormCadastroEstudante = () => {
   });
   
   useEffect(() => {
-    if (!isLogged) {
-      window.location.href = "/login";
-    }
     getSchools();
   }, []);
 
   const getSchools = async () => {
-    const a = await professorRoutes.getSchools(user);
+    const a = await professorRoutes.getSchools(Cookies.get('user'));
     if (a) {
       setSchools(a);
     }
   };
-
-  useEffect(() => {
-    if (!isLogged) {
-      window.location.href = "/login";
-    }
-    getSchools();
-  }, []);
 
 
   const handleAluno = (e) => {
@@ -151,7 +137,7 @@ const FormCadastroEstudante = () => {
 
   const postAluno = async (e) => {
     e.preventDefault();
-    const a = await professorRoutes.postStudent(aluno, user);
+    const a = await professorRoutes.postStudent(aluno, Cookies.get('user'));
     if (a) {
       toast.success("Estudante cadastrado com sucesso!")
       setRedirect(true);

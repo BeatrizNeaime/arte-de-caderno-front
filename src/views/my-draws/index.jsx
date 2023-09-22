@@ -11,6 +11,7 @@ import {
   Linha,
 } from "src/styles/sharedStyles";
 import DrawCard from "./components/DrawCard";
+import Draws from "src/Components/Draws";
 
 const MyDrawsView = () => {
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,9 @@ const MyDrawsView = () => {
           <ContentContainer>
             <Title>Meus Desenhos</Title>
             <Linha>
-             <DrawCard/>
+              {draws.map((d, i) => {
+                return <Draws draw={d} key={i} />;
+              })}
             </Linha>
           </ContentContainer>
         </ImgContainer>

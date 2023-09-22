@@ -1,13 +1,10 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import NavBoot from "./Components/Navbar";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Rotas from "./hooks/Routes";
 import { singupContext } from "./contexts/singupContext";
-import { LoggedContext } from "./contexts/loggedContext";
 import { userContext } from "./contexts/userContext";
-import { currentPageContext } from "./contexts/currentPage";
 
 function App() {
   const [pessoa, setPessoa] = useState({
@@ -26,9 +23,8 @@ function App() {
     cidade: null,
     uf: null,
     escola: null,
-    token: null
+    token: null,
   });
-  const [isLogged, setIsLogged] = useState(false);
 
   const [user, setUser] = useState({
     id: null,
@@ -45,20 +41,16 @@ function App() {
     state: null,
     schoolId: null,
     studentsId: [],
-    drawsId: []
+    drawsId: [],
   });
-
-  const [currentPage, setCurrentPage] = useState("Início");
 
   return (
     <div className="text-center">
       <Router>
         <singupContext.Provider value={{ pessoa, setPessoa }}>
-          <LoggedContext.Provider value={{ isLogged, setIsLogged }}>
-            <userContext.Provider value={{ user, setUser }}>
-              <Rotas />
-            </userContext.Provider>
-          </LoggedContext.Provider>
+          <userContext.Provider value={{ user, setUser }}>
+            <Rotas />
+          </userContext.Provider>
         </singupContext.Provider>
       </Router>
       <ToastContainer

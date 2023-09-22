@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   AuxDiv,
   NavContainer,
   NavDropdown,
   NavLink,
-  Navnav,
+  Navnav
 } from "./navComponents";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import DropDown from "../DropDown";
 import { fonts } from "../UI/contants";
-import { LoggedContext } from "../../contexts/loggedContext";
+import Cookies from "js-cookie";
 
 function NavBoot({ currentPage }) {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [sideMenu, setSideMenu] = useState(false);
   const [topOfPage, setTopOfPage] = useState(true);
-  const { isLogged } = useContext(LoggedContext);
+  const isLogged = Cookies.get('isLogged')
   const links = [
     {
       name: "Início",
