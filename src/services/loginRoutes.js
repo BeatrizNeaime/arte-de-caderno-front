@@ -1,4 +1,5 @@
-import { toast, customId } from 'react-toastify'
+import { toast } from 'react-toastify'
+import { throwToast } from 'src/utils/toast';
 
 export const loginRoutes = {
     login: async function (user, pwd) {
@@ -41,5 +42,30 @@ export const loginRoutes = {
         } else {
             return await b
         }
+    },
+    forgotPassword: async function (user) {
+        const url = "http://localhost:8080/forgotPassword"
+        const cpf = user.replace(/\D/g, "")
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: cpf
+            })
+        }
+
+        try {
+            const a = await fetch(url, options)
+            if (a.status === 200) {
+                throwToast.info("Um código de recuperação foi enviado para seu e-mail cadastrado")
+                return true
+            } else {
+                throwToast.error("Usuário não encontrado")
+                return false
+            }
+        } catch (error) {
+            console.error(error)
+        }
+
     }
 }

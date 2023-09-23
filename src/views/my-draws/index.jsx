@@ -1,32 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "src/Components/Loading";
 import NavBoot from "src/Components/Navbar";
-import { userContext } from "src/contexts/userContext";
 import { drawRoutes } from "src/services/drawRoutes";
 import {
   PageContainer,
   ImgContainer,
   ContentContainer,
   Title,
-  Linha,
+  Linha
 } from "src/styles/sharedStyles";
-import DrawCard from "./components/DrawCard";
 import Draws from "src/Components/Draws";
+import Cookies from "js-cookie";
 
 const MyDrawsView = () => {
   const [loading, setLoading] = useState(true);
   const [draws, setDraws] = useState(null);
-  const { user } = useContext(userContext);
+  
 
   useEffect(() => {
     getDraws();
   }, []);
 
   const getDraws = async () => {
-    const a = drawRoutes.getDrawsByUser(user);
+    const a = drawRoutes.getDrawsByUser(Cookies.get('user'));
     if (a) {
       setDraws(a);
       setLoading(false);
+      console.log(draws)
     }
   };
 

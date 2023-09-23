@@ -11,16 +11,18 @@ import {
   Mandatory,
   Select,
   Option,
-  Button
+  Button,
 } from "src/styles/sharedStyles";
-import NavBoot from "src/Components/Navbar";import { userContext } from "src/contexts/userContext";
-import { Navigate} from "react-router-dom";
+import NavBoot from "src/Components/Navbar";
+import { userContext } from "src/contexts/userContext";
+import { Navigate } from "react-router-dom";
 import { CheckupContainer } from "../cadastro-usuario/components";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
 import { drawRoutes } from "src/services/drawRoutes";
 import PreviousArrow from "src/Components/PreviousArrow";
 import Loading from "src/Components/Loading";
+import Cookies from "js-cookie";
 
 const initialState = {
   titulo: null,
@@ -37,9 +39,11 @@ const CadastroDesenhoView = () => {
   const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(userContext);
+  const access = Cookies.get("accessType");
 
   const getStudents = async () => {
-    const a = await professorRoutes.getStudents(user);
+    const a = await professorRoutes.getStudents(Cookies.get("user"));
+    console.log(a);
     if (a) {
       setStudents(a);
       setLoading(false);
@@ -47,22 +51,21 @@ const CadastroDesenhoView = () => {
   };
 
   useEffect(() => {
-
-    if (user.accessType === "student") {
+    if (access === "student") {
       setDesenho((desenho) => {
         return {
           ...desenho,
           autor: user.id,
         };
       });
-      setLoading(false)
-    } else if (user.accessType === "professor") {
+      setLoading(false);
+    } else if (access === "professor") {
       getStudents();
     }
   }, []);
 
   const postDraw = async (e) => {
-    console.log(desenho)
+    console.log(desenho);
     e.preventDefault();
     const a = await drawRoutes.postDraw(desenho);
     if (a) {
@@ -90,7 +93,8 @@ const CadastroDesenhoView = () => {
     );
   } else {
     return (
-      <PageContainer>        {done && <Navigate to="/dashboard" replace />}
+      <PageContainer>
+        {done && <Navigate to="/dashboard" replace />}
         <ImgContainer img={require("src/assets/img/op-background.png")}>
           <NavBoot currentPage={"Perfil"} />
           <ContentContainer
@@ -99,10 +103,10 @@ const CadastroDesenhoView = () => {
             }}
           >
             <CheckupContainer width={"90%"}>
-              {user.accessType === "professor" && (
+              {access === "professor" && (
                 <Title>Cadastre um desenho</Title>
               )}
-              {user.accessType === "student" && (
+              {access === "student" && (
                 <Title>Cadastre seu desenho</Title>
               )}
               <form style={{ width: "100%" }} onSubmit={postDraw}>
@@ -123,7 +127,7 @@ const CadastroDesenhoView = () => {
                     <Label>
                       Autor:<Mandatory>*</Mandatory>{" "}
                     </Label>
-                    {user.accessType === "professor" && (
+                    {access=== "professor" && (
                       <Select
                         name="autor"
                         width={"100%"}
@@ -132,16 +136,17 @@ const CadastroDesenhoView = () => {
                         <Option selected disabled>
                           Selecione um estudante...
                         </Option>
+
                         {students.map((s) => {
                           return (
-                            <Option value={s._id} key={s.id}>
+                            <Option value={s._id} key={s._id}>
                               {s.name}
                             </Option>
                           );
                         })}
                       </Select>
                     )}
-                    {user.accessType === "student" && (
+                    {access === "student" && (
                       <Input type="text" disabled value={user.name} required />
                     )}
                   </InputColumn>
@@ -206,7 +211,7 @@ const CadastroDesenhoView = () => {
                 width: "90%",
               }}
             >
-              <PreviousArrow />
+              <PreviousArrow navigate={"dashboard"} />
             </Linha>
           </ContentContainer>
         </ImgContainer>

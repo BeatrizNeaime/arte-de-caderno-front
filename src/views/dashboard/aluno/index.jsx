@@ -1,6 +1,7 @@
-import { Column,  Linha } from "../../../styles/sharedStyles";
+import { Column, Linha } from "../../../styles/sharedStyles";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import Card from "../../../Components/Cards";
+import Cookies from "js-cookie";
 
 const DashboardAlunoView = ({ user }) => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -30,7 +31,7 @@ const DashboardAlunoView = ({ user }) => {
           name={"Desenhos Cadastrados"}
           desktop={desktop}
           value={user.drawsId.length}
-          path={"/desenhos"}
+          path={`/desenhos/${Cookies.get("user")}`}
         />
       </Linha>
     </Column>

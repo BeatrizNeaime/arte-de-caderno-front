@@ -9,6 +9,7 @@ const CardDiv = styled.div`
   background: ${effects.glass.bg};
   backdrop-filter: ${effects.glass.filter};
   padding: 1rem;
+  padding-left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;

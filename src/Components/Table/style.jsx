@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts } from "../UI/contants";
+import { fonts } from "../UI/contants";
 
 const MyTable = styled.table`
   background: rgba(255, 255, 255, 0.04);
@@ -51,21 +51,6 @@ const TD = styled.td`
   padding: 5px;
 `;
 
-const ShowBtn = styled.button`
-  background-color: ${colors.deepBlue};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  color: white;
-  font-family: ${fonts.jetbrains};
-  padding: 5px;
-  width: 50%;
-  text-transform: uppercase;
 
-  &:hover {
-    background-color: #92bac9;
-  }
-`;
 
-export { MyTable, TBody, TH, THead, TR, TD, ShowBtn };
+export { MyTable, TBody, TH, THead, TR, TD };

@@ -8,11 +8,12 @@ import {
   ImgContainer,
   Linha,
   PageContainer,
-  Title
+  Title,
 } from "src/styles/sharedStyles";
 import SchoolCard from "./components/card";
 import PreviousArrow from "src/Components/PreviousArrow";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
+import Cookies from "js-cookie";
 
 const LinkedSchoolsView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -25,7 +26,7 @@ const LinkedSchoolsView = () => {
   }, []);
 
   const getSchools = async () => {
-    const a = await professorRoutes.getSchools(user);
+    const a = await professorRoutes.getSchools(Cookies.get("user"));
     if (a) {
       setSchools(a);
       setLoading(false);
@@ -56,7 +57,7 @@ const LinkedSchoolsView = () => {
             <Linha
               style={{
                 width: desktop ? "80%" : "100%",
-                justifySelf: "flex-end"
+                justifySelf: "flex-end",
               }}
             >
               <PreviousArrow />

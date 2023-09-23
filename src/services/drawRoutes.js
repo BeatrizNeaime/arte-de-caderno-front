@@ -1,6 +1,7 @@
+import Cookies from 'js-cookie';
 import { toast } from 'react-toastify'
 
-const token = localStorage.getItem('token')
+const token = Cookies.get('token')
 
 export const drawRoutes = {
     postDraw: async function (draw) {
@@ -31,8 +32,8 @@ export const drawRoutes = {
             console.error(error);
         }
     },
-    getDrawsByUser: async function (user) {
-        const url = `http://localhost:8080/draw/student/${user.id}`
+    getDrawsByUser: async function (id) {
+        const url = `http://localhost:8080/draw/student/${id}`
         const options = {
             method: "GET",
             headers: {
@@ -44,7 +45,7 @@ export const drawRoutes = {
         try {
             const a = await fetch(url, options)
             const b = await a.json()
-            console.log(b)
+            return await b
         } catch (error) {
             console.error(error)
         }

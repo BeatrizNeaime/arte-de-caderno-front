@@ -14,6 +14,7 @@ import { userContext } from "src/contexts/userContext";
 import { professorRoutes } from "src/services/professorRoutes";
 import Loading from "src/Components/Loading";
 import PreviousArrow from "src/Components/PreviousArrow";
+import Cookies from "js-cookie";
 
 const StudentsControlView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -26,7 +27,7 @@ const StudentsControlView = () => {
   }, []);
 
   const getData = async () => {
-    const a = await professorRoutes.getStudents(user);
+    const a = await professorRoutes.getStudents(Cookies.get('user'));
     if (a) {
       setData(a);
       setLoading(false);

@@ -107,7 +107,7 @@ const LoginView = () => {
                 </ImgButton>
               </Linha>
               <Linha style={{ margin: "0.2rem 0" }}>
-                <ForgotLink href="/forgot">Esqueceu sua senha?</ForgotLink>
+                <ForgotLink href="/recuperar-senha">Esqueceu sua senha?</ForgotLink>
               </Linha>
             </InputColumn>
             <Linha style={{ margin: "0.5rem 0" }}>

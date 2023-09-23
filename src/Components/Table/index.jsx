@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { MyTable, TBody, TH, THead, TR, TD, ShowBtn } from "./style";
+import { useState } from "react";
+import { MyTable, TBody, TH, THead, TR, TD } from "./style";
+import { InteractiveBtn } from "../InteractiveBtn";
+import { colors } from "../UI/contants";
 import { Navigate } from "react-router-dom";
-import { schoolRoutes } from "src/services/schoolRoutes";
-import StudentModal from "../StudentModal";
 
 const Table = ({ header, data }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [aluno, setAluno] = useState(null);
-  const [school, setSchool] = useState(null);
-
-  const show = (data) => {
-    setAluno(data);
-    setShowModal(true);
-  };
-
-  const getSchool = async (id) => {
-    const a = await schoolRoutes.getSchoolById(id);
-    if (a) {
-      setSchool(a.name);
-    }
-  };
-
-  useEffect(() => {
-  }, []);
+  const [redirect, setRedirect] = useState(false);
 
   return (
     <MyTable>
-      {showModal && <Navigate to="/info" replace />}
       <THead>
         {header.map((h) => {
           return <TH>{h}</TH>;
@@ -39,8 +21,16 @@ const Table = ({ header, data }) => {
               <TD>{d.name}</TD>
               <TD style={{ justifyContent: "center" }}>{d.drawsId.length}</TD>
               <TD style={{ justifyContent: "center" }}>
-                <StudentModal student={d} />
+                <InteractiveBtn
+                  width={"10%"}
+                  bg={colors.facebook}
+                  hover={colors.deepBlue}
+                  onClick={() => setRedirect(true)}
+                >
+                  <ion-icon name="eye-outline"></ion-icon>
+                </InteractiveBtn>
               </TD>
+              {redirect && <Navigate to={`/info/${d._id}`} replace />}
             </TR>
           );
         })}

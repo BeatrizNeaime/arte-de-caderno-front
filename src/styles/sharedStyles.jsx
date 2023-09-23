@@ -11,6 +11,10 @@ const Select = styled.select`
   &:hover {
     cursor: pointer;
   }
+
+  &:disabled {
+    border-color: ${colors.deepGrey};
+  }
 `;
 
 const Option = styled.option`
@@ -19,6 +23,10 @@ const Option = styled.option`
   &:hover {
     background-color: ${colors.blue_color};
     cursor: pointer;
+  }
+
+  &:disabled {
+    border-color: ${colors.deepGrey};
   }
 `;
 
@@ -74,16 +82,19 @@ const Column = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: ${(props) => (props.primary ? colors.blue_color : colors.deepGrey)};
+  background-color: ${(props) =>
+    props.primary ? colors.blue_color : colors.deepGrey};
   border-radius: 6px;
   color: black;
   justify-content: center;
   padding: 10px;
   text-align: center;
   text-transform: uppercase;
+  transition: ease 1.5s;
 
   &:hover {
-    background-color: ${(props) => (props.primary ? colors.deepBlue : colors.lightGrey)};
+    background-color: ${(props) =>
+      props.primary ? colors.deepBlue : colors.lightGrey};
   }
 `;
 
@@ -189,6 +200,10 @@ const Form = styled(Column)`
   gap: 1rem;
 `;
 
+const Text = styled.p`
+  font-family: ${fonts.jetbrains};
+`
+
 export {
   Column,
   InputColumn,
@@ -211,4 +226,5 @@ export {
   ContentContainer,
   RateButton,
   Form,
+  Text
 };

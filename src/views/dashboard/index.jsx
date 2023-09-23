@@ -23,7 +23,7 @@ const DashboardRouter = () => {
 
   const getProf = async () => {
     const a = await professorRoutes.getProfById(Cookies.get("user"));
-
+    console.log(a);
     if (a) {
       setUser((user) => ({
         ...user,
@@ -48,7 +48,7 @@ const DashboardRouter = () => {
   };
 
   const getStudent = async () => {
-    const a = await studentRoutes.getUserById(user);
+    const a = await studentRoutes.getUserById(Cookies.get("user"));
     if (a) {
       setUser((user) => ({
         ...user,

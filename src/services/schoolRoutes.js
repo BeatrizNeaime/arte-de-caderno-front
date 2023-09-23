@@ -1,6 +1,7 @@
+import Cookies from "js-cookie"
 import { throwToast } from "src/utils/toast"
 
-const token = localStorage.getItem('token')
+const token = Cookies.get('token')
 
 export const schoolRoutes = {
     getSchoolById: async function (id) {

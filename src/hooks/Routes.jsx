@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import About from "../pages/about/index";
 import Cadastro from "../pages/cadastro";
 import Cadastro2 from "../pages/cadastro/index2";
@@ -19,6 +19,9 @@ import TwoFactor from "../pages/twoFactor";
 import LinkedSchools from "src/pages/linked-schools";
 import MyDraws from "src/pages/my-draws";
 import ProtectedRoute from "./ProtectedRoute";
+import NotLoggedRoute from "./NoLoggedRoute";
+import ForgotPassword from "src/pages/forgot-password";
+import ChangePassword from "src/views/forgot-password/change-pwd";
 
 const Rotas = () => {
   return (
@@ -27,14 +30,9 @@ const Rotas = () => {
       <Route path="/sobre" element={<About />} />
       <Route path="/galeria" element={<Gallery />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/cadastro-usuario"
-        element={<ProtectedRoute Component={Cadastro} />}
-      />
-      <Route
-        path="/cadastro-usuario/escola"
-        element={<ProtectedRoute Component={Cadastro2} />}
-      />
+      <Route path="/desenvolvedores" element={<Devs />} />
+      /* --- ROTAS PROTEGIDAS (precisam de login) --- */
+      
       <Route
         path="/cadastro-escola"
         element={<ProtectedRoute Component={CadastroEscola} />}
@@ -53,24 +51,43 @@ const Rotas = () => {
       />
       <Route path="/perfil" element={<ProtectedRoute Component={Profile} />} />
       <Route path="/escolas" element={<ProtectedRoute Component={Schools} />} />
-      <Route path="/desenvolvedores" element={<Devs />} />
       <Route
         path="/estudantes-cadastrados"
         element={<ProtectedRoute Component={StudentsControl} />}
       />
       <Route
-        path="/info"
+        path="/info/:id"
         element={<ProtectedRoute Component={StudentInfo} />}
       />
       <Route path="/avaliar" element={<ProtectedRoute Component={Rating} />} />
-      <Route path="/dois-fatores" element={<TwoFactor />} />
       <Route
         path="/escolas-vinculadas"
         element={<ProtectedRoute Component={LinkedSchools} />}
       />
       <Route
-        path="/desenhos"
+        path="/desenhos/:id"
         element={<ProtectedRoute Component={MyDraws} />}
+      />
+      /* --- SÓ RENDERIZA SE NÃO ESTIVER LOGADO --- */
+      <Route
+        path="/dois-fatores"
+        element={<NotLoggedRoute Component={TwoFactor} />}
+      />
+      <Route
+        path="/recuperar-senha"
+        element={<NotLoggedRoute Component={ForgotPassword} />}
+      />
+      <Route
+        path="/trocar-senha/:id"
+        element={<NotLoggedRoute Component={ChangePassword} />}
+      />
+      <Route
+        path="/cadastro-usuario"
+        element={<NotLoggedRoute Component={Cadastro} />}
+      />
+      <Route
+        path="/cadastro-usuario/escola"
+        element={<NotLoggedRoute Component={Cadastro2} />}
       />
     </Routes>
   );

@@ -1,5 +1,6 @@
+import Cookies from "js-cookie";
 import { throwToast } from "src/utils/toast";
-const token = localStorage.getItem('token')
+const token = Cookies.get('token')
 
 export const studentRoutes = {
     insertStudent: async function (student, school) {
@@ -42,8 +43,8 @@ export const studentRoutes = {
             console.error(error)
         }
     },
-    getUserById: async function (user) {
-        const url = `http://localhost:8080/student/${user.id}`
+    getUserById: async function (id) {
+        const url = `http://localhost:8080/student/${id}`
         const options = {
             method: 'GET',
             headers: {

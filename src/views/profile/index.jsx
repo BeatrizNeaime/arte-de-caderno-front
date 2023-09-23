@@ -1,22 +1,23 @@
-import { useState, useContext} from "react";
+import { useState, useContext } from "react";
 import {
   PageContainer,
   ImgContainer,
   ContentContainer,
   Title,
   Linha,
-  Column,
   InputColumn,
   Label,
   Mandatory,
   Input,
   Button,
-  Form
+  Form,
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
+import { CheckupContainer } from "../cadastro-usuario/components";
+import PreviousArrow from "src/Components/PreviousArrow";
 
 const ProfileView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -28,16 +29,7 @@ const ProfileView = () => {
       <ImgContainer img={require("../../assets/img/op-background.png")}>
         <NavBoot currentPage={"Perfil"} />
         <ContentContainer>
-          <Column
-            width={desktop ? "70%" : "100%"}
-            style={{
-              backgroundColor: "white",
-              backdropFilter: "blur(5px)",
-              border: "1px solid black",
-              padding: "1rem",
-              borderRadius: "12px",
-            }}
-          >
+          <CheckupContainer width={desktop ? "70%" : "100%"}>
             <Linha
               style={{
                 flexDirection: "row",
@@ -118,7 +110,12 @@ const ProfileView = () => {
                 </Linha>
               )}
             </Form>
-          </Column>
+          </CheckupContainer>
+          <Linha
+            style={{ width: desktop ? "70%" : "100%", flexDirection: "row" }}
+          >
+            <PreviousArrow />
+          </Linha>
         </ContentContainer>
       </ImgContainer>
     </PageContainer>
