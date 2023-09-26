@@ -23,13 +23,16 @@ import { drawRoutes } from "src/services/drawRoutes";
 import PreviousArrow from "src/Components/PreviousArrow";
 import Loading from "src/Components/Loading";
 import Cookies from "js-cookie";
+import { Form } from "react-bootstrap";
+import { checkImage } from "src/utils/checkImage";
+import { throwToast } from "src/utils/toast";
 
 const initialState = {
   titulo: null,
   autor: null,
   categoria: null,
   tema: null,
-  link: null,
+  file: null,
 };
 
 const CadastroDesenhoView = () => {
@@ -38,6 +41,7 @@ const CadastroDesenhoView = () => {
   const [done, setDone] = useState(false);
   const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [send, setSend] = useState(false);
   const { user } = useContext(userContext);
   const access = Cookies.get("accessType");
 
@@ -65,19 +69,34 @@ const CadastroDesenhoView = () => {
   }, []);
 
   const postDraw = async (e) => {
-    console.log(desenho);
     e.preventDefault();
-    const a = await drawRoutes.postDraw(desenho);
+    for (const [key, value] of Object.entries(desenho)) {
+      if (desenho.key === null) {
+        setSend(false);
+        throwToast.warning(`Preencha o campo ${key}`)
+      } else{
+        setSend(true)
+      }
+    }
+    if (send) {
+      const a = await drawRoutes.postDraw(desenho);
+      if (a) {
+        setDone(true);
+      }
+    }
+  };
+
+  const handleDesenhoFile = (e) => {
+    const { files } = e.target;
+    const a = checkImage(files[0]);
     if (a) {
-      setDone(true);
+      setDesenho({ ...desenho, file: files[0] });
     }
   };
 
   const handleDesenho = (e) => {
     const { name, value } = e.target;
-    setDesenho((desenho) => {
-      return { ...desenho, [name]: value };
-    });
+    setDesenho({ ...desenho, [name]: value });
   };
 
   if (loading) {
@@ -103,12 +122,8 @@ const CadastroDesenhoView = () => {
             }}
           >
             <CheckupContainer width={"90%"}>
-              {access === "professor" && (
-                <Title>Cadastre um desenho</Title>
-              )}
-              {access === "student" && (
-                <Title>Cadastre seu desenho</Title>
-              )}
+              {access === "professor" && <Title>Cadastre um desenho</Title>}
+              {access === "student" && <Title>Cadastre seu desenho</Title>}
               <form style={{ width: "100%" }} onSubmit={postDraw}>
                 <Linha>
                   <InputColumn width={desktop ? "50%" : "100%"}>
@@ -117,7 +132,6 @@ const CadastroDesenhoView = () => {
                     </Label>
                     <Input
                       type="text"
-                      required
                       value={desenho.titulo}
                       name="titulo"
                       onChange={handleDesenho}
@@ -127,7 +141,7 @@ const CadastroDesenhoView = () => {
                     <Label>
                       Autor:<Mandatory>*</Mandatory>{" "}
                     </Label>
-                    {access=== "professor" && (
+                    {access === "professor" && (
                       <Select
                         name="autor"
                         width={"100%"}
@@ -188,15 +202,14 @@ const CadastroDesenhoView = () => {
                   </InputColumn>
                 </Linha>
                 <Linha style={{ marginTop: "1rem" }}>
-                  {/* <Button primary type="button" style={{ borderRadius: "12px" }}>
-                    Escolher desenho
-                  </Button> */}
-                  <Input
-                    placeholder="link"
-                    value={desenho.link}
-                    name="link"
-                    onChange={handleDesenho}
-                  />
+                  <Form.Group
+                    controlId="formFile"
+                    className="mb-3"
+                    onChange={handleDesenhoFile}
+                  >
+                    <Form.Label>Escolher arquivo </Form.Label>
+                    <Form.Control type="file" accept={"image/*"} />
+                  </Form.Group>
                 </Linha>
                 <Linha
                   style={{ marginTop: "2rem", width: "auto", gap: "1rem" }}

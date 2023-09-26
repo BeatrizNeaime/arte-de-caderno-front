@@ -18,6 +18,7 @@ import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
 import { CheckupContainer } from "../cadastro-usuario/components";
 import PreviousArrow from "src/Components/PreviousArrow";
+import { masks } from "src/utils/masks";
 
 const ProfileView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -61,7 +62,7 @@ const ProfileView = () => {
                   <Label>
                     CPF:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={user.cpf} name="cpf" disabled />
+                  <Input value={masks.cpf(user.cpf)} name="cpf" disabled />
                 </InputColumn>
               </Linha>
               <Linha>

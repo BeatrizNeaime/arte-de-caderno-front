@@ -2,9 +2,9 @@ import { Column, Linha } from "../../../styles/sharedStyles";
 import Card from "../../../Components/Cards";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
-const DashboardProfessorView = ({user}) => {
+const DashboardProfessorView = ({ user }) => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  
+
   return (
     <Column
       style={{
@@ -12,6 +12,7 @@ const DashboardProfessorView = ({user}) => {
         margin: desktop ? "0" : "1rem 0",
       }}
     >
+
       <Linha>
         <Card
           icon={"people-1"}
@@ -19,6 +20,7 @@ const DashboardProfessorView = ({user}) => {
           value={user.studentsId.length}
           desktop={desktop}
           path={"/estudantes-cadastrados"}
+          className={"estudantes-cadastrados"}
         />
         <Card
           icon={"draw"}
@@ -26,6 +28,7 @@ const DashboardProfessorView = ({user}) => {
           value={0}
           desktop={desktop}
           path={"/desenhos"}
+          className={"desenhos-cadastrados"}
         />
         <Card
           icon={"book11"}

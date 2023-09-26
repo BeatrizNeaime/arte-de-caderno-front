@@ -1,7 +1,7 @@
-import React from "react";
 import { Column, Linha } from "../../../styles/sharedStyles";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import Card from "../../../Components/Cards";
+import Cookies from "js-cookie";
 
 const DashboardAvaliadorView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -14,7 +14,12 @@ const DashboardAvaliadorView = () => {
       }}
     >
       <Linha>
-        <Card icon={"create-1"} name={"Aguardando avaliação"} desktop={desktop} path="#" />
+        <Card
+          icon={"create-1"}
+          name={"Aguardando avaliação"}
+          desktop={desktop}
+          path={`/aguardando-avaliacao/${Cookies.get("user")}`}
+        />
         <Card icon={"draw"} name={"Avaliados"} desktop={desktop} path="#" />
       </Linha>
     </Column>

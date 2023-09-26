@@ -27,25 +27,6 @@ const TwoFactorView = () => {
   const logar = async () => {
     const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
     if (a) {
-      setUser((u) => ({
-        ...u,
-        id: a.user._id,
-        name: a.user.name,
-        date_of_birth: a.user.date_of_birth,
-        cpf: a.user.cpf,
-        accessType: a.accessType,
-        email: a.user.email,
-        password: a.user.password,
-        phone: a.user.phone,
-        cep: a.user.cep,
-        city: a.user.city,
-        loginId: a.user.name,
-        state: a.user.state,
-        schoolId: a.user.schoolId,
-        studentsId: a.user.studentsId || null,
-        drawsId: a.user.drawsId,
-      }));
-
       Cookies.set("user", a.user._id, { expires: 30, path: "/" });
       Cookies.set("accessType", a.accessType, { expires: 30, path: "/" });
       Cookies.set("token", a.token, { expires: 30, path: "/" });
@@ -87,6 +68,7 @@ const TwoFactorView = () => {
               value={twoFactorCode}
               border={border}
               onChange={(e) => setTwoFactorCode(e.target.value)}
+              onPaste={(e) => setTwoFactorCode(e.target.value)}
             />
             <Button primary onClick={logar}>
               verificar

@@ -83,6 +83,7 @@ const LoginView = () => {
                 value={credentials.username}
                 onChange={handleCPF}
                 required
+                id="username"
               />
             </InputColumn>
             <InputColumn width={"100%"} style={{ margin: "1rem 0" }}>
@@ -94,6 +95,7 @@ const LoginView = () => {
                   style={{
                     width: desktop ? "80%" : "100%",
                   }}
+                  className=".password"
                 />
                 <ImgButton
                   type="button"

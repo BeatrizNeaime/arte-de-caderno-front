@@ -8,13 +8,14 @@ import {
 import NavBoot from "../../Components/Navbar";
 import DashboardAlunoView from "./aluno";
 import DashboardProfessorView from "./professor";
-import { DashTitle } from "./style";
 import DashboardAvaliadorView from "./avaliador";
 import Loading from "../../Components/Loading";
-import { studentRoutes } from "src/services/studentRoutes";
-import { userContext } from "../../contexts/userContext";
 import Cookies from "js-cookie";
+import { DashTitle } from "./style";
+import { userContext } from "../../contexts/userContext";
+import { studentRoutes } from "src/services/studentRoutes";
 import { professorRoutes } from "src/services/professorRoutes";
+import { evaluatorRoutes } from "src/services/evaluatorRoutes";
 
 const DashboardRouter = () => {
   const { user, setUser } = useContext(userContext);
@@ -23,25 +24,25 @@ const DashboardRouter = () => {
 
   const getProf = async () => {
     const a = await professorRoutes.getProfById(Cookies.get("user"));
-    console.log(a);
+    console.log("user> ", a);
     if (a) {
       setUser((user) => ({
         ...user,
-        id: a.professor._id,
-        name: a.professor.name,
-        date_of_birth: a.professor.date_of_birth,
-        cpf: a.professor.cpf,
+        id: a.user._id,
+        name: a.user.name,
+        date_of_birth: a.user.date_of_birth,
+        cpf: a.user.cpf,
         accessType: a.accessType,
-        email: a.professor.email,
-        password: a.professor.password,
-        phone: a.professor.phone,
-        cep: a.professor.cep,
-        city: a.professor.city,
-        loginId: a.name,
-        state: a.professor.state,
-        schoolId: a.professor.schoolId,
-        studentsId: a.professor.studentsId || null,
-        drawsId: a.professor.drawsId,
+        email: a.user.email,
+        password: a.user.password,
+        phone: a.user.phone,
+        cep: a.user.cep,
+        city: a.user.city,
+        loginId: a.user.loginId,
+        state: a.user.state,
+        schoolId: a.user.schoolId,
+        studentsId: a.user.studentsId || null,
+        drawsId: a.user.drawsId,
       }));
       setLoading(false);
     }
@@ -52,33 +53,51 @@ const DashboardRouter = () => {
     if (a) {
       setUser((user) => ({
         ...user,
-        id: a.student._id,
-        name: a.student.name,
-        date_of_birth: a.student.date_of_birth,
-        cpf: a.student.cpf,
+        id: a.user._id,
+        name: a.user.name,
+        date_of_birth: a.user.date_of_birth,
+        cpf: a.user.cpf,
         accessType: a.accessType,
-        email: a.student.email,
-        password: a.student.password,
-        phone: a.student.phone,
-        cep: a.student.cep,
-        city: a.student.city,
-        loginId: a.name,
-        state: a.student.state,
-        schoolId: a.student.schoolId,
-        studentsId: a.student.studentsId || null,
-        drawsId: a.student.drawsId,
+        email: a.user.email,
+        password: a.user.password,
+        phone: a.user.phone,
+        cep: a.user.cep,
+        city: a.user.city,
+        loginId: a.user.loginId,
+        state: a.user.state,
+        schoolId: a.user.schoolId,
+        drawsId: a.user.drawsId,
       }));
       setLoading(false);
     }
-    console.log(a);
+  };
+
+  const getEvaluator = async () => {
+    const a = await evaluatorRoutes.getEvaluatorById(Cookies.get("user"));
+
+    if (a) {
+      setUser((user) => ({
+        ...user,
+        name: a.user.name,
+        email: a.user.email,
+        cpf: a.user.cpf,
+        loginId: a.user.loginId,
+      }));
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    if (accessType === "professor") {
-      getProf();
-    } else if (accessType === "student") {
-      getStudent();
+    // if (accessType === "professor") {
+    //   getProf();
+    // } else if (accessType === "student") {
+    //   getStudent();
+    if (accessType === "evaluator") {
+      getEvaluator();
     }
+    Cookies.set("user", "650a276884a63659b672fa4d");
+    Cookies.set("isLogged", true);
+    Cookies.set("accessType", "evaluator");
   }, []);
 
   if (loading) {
@@ -99,13 +118,13 @@ const DashboardRouter = () => {
             <Linha>
               <DashTitle>Olá, {user.name}!</DashTitle>
             </Linha>
-            {user.accessType === "professor" && (
+            {accessType === "professor" && (
               <DashboardProfessorView user={user} />
             )}
-            {user.accessType === "student" && (
+            {accessType === "student" && (
               <DashboardAlunoView user={user} />
             )}
-            {user.accessType === "judge" && (
+            {accessType === "evaluator" && (
               <DashboardAvaliadorView user={user} />
             )}
           </ContentContainer>
