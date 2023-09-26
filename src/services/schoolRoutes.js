@@ -15,7 +15,7 @@ export const schoolRoutes = {
 
         const a = await fetch(url, options)
         const b = await a.json()
-        return b
+        return await b
     },
     getUfs: async function () {
         const a = await fetch("http://localhost:8080/school/uf");

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify'
+import { throwToast } from 'src/utils/toast';
 
 const token = Cookies.get('token')
 
@@ -23,9 +23,9 @@ export const drawRoutes = {
         try {
             const a = await fetch(url, options);
             if (a.status !== 201) {
-                toast.error("Ocorreu um erro. Tente novamente!");
+                throwToast.error("Ocorreu um erro. Tente novamente!");
             } else {
-                toast.success("Desenho cadastrado com sucesso!");
+                throwToast.success("Obra cadastrado com sucesso!");
                 return true
             }
         } catch (error) {

@@ -43,8 +43,9 @@ export const studentRoutes = {
             console.error(error)
         }
     },
-    getUserById: async function (id) {
-        const url = `http://localhost:8080/student/${id}`
+    getUserById: async function (student_id) {
+        console.log(":: ",student_id)
+        const url = `http://localhost:8080/student/${student_id}`
         const options = {
             method: 'GET',
             headers: {
@@ -55,7 +56,7 @@ export const studentRoutes = {
         try {
             const a = await fetch(url, options)
             const b = await a.json()
-            return await b
+            return b
         } catch (error) {
             console.error(error)
         }

@@ -35,7 +35,6 @@ export const professorRoutes = {
 
     },
     getProfById: async function (id) {
-        console.log(token)
         const url = `http://localhost:8080/professor/${id}`
         const options = {
             method: 'GET',

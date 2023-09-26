@@ -67,5 +67,29 @@ export const loginRoutes = {
             console.error(error)
         }
 
+    },
+    resetPassword: async function (newCred) {
+        const url = "http://localhost:8080/resetPassword"
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: newCred.username,
+                password: newCred.pwd,
+                token: newCred.code
+            })
+        }
+
+        try {
+            const a = await fetch(url, options)
+            const b = await a.json()
+            if (a.ok) {
+                console.log(b)
+                return true
+            }
+        } catch (error) {
+            throwToast.error("Algo deu errado. Tente novamente mais tarde!")
+        }
+
     }
 }
