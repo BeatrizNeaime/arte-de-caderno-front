@@ -13,7 +13,7 @@ import Schools from "../pages/schools/Schools";
 import Devs from "../pages/devs";
 import DashboardRouter from "../views/dashboard";
 import StudentsControl from "../pages/students-control";
-import StudentInfo from "../Components/Student-info";
+import StudentInfo from "../pages/student-info";
 import Rating from "../pages/rating";
 import TwoFactor from "../pages/twoFactor";
 import LinkedSchools from "src/pages/linked-schools";
@@ -22,6 +22,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import NotLoggedRoute from "./NoLoggedRoute";
 import ForgotPassword from "src/pages/forgot-password";
 import ChangePassword from "src/views/forgot-password/change-pwd";
+import DrawsWaiting from "src/pages/draws-waiting-rate";
 
 const Rotas = () => {
   return (
@@ -29,10 +30,8 @@ const Rotas = () => {
       <Route path="/" element={<Home />} />
       <Route path="/sobre" element={<About />} />
       <Route path="/galeria" element={<Gallery />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/desenvolvedores" element={<Devs />} />
       /* --- ROTAS PROTEGIDAS (precisam de login) --- */
-      
       <Route
         path="/cadastro-escola"
         element={<ProtectedRoute Component={CadastroEscola} />}
@@ -56,7 +55,7 @@ const Rotas = () => {
         element={<ProtectedRoute Component={StudentsControl} />}
       />
       <Route
-        path="/info/:id"
+        path="/info/:student_id"
         element={<ProtectedRoute Component={StudentInfo} />}
       />
       <Route path="/avaliar" element={<ProtectedRoute Component={Rating} />} />
@@ -65,10 +64,15 @@ const Rotas = () => {
         element={<ProtectedRoute Component={LinkedSchools} />}
       />
       <Route
-        path="/desenhos/:id"
+        path="/desenhos/:id?"
         element={<ProtectedRoute Component={MyDraws} />}
       />
+      <Route
+        path="/aguardando-avaliacao/:id"
+        element={<ProtectedRoute Component={DrawsWaiting} />}
+      />
       /* --- SÓ RENDERIZA SE NÃO ESTIVER LOGADO --- */
+      <Route path="/login" element={<NotLoggedRoute Component={Login} />} />
       <Route
         path="/dois-fatores"
         element={<NotLoggedRoute Component={TwoFactor} />}
@@ -78,7 +82,7 @@ const Rotas = () => {
         element={<NotLoggedRoute Component={ForgotPassword} />}
       />
       <Route
-        path="/trocar-senha/:id"
+        path="/trocar-senha/:id?"
         element={<NotLoggedRoute Component={ChangePassword} />}
       />
       <Route

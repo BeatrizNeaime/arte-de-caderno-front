@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { fonts } from "../UI/contants";
 
 const MyTable = styled.table`
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(5px);
   width: 100%;
+  min-height: 10vh;
+  height: auto;
+  max-height: 50vh;
+  overflow-y: scroll;
 `;
 
 const THead = styled.thead`
@@ -27,7 +29,6 @@ const TH = styled.th`
 const TBody = styled.tbody`
   padding: 5px;
   width: 100%;
-  height: 160px !important;
   overflow-y: scroll;
 `;
 
@@ -50,7 +51,5 @@ const TD = styled.td`
   width: 100%;
   padding: 5px;
 `;
-
-
 
 export { MyTable, TBody, TH, THead, TR, TD };

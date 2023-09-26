@@ -17,6 +17,8 @@ function NavBoot({ currentPage }) {
   const [sideMenu, setSideMenu] = useState(false);
   const [topOfPage, setTopOfPage] = useState(true);
   const isLogged = Cookies.get('isLogged')
+  const profileLink = desktop ? "Perfil" : "Dashboard"
+  
   const links = [
     {
       name: "Início",
@@ -31,7 +33,7 @@ function NavBoot({ currentPage }) {
       path: "/sobre",
     },
     {
-      name: isLogged ? "Perfil" : "Login",
+      name: isLogged ? profileLink : "Login",
       path: isLogged ? "/dashboard" : "/login",
     },
   ];

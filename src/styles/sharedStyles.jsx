@@ -96,6 +96,12 @@ const Button = styled.button`
     background-color: ${(props) =>
       props.primary ? colors.deepBlue : colors.lightGrey};
   }
+
+  &:disabled{
+    cursor: not-allowed;
+    background-color: ${colors.deepGrey};
+  }
+
 `;
 
 const Alert = styled.div`
