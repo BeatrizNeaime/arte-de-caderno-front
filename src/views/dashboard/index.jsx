@@ -24,7 +24,7 @@ const DashboardRouter = () => {
 
   const getProf = async () => {
     const a = await professorRoutes.getProfById(Cookies.get("user"));
-    console.log("user> ", a);
+
     if (a) {
       setUser((user) => ({
         ...user,
@@ -88,16 +88,14 @@ const DashboardRouter = () => {
   };
 
   useEffect(() => {
-    // if (accessType === "professor") {
-    //   getProf();
-    // } else if (accessType === "student") {
-    //   getStudent();
+    if (accessType === "professor") {
+      getProf();
+    } else if (accessType === "student") {
+      getStudent();
+    }
     if (accessType === "evaluator") {
       getEvaluator();
     }
-    Cookies.set("user", "650a276884a63659b672fa4d");
-    Cookies.set("isLogged", true);
-    Cookies.set("accessType", "evaluator");
   }, []);
 
   if (loading) {

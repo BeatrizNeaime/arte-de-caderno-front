@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   PageContainer,
   ImgContainer,
@@ -10,7 +10,7 @@ import {
   Mandatory,
   Input,
   Button,
-  Form,
+  Form
 } from "../../styles/sharedStyles";
 import NavBoot from "../../Components/Navbar";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -18,12 +18,33 @@ import styled from "styled-components";
 import { userContext } from "../../contexts/userContext";
 import { CheckupContainer } from "../cadastro-usuario/components";
 import PreviousArrow from "src/Components/PreviousArrow";
-import { masks } from "src/utils/masks";
+import Cookies from "js-cookie";
+import { getSearchParamsForLocation } from "react-router-dom/dist/dom";
 
 const ProfileView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [edit, setEdit] = useState(false);
-  const { user } = useContext(userContext);
+  const [user,setUser] = useState(null)
+  const cpf = user.cpf
+  const access = Cookies.get('accessType')
+
+  const getProf = () =>{
+    
+  }
+
+  useEffect(() => {
+    if(access === professor){
+      getProf()
+    } else if(access === "student"){
+      getStudent()
+    } else {
+      getEvaluator()
+    }
+  }, []);
+
+  const handleClick = () => {
+    setEdit(!edit);
+  };
 
   return (
     <PageContainer>
@@ -39,10 +60,7 @@ const ProfileView = () => {
               }}
             >
               <Title>Perfil</Title>
-              <ProfileIcon
-                src={require("../../assets/img/icons/create-1.webp")}
-                onClick={() => setEdit(true)}
-              />
+              
             </Linha>
             <Form>
               <Linha>
@@ -62,7 +80,7 @@ const ProfileView = () => {
                   <Label>
                     CPF:<Mandatory>*</Mandatory>
                   </Label>
-                  <Input value={masks.cpf(user.cpf)} name="cpf" disabled />
+                  <Input value={cpf} name="cpf" disabled />
                 </InputColumn>
               </Linha>
               <Linha>

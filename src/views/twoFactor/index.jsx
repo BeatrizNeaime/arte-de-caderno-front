@@ -7,7 +7,7 @@ import {
   PageContainer,
   Subtitle,
   Input,
-  Button,
+  Button
 } from "../../styles/sharedStyles";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { colors } from "../../Components/UI/contants";
@@ -15,7 +15,6 @@ import PreviousArrow from "../../Components/PreviousArrow";
 import { userContext } from "../../contexts/userContext";
 import { loginRoutes } from "../../services/loginRoutes";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 const TwoFactorView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
@@ -27,10 +26,6 @@ const TwoFactorView = () => {
   const logar = async () => {
     const a = await loginRoutes.logar(user.cpf, user.password, twoFactorCode);
     if (a) {
-      Cookies.set("user", a.user._id, { expires: 30, path: "/" });
-      Cookies.set("accessType", a.accessType, { expires: 30, path: "/" });
-      Cookies.set("token", a.token, { expires: 30, path: "/" });
-      Cookies.set("isLogged", true, { expires: 30, path: "/" });
       setRedirect(true);
     }
   };

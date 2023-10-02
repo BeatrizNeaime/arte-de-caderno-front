@@ -19,8 +19,15 @@ const DashboardAvaliadorView = () => {
           name={"Aguardando avaliação"}
           desktop={desktop}
           path={`/aguardando-avaliacao/${Cookies.get("user")}`}
+          value={"5"}
         />
-        <Card icon={"draw"} name={"Avaliados"} desktop={desktop} path="#" />
+        <Card
+          icon={"draw"}
+          name={"Avaliados"}
+          desktop={desktop}
+          path="#"
+          value={"15"}
+        />
       </Linha>
     </Column>
   );

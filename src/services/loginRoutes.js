@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify'
+import Cookies from 'js-cookie';
 import { throwToast } from 'src/utils/toast';
 
 export const loginRoutes = {
@@ -31,15 +31,18 @@ export const loginRoutes = {
                 code2factor: code.toUpperCase(),
             }),
         };
-        const customId = "my-custom-id"
         const a = await fetch(url, options)
         const b = await a.json()
-        console.log(b)
+
         if (a.status !== 200) {
-            toast.error("Código incorreto!", { customId: customId })
+            throwToast.error("Código incorreto!")
             console.log(code)
             return false
         } else {
+            Cookies.set("user", b.user._id, { expires: 30, path: "/" });
+            Cookies.set("accessType", b.accessType, { expires: 30, path: "/" });
+            Cookies.set("token", b.token, { expires: 30, path: "/" });
+            Cookies.set("isLogged", true, { expires: 30, path: "/" });
             return await b
         }
     },
